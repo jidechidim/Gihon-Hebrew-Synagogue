@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="./css/parsha.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Weekly Parsha — Ghihon Hebrew Synagogue</title>
+
+  <!-- Fonts & CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./parsha.css" />
+</head>
+
+  <!-- Injected partials -->
+  <div id="__header"></div>
+
+  <!-- ===== Page ===== -->
+  <main class="page" id="main">
+    <!-- Title + search + refs row -->
+    <section class="parsha-header" aria-labelledby="title">
+      <div class="container narrow center">
+        <h1 id="title">Weekly Parsha</h1>
+
+        <form class="parsha-search" role="search" aria-label="Search parsha">
+          <label class="sr-only" for="q">Search parsha</label>
+          <input id="q" name="q" type="search" placeholder="Search parsha" autocomplete="off" />
+          <span class="search-icon" aria-hidden="true">🔎</span>
+        </form>
+
+        <p class="refs">
+          <a href="#" class="ref">Genesis 40:12</a>
+          <span class="sep">—</span>
+          <a href="#" class="ref">Genesis 44:07</a>
+        </p>
+
+        <p class="result-meta" id="resultMeta" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- Reading body -->
+    <section class="parsha-content" aria-label="Parsha reading">
+      <div class="container reading">
+        <p>Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere.</p>
+        <p>Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit.</p>
+        <p>Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit.</p>
+        <p>Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit.</p>
+        <p>Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit.</p>
+        <p>Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit.</p>
+      </div>
+    </section>
+
+    <!-- Pager -->
+    <nav class="container pager" aria-label="Parsha navigation">
+      <a class="pager-link prev" href="#" rel="prev"><span aria-hidden="true">‹</span> Previous</a>
+      <a class="pager-link next" href="#" rel="next">Next<span aria-hidden="true">›</span></a>
+    </nav>
+  </main>
+
+  <!-- Injected partial -->
+  <div id="__footer"></div>
+
+  <!-- Scripts -->
+  <script type="module" src="./js/partials.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

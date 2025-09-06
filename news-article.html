@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Article — Ghihon Hebrew Synagogue</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+  <!-- Your shared/article styles (can share with news.css) -->
+  <link rel="stylesheet" href="/css/news.css">
+</head>
+<body>
+  <div id="__header"></div>
+
+<main class="page">
+  <article class="container narrow" id="article"></article>
+  <p id="articleMsg" class="form-msg" aria-live="polite"></p>
+</main>
+<script type="module" src="/js/news-article.js"></script>
+
+    <!-- Prev/Next -->
+    <nav class="container pager" aria-label="Article navigation">
+      <a class="pager-link prev" id="prevLink" href="#"><span aria-hidden="true">‹</span> Previous</a>
+      <a class="pager-link next" id="nextLink" href="#">Next <span aria-hidden="true">›</span></a>
+    </nav>
+  </main>
+
+  <div id="__footer"></div>
+
+  <script type="module" src="/js/partials.js"></script>
+  <script type="module" src="/js/news-article.js"></script>
+</body>
+</html>
