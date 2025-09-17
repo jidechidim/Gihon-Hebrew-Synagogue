@@ -1,0 +1,126 @@
+/* ===== Tokens ===== */
+:root {
+  --brand: #255D99;
+  --brand-900: #1C467D;
+  --ink: #121212;
+  --muted: #6b7280;
+  --paper: #ffffff;
+  --outline: #e7edf3;
+  --shadow: 0 10px 25px rgba(3,7,18,.08);
+  --max: 1120px;
+}
+
+/* ===== Base ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.65;
+}
+main { flex: 1; } /* ensures footer sticks to bottom */
+img { max-width: 100%; display: block; }
+
+.container { width: min(92vw, var(--max)); margin-inline: auto; }
+.container.narrow { width: min(820px, 92vw); }
+.center { text-align: center; }
+
+/* ===== Header ===== */
+.site-header {
+  position: fixed;
+  top: 0; inset-inline: 0;
+  z-index: 60;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+}
+.nav-wrap { display: flex; align-items: center; gap: 1rem; padding: 10px 0; }
+.brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; }
+.site-header .brand img { height: 40px; width: auto; }
+@media (max-width:640px) { .site-header .brand img { height: 32px; } }
+.brand-text { font-weight: 800; color: var(--ink); }
+
+.desktop-nav { margin-left: auto; }
+.desktop-nav ul { display: flex; gap: 1.1rem; list-style: none; }
+.desktop-nav a { color: var(--ink); text-decoration: none; font-weight: 600; transition: color .25s ease; }
+.desktop-nav a:hover { color: var(--brand); }
+.desktop-nav a.active { color: var(--brand); }
+.btn-donate {
+  background: #0f2d4a; color: #fff;
+  padding: .55rem 1rem; border-radius: 0;
+  font-weight: 700; text-decoration: none;
+}
+.btn-donate:hover { background: var(--brand); }
+
+/* Mobile Nav */
+.hamburger { display: none; }
+@media (max-width:900px) {
+  .desktop-nav { display: none; }
+  .hamburger { display: inline-block; }
+}
+
+/* ===== Calendar Head ===== */
+.calendar-head {
+  padding: 90px 0 20px; /* space under fixed header */
+}
+.calendar-head h1 {
+  margin-bottom: 10px;
+  font-size: clamp(26px, 2vw + 18px, 34px);
+  font-weight: 800;
+}
+.calendar-head .lede { margin: 0; color: var(--muted); }
+
+/* ===== Calendar List ===== */
+.calendar-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  display: grid;
+  gap: 14px;
+}
+.calendar-item {
+  background: var(--paper);
+  border: 1px solid var(--outline);
+  border-radius: 8px;
+  padding: 12px 16px;
+  box-shadow: var(--shadow);
+  text-align: left;
+}
+.calendar-item strong {
+  display: block;
+  font-weight: 700;
+}
+.calendar-item span {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* ===== Footer ===== */
+.site-footer {
+  background: var(--brand);
+  color: #fff;
+  width: 100%;
+  margin-top: auto; /* push footer to bottom */
+}
+.site-footer a { color: #fff; text-decoration: none; opacity: .95; transition: opacity .2s ease; }
+.site-footer a:hover { opacity: 1; }
+.footer-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; padding: 36px 0; }
+.logo-badge img { width: 64px; height: 64px; background: #fff; border-radius: 50%; }
+.foot-col h4 { margin: .2rem 0 .6rem; }
+.foot-col ul { list-style: none; display: grid; gap: .35rem; }
+.socials a { display: inline-block; margin-right: .6rem; }
+.footer-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 0; border-top: 1px solid rgba(255,255,255,.15);
+}
+.footer-bottom .legal { display: flex; gap: 14px; list-style: none; }
+
+/* Responsive Footer */
+@media (max-width:1024px) { .footer-grid { grid-template-columns: repeat(2,1fr); gap: 18px; } }
+@media (max-width:640px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 12px; }
+  .footer-bottom { flex-direction: column; text-align: center; gap: 10px; }
+  .footer-bottom .legal { justify-content: center; flex-wrap: wrap; }
+}

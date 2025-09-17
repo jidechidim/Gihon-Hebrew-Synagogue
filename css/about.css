@@ -26,7 +26,7 @@ body{
 .center{text-align:center}
 
 .btn{
-  display:inline-block; padding:.7rem 1.1rem; border-radius:999px;
+  display:inline-block; padding:.7rem 1.1rem; border-radius:0px;
   border:2px solid transparent; font-weight:700; text-decoration:none;
   transition:all .25s ease;
 }
@@ -93,7 +93,7 @@ body{
   background:#0f2d4a;
   color:#fff;
   padding:.55rem 1rem;
-  border-radius:999px;
+  border-radius:0px;
   font-weight:700;
   text-decoration:none;
   border:2px solid transparent;
@@ -171,7 +171,7 @@ body{
   width:auto;
   display:inline-block;
   padding:.55rem 1rem;
-  border-radius:999px;
+  border-radius:0px;
   background:#0f2d4a;
   color:#fff;
   transition:background .25s ease,color .25s ease;

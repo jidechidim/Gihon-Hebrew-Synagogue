@@ -35,24 +35,23 @@
     </div>
   </section>
 
-  <!-- ======== Weekly Parsha ======== -->
-  <section id="parsha" class="section parsha">
-    <div class="container narrow">
-      <h2 class="section-title">Weekly Parsha</h2>
-      <blockquote class="parsha-quote" cite="#">
-        <span class="quote-mark">“</span>
-        <p>“Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum repellendus temporibus dignissimos explicabo culpa architecto pariatur dicta.”</p>
-        <footer class="parsha-ref">
-          <a href="./parsha.html" class="ref">Genesis 48:27</a>
-          <span class="sep">•</span>
-          <a href="./parsha.html" class="ref">Genesis 49:02</a>
-        </footer>
-      </blockquote>
-      <div class="center">
-        <a href="./parsha.html" class="btn btn-outline">Go to Parsha</a>
-      </div>
+<!-- ======== Weekly Parsha ======== -->
+<section id="parsha" class="section parsha">
+  <div class="container narrow">
+    <h2 class="section-title">Weekly Parsha</h2>
+    <blockquote class="parsha-quote" cite="#">
+      <span class="quote-mark">“</span>
+      <p id="parshaText">Loading parsha...</p>
+      <footer class="parsha-ref">
+        <a href="./parsha.html" id="parshaRef" class="ref">Fetching...</a>
+      </footer>
+    </blockquote>
+    <div class="center">
+      <a href="./parsha.html" class="btn btn-outline">Go to Parsha</a>
     </div>
-  </section>
+  </div>
+</section>
+
 
   <!-- ======== Upcoming Events ======== -->
   <section id="events" class="section events">
@@ -142,24 +141,24 @@
           <img src="assets/newsimage1.png" alt="Feature story">
           <div class="feature-meta">
             <h3>Community Outreach Week</h3>
-            <a href="#" class="read-more">Read more</a>
+            <a href="./news.html" class="read-more">Read more</a>
           </div>
         </article>
 
         <aside class="thumbs">
-          <a class="thumb" href="#">
+          <a class="thumb" href="./news.html">
             <img src="assets/newsimage2.png" alt="Story 1">
             <span>Community Outreach Week</span>
           </a>
-          <a class="thumb" href="#">
+          <a class="thumb" href="./news.html">
             <img src="assets/newsimage3.png" alt="Story 2">
             <span>Festival of Lights</span>
           </a>
-          <a class="thumb" href="#">
+          <a class="thumb" href="./news.html">
             <img src="assets/newsimage4.png" alt="Story 3">
             <span>Summer Camp</span>
           </a>
-          <a class="thumb" href="#">
+          <a class="thumb" href="./news.html">
             <img src="assets/newsimage5.png" alt="Story 4">
             <span>Summer Camp</span>
           </a>
@@ -188,5 +187,33 @@
   <!-- Scripts -->
   <script type="module" src="./js/partials.js"></script>
   <script src="./script.js"></script>
+
+  <script>
+  async function loadParsha() {
+    try {
+      const url = "https://www.hebcal.com/shabbat?cfg=json&geonameid=2352778&c=on"; 
+      const response = await fetch(url);
+      const data = await response.json();
+
+      const parshaItem = data.items.find(item => item.category === "parashat");
+
+      if (parshaItem) {
+        document.getElementById("parshaText").textContent = parshaItem.title;
+        document.getElementById("parshaRef").textContent = "Read more";
+        document.getElementById("parshaRef").href = "./parsha.html";
+      } else {
+        document.getElementById("parshaText").textContent = "No parsha this week.";
+        document.getElementById("parshaRef").textContent = "";
+      }
+    } catch (err) {
+      console.error("Error fetching parsha:", err);
+      document.getElementById("parshaText").textContent = "Unable to load parsha.";
+      document.getElementById("parshaRef").textContent = "";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", loadParsha);
+</script>
+
 </body>
 </html>

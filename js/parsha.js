@@ -85,3 +85,4 @@ if (input) {
   input.addEventListener('input', (e) => highlight(e.target.value));
   input.addEventListener('search', (e) => highlight(e.target.value)); // supports clear button in Safari/iOS
 }
+

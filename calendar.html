@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="./css/parsha.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jewish Calendar - Gihon Hebrew Synagogue</title>
+
+  <!-- Fonts & CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+  <!-- Page-specific CSS -->
+  <link rel="stylesheet" href="./css/calendar.css" />
+</head>
+<body>
+  <!-- Injected Header -->
+  <header id="__header"></header>
+
+  <!-- Main Content -->
+  <main class="page">
+    <!-- Title -->
+    <section class="calendar-head" aria-labelledby="calendarTitle">
+      <div class="container narrow center">
+        <h1 id="calendarTitle">Jewish Calendar</h1>
+        <p class="lede">Upcoming holidays, parsha readings, and candle-lighting times.</p>
+      </div>
+    </section>
+
+    <!-- Calendar Events -->
+    <section id="calendar" class="calendar section">
+      <div class="container narrow center">
+        <ul id="calendarList" class="calendar-list">
+          <li>Loading calendar...</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- Injected Footer -->
+  <footer id="__footer"></footer>
+
+  <!-- Scripts -->
+  <script type="module" src="./js/partials.js"></script>
+  <script src="./script.js"></script>
+
+  <!-- Hebcal Fetch -->
+  <script>
+    async function loadCalendar() {
+      try {
+        const res = await fetch(
+          "https://www.hebcal.com/hebcal?v=1&cfg=json&year=now&month=x&maj=on&min=on&mod=on&nx=on&ss=on&mf=on&c=on&geo=geoname&geonameid=2563230"
+        );
+        const data = await res.json();
+        const list = document.getElementById("calendarList");
+
+        list.innerHTML = data.items
+          .slice(0, 10)
+          .map(
+            item => `
+              <li class="calendar-item">
+                <strong>${item.title}</strong>
+                <span>${new Date(item.date).toDateString()}</span>
+              </li>`
+          )
+          .join("");
+      } catch (err) {
+        console.error("Calendar load failed", err);
+        document.getElementById("calendarList").innerHTML =
+          "<li>Unable to load calendar at the moment.</li>";
+      }
+    }
+    document.addEventListener("DOMContentLoaded", loadCalendar);
+  </script>
+</body>
+</html>

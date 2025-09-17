@@ -87,7 +87,7 @@ img{max-width:100%;display:block}
   background:#0f2d4a;
   color:#fff;
   padding:.55rem 1rem;
-  border-radius:999px;
+  border-radius:0px;
   font-weight:700;
   text-decoration:none;
   border:2px solid transparent;
@@ -165,7 +165,7 @@ img{max-width:100%;display:block}
   width:auto;
   display:inline-block;
   padding:.55rem 1rem;
-  border-radius:999px;
+  border-radius:0px;
   background:#0f2d4a;
   color:#fff;
   transition:background .25s ease,color .25s ease;
@@ -212,7 +212,7 @@ img{max-width:100%;display:block}
 .event{ 
   display:grid; 
   grid-template-columns: 360px 1fr; 
-  gap:26px; 
+  gap:50px; 
   align-items:flex-start; 
 } 
  
@@ -256,7 +256,7 @@ img{max-width:100%;display:block}
 /* Buttons */ 
 .btn{ 
   display:inline-block; 
-  border-radius:999px; 
+  border-radius:0px; 
   padding:.6rem 1rem; 
   font-weight:700; 
   text-decoration:none; 

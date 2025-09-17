@@ -22,7 +22,6 @@
     <section class="parsha-header" aria-labelledby="title">
       <div class="container narrow center">
         <h1 id="title">Weekly Parsha</h1>
-        <h2 id="title">Name of Parsha</h2>
 
         <form class="parsha-search" role="search" aria-label="Search parsha">
           <label class="sr-only" for="q">Search parsha</label>
@@ -40,17 +39,23 @@
       </div>
     </section>
 
-    <!-- Reading body -->
-    <section class="parsha-content" aria-label="Parsha reading">
-      <div class="container reading">
-        <p>Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere.</p>
-        <p>Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit.</p>
-        <p>Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit.</p>
-        <p>Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit.</p>
-        <p>Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit.</p>
-        <p>Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in gravida eu augue hendrerit.</p>
-      </div>
-    </section>
+<!-- ======== Weekly Parsha ======== -->
+<section id="parsha" class="section parsha">
+  <div class="container narrow">
+    <h2 class="section-title">Weekly Parsha</h2>
+    <blockquote class="parsha-quote" cite="#">
+      <span class="quote-mark">“</span>
+      <p id="parshaText">Loading parsha...</p>
+      <footer class="parsha-ref" id="parshaRefs">
+        <a href="./parsha.html" id="parshaRef" class="ref">Fetching...</a>
+      </footer>
+    </blockquote>
+    <div class="center">
+      <a href="./parsha.html" class="btn btn-outline">Go to Parsha</a>
+    </div>
+  </div>
+</section>
+
 
     <!-- Pager -->
     <nav class="container pager" aria-label="Parsha navigation">
@@ -65,5 +70,61 @@
   <!-- Scripts -->
   <script type="module" src="./js/partials.js"></script>
   <script src="./script.js"></script>
+  
+  <script>
+  async function loadParsha() {
+    try {
+      const url = "https://www.hebcal.com/shabbat?cfg=json&geonameid=2352778&c=on"; 
+      const response = await fetch(url);
+      const data = await response.json();
+
+      const parshaItem = data.items.find(item => item.category === "parashat");
+
+      if (parshaItem) {
+        // Parsha name
+        document.getElementById("parshaText").textContent = parshaItem.title;
+
+        // Clear previous refs
+        const refContainer = document.getElementById("parshaRefs");
+        refContainer.innerHTML = "";
+
+        // Split reading references if provided (e.g., "Genesis 6:9-11:32")
+        if (parshaItem.memo) {
+          const refs = parshaItem.memo.split(";"); 
+          refs.forEach((ref, i) => {
+            if (i > 0) {
+              const sep = document.createElement("span");
+              sep.classList.add("sep");
+              sep.textContent = "•";
+              refContainer.appendChild(sep);
+            }
+            const link = document.createElement("a");
+            link.href = "./parsha.html";
+            link.classList.add("ref");
+            link.textContent = ref.trim();
+            refContainer.appendChild(link);
+          });
+        } else {
+          // fallback
+          const link = document.createElement("a");
+          link.href = "./parsha.html";
+          link.classList.add("ref");
+          link.textContent = "Read More";
+          refContainer.appendChild(link);
+        }
+      } else {
+        document.getElementById("parshaText").textContent = "No parsha this week.";
+        document.getElementById("parshaRefs").textContent = "";
+      }
+    } catch (err) {
+      console.error("Error fetching parsha:", err);
+      document.getElementById("parshaText").textContent = "Unable to load parsha.";
+      document.getElementById("parshaRefs").textContent = "";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", loadParsha);
+</script>
+
 </body>
 </html>
