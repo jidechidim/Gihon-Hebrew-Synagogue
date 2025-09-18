@@ -19,10 +19,12 @@ async function inject(selector, url) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  // Always fetch from root directory on GitHub Pages
-  const okHeader = await inject('#__header', '/Gihon-Hebrew-Synagogue/partials/header.html');
-  await inject('#__footer', '/Gihon-Hebrew-Synagogue/partials/footer.html');
-  
+  // IMPORTANT: prefix with repo name
+  const repo = 'Gihon-Hebrew-Synagogue';
+
+  const okHeader = await inject('#__header', `/${repo}/partials/header.html`);
+  await inject('#__footer', `/${repo}/partials/footer.html`);
+
   if (okHeader) initHeader();
 
   const y = document.getElementById('year');
