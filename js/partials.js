@@ -1,33 +1,28 @@
-// /js/partials.js
 import { initHeader } from './header.js';
 
-// Resolve paths relative to the JS file location (…/js/)
-const ROOT = new URL('..', import.meta.url); // parent folder of /js
-
-async function inject(selector, fileName) {
+async function inject(selector, url) {
   const host = document.querySelector(selector);
   if (!host) return false;
-
   try {
-    // Looks for …/partials/<fileName> next to your /js folder
-    const url = new URL(`partials/${fileName}`, ROOT).href;
     const res = await fetch(url, { cache: 'no-cache' });
-    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+    if (!res.ok) throw new Error(res.status);
     host.innerHTML = await res.text();
     return true;
   } catch (err) {
-    console.error(`[partials] Failed to inject ${fileName}:`, err);
-    host.innerHTML = ''; // keep DOM clean if injection fails
+    console.error(`Failed to load ${url}:`, err);
     return false;
   }
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const headerOk = await inject('#__header', 'header.html');
-  await inject('#__footer', 'footer.html');
-  if (headerOk) initHeader?.();
+  // ✅ Use repo-aware paths
+  const base = '/Gihon-Hebrew-Synagogue/partials/';
 
-  // Year in footer (optional)
+  const okHeader = await inject('#__header', base + 'header.html');
+  await inject('#__footer', base + 'footer.html');
+
+  if (okHeader) initHeader();
+
   const y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
 });
