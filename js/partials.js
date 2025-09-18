@@ -15,8 +15,13 @@ async function inject(selector, url) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  // ✅ Use repo-aware paths
-  const base = '/Gihon-Hebrew-Synagogue/partials/';
+  // Detect if running on GitHub Pages (domain includes github.io)
+  const onGithub = window.location.hostname.includes('github.io');
+
+  // Base path: local (./partials/) vs GitHub Pages (/REPO/partials/)
+  const base = onGithub
+    ? '/Gihon-Hebrew-Synagogue/partials/'
+    : './partials/';
 
   const okHeader = await inject('#__header', base + 'header.html');
   await inject('#__footer', base + 'footer.html');
