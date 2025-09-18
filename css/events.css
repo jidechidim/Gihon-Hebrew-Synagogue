@@ -391,3 +391,13 @@ img{max-width:100%;display:block}
   .event-media img{height:200px}
   .pager{padding-bottom:30px}
 }
+
+/* Add spacing between event cards */
+.events-list .event {
+  margin-bottom: 1px;
+}
+
+/* Extra bottom space for last event */
+.events-list .last-event {
+  margin-bottom: 100px;
+}
