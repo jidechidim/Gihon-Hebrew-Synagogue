@@ -43,9 +43,8 @@
 <!-- ======== Weekly Parsha ======== -->
 <section id="parsha" class="section parsha">
   <div class="container narrow">
-    <h2 class="section-title">Weekly Parsha</h2>
+    <h1 class="section-title">Weekly Parsha</h1>
     <blockquote class="parsha-quote" cite="#">
-      <span class="quote-mark">“</span>
       <p id="parshaText">Loading parsha...</p>
       <footer class="parsha-ref">
         <a href="./parsha.html" id="parshaRef" class="ref">Fetching...</a>
@@ -192,19 +191,20 @@
     </div>
   </section>
 
-  <!-- ======== Newsletter ======== -->
-  <section id="getinvolved" class="section newsletter">
-    <div class="container narrow center">
-      <h2 class="section-title">Stay Up to Date With the Latest</h2>
-      <p>Subscribe to our newsletter and always stay updated about the latest news in the Jewish community.</p>
-      <form id="newsletterForm" class="newsletter-form" novalidate>
-        <label class="sr-only" for="email">Email address</label>
-        <input id="email" name="email" type="email" placeholder="Email address" required>
-        <button class="btn btn-primary" type="submit">Subscribe</button>
-      </form>
-      <p id="newsletterMsg" class="form-msg" role="status" aria-live="polite"></p>
-    </div>
-  </section>
+<!-- ===== Newsletter Section ===== -->
+<section class="newsletter section">
+  <div class="container narrow center">
+    <h2 class="section-title">Stay Connected</h2>
+    <p>Sign up to receive updates on events, parsha readings, and community news.</p>
+    
+    <form class="newsletter-form" action="https://formspree.io/f/xvgbearn" method="POST">
+      <input type="email" name="email" placeholder="Enter your email address" required>
+      <button type="submit" class="btn btn-primary">Subscribe</button>
+    </form>
+    
+    <p class="form-msg" id="formMsg"></p>
+  </div>
+</section>
 
   <!-- Injected partial -->
   <div id="__footer"></div>
