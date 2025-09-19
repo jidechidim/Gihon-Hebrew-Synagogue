@@ -1,12 +1,16 @@
 /* ===== Tokens (from your guide) ===== */
 :root{
-  --brand:#255D99;
-  --brand-900:#1C467D;
-  --ink:#121212;
-  --muted:#6b7280;
-  --paper:#ffffff;
-  --outline:#e7edf3;
-  --max:1120px;
+  --brand:#255D99;        /* primary */
+  --brand-900:#1C467D;    /* darker */
+  --brand-100:#A8BED6;    /* light/tint */
+  --ink:#121212;          /* body/headings */
+  --muted:#64748b;        /* secondary text */
+  --paper:#ffffff;        /* base */
+  --paper-2:#F5F7FA;      /* soft section */
+  --outline:#dbe3ec;      /* borders */
+  --radius:14px;
+  --shadow:0 10px 25px rgba(2,6,23,.08);
+  --max:1120px;           /* content width */
 }
 
 /* ===== Base ===== */
