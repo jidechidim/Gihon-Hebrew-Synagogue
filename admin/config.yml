@@ -1,0 +1,83 @@
+local_backend: true
+
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  # ----- News -----
+  - name: "news"
+    label: "News"
+    files:
+      - file: "data/news.json"
+        label: "News Items"
+        name: "news"
+        format: json
+        fields:
+          - label: Items
+            name: items
+            widget: list
+            summary: "{{fields.title}} — {{fields.date}}"
+            fields:
+              - {label: Title, name: title, widget: string}
+              - {label: Slug, name: slug, widget: string, hint: "used in URLs"}
+              - {label: Date, name: date, widget: datetime}
+              - {label: Excerpt, name: excerpt, widget: text}
+              - {label: Feature Image, name: image, widget: image}
+              - {label: Body, name: body, widget: markdown}
+              - {label: Tags, name: tags, widget: list, required: false}
+
+  # ----- Events -----
+  - name: "events"
+    label: "Events"
+    files:
+      - file: "data/events.json"
+        label: "Events"
+        name: "events"
+        format: json
+        fields:
+          - label: Items
+            name: items
+            widget: list
+            summary: "{{fields.title}} — {{fields.date}} @ {{fields.location}}"
+            fields:
+              - {label: Title, name: title, widget: string}
+              - {label: Slug, name: slug, widget: string}
+              - {label: Date & Time, name: date, widget: datetime}
+              - {label: Location, name: location, widget: string}
+              - {label: Image, name: image, widget: image}
+              - {label: Description, name: body, widget: markdown}
+              - {label: Register URL, name: registerUrl, widget: string, required: false}
+
+  # ----- Parsha (editable notes) -----
+  - name: "parsha"
+    label: "Parsha"
+    files:
+      - file: "data/parsha.json"
+        label: "Current Parsha"
+        name: "parsha"
+        format: json
+        fields:
+          - {label: Name, name: name, widget: string}
+          - {label: Quote, name: quote, widget: text, required: false}
+          - {label: Refs, name: refs, widget: list, required: false, field: {label: Ref, name: ref, widget: string}}
+
+  # ----- Pages (About/Donate) -----
+  - name: "pages"
+    label: "Pages"
+    files:
+      - file: "about.md"
+        label: "About Us"
+        name: "about"
+        fields:
+          - {label: Title, name: title, widget: string}
+          - {label: Body, name: body, widget: markdown}
+      - file: "donate.md"
+        label: "Donate"
+        name: "donate"
+        fields:
+          - {label: Title, name: title, widget: string}
+          - {label: Body, name: body, widget: markdown}

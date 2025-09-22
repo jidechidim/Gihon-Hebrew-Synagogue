@@ -123,5 +123,30 @@
   <script type="module" src="./js/partials.js"></script>
   <script src="./script.js"></script>
 
+  <script>
+async function loadNews(){
+  try{
+    const res = await fetch('data/news.json', {cache:'no-cache'});
+    const {items} = await res.json();
+    const wrap = document.querySelector('.news-list .container');
+    wrap.innerHTML = items.map(post => `
+      <article class="post">
+        <a class="post-media" href="news/${post.slug}.html">
+          <img src="${post.image}" alt="${post.title}">
+        </a>
+        <div class="post-body">
+          <h3 class="post-title"><a href="news/${post.slug}.html">${post.title}</a></h3>
+          <p class="post-excerpt">${post.excerpt || ''}</p>
+          <a class="post-more" href="news/${post.slug}.html">Read More</a>
+        </div>
+      </article>
+    `).join('');
+  } catch(e){
+    console.error(e);
+  }
+}
+loadNews();
+</script>
+
 </body>
 </html>

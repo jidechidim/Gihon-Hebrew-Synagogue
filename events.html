@@ -163,5 +163,36 @@
   <!-- Scripts -->
   <script type="module" src="./js/partials.js"></script>
   <script src="./script.js"></script>
+
+  <script>
+async function loadEvents(){
+  try{
+    const res = await fetch('data/events.json', {cache:'no-cache'});
+    const {items} = await res.json();
+    const wrap = document.querySelector('.events-list .container');
+    wrap.innerHTML = items.map(ev => `
+      <article class="event">
+        <div class="event-media">
+          <img src="${ev.image}" alt="${ev.title}">
+        </div>
+        <div class="event-body">
+          <h3 class="event-title">${ev.title}</h3>
+          <p class="event-desc">${ev.body || ''}</p>
+          <ul class="event-meta">
+            <li><span class="dot" aria-hidden="true"></span> ${new Date(ev.date).toLocaleString()}</li>
+            <li><span class="dot" aria-hidden="true"></span> ${ev.location || ''}</li>
+          </ul>
+          ${ev.registerUrl ? `
+            <a class="btn btn-sm btn-outline" href="${ev.registerUrl}" target="_blank" rel="noopener noreferrer">Register</a>` : ``}
+        </div>
+      </article>
+    `).join('');
+  } catch(e){
+    console.error(e);
+  }
+}
+loadEvents();
+</script>
+
 </body>
 </html>

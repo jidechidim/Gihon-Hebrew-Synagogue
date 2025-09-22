@@ -1,0 +1,27 @@
+async function loadParsha() {
+  try {
+    const res = await fetch("/data/parsha.json");
+    const data = await res.json();
+
+    if (data.override) {
+      document.querySelector(".parsha-quote p").textContent = data.quote;
+      document.querySelector(".parsha-ref").innerHTML = data.refs
+        .map(ref => `<a href="./parsha.html" class="ref">${ref}</a>`)
+        .join("<span class='sep'>•</span>");
+      return;
+    }
+  } catch (e) {
+    console.warn("No override parsha.json, falling back to Hebcal API");
+  }
+
+  // fallback to Hebcal
+  const res = await fetch("https://www.hebcal.com/shabbat?cfg=json&geonameid=2563230&m=50");
+  const hebcal = await res.json();
+  const parsha = hebcal.items.find(item => item.category === "parashat");
+
+  if (parsha) {
+    document.querySelector(".parsha-quote p").textContent = parsha.hebrew || parsha.title;
+    document.querySelector(".parsha-ref").innerHTML = `<a href="./parsha.html" class="ref">${parsha.title}</a>`;
+  }
+}
+loadParsha();

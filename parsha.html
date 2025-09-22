@@ -126,5 +126,23 @@
   document.addEventListener("DOMContentLoaded", loadParsha);
 </script>
 
+<script>
+async function loadParsha(){
+  try{
+    const res = await fetch('data/parsha.json', {cache:'no-cache'});
+    const data = await res.json();
+    const nameEl = document.getElementById('parshaName');
+    const quoteEl = document.getElementById('parshaQuote');
+    const refsEl = document.getElementById('parshaRefs');
+    if(nameEl) nameEl.textContent = data.name || '';
+    if(quoteEl) quoteEl.textContent = data.quote || '';
+    if(refsEl && Array.isArray(data.refs)){
+      refsEl.innerHTML = data.refs.map(r => `<a class="ref" href="./parsha.html">${r}</a>`).join('<span class="sep">•</span>');
+    }
+  } catch(e){ console.error(e); }
+}
+loadParsha();
+</script>
+
 </body>
 </html>
