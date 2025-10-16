@@ -1,0 +1,20 @@
+{
+  "parshas": [
+    {
+      "name": "Bereishit",
+      "ref": "Genesis 1:1–6:8",
+      "summary": "The creation of the world and early humanity."
+    },
+    {
+      "name": "Noach",
+      "ref": "Genesis 6:9–11:32",
+      "summary": "The story of Noah, the flood, and the Tower of Babel."
+    },
+    {
+      "name": "Lech-Lecha",
+      "ref": "Genesis 12:1–17:27",
+      "summary": "God calls Abraham and promises him a great nation."
+    }
+    // … add all 54 parshas
+  ]
+}

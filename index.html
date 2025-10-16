@@ -4,7 +4,7 @@
   <link rel="stylesheet" href="./css/styles.css">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ghihon Hebrew Synagogue</title>
+  <title>Gihon Hebrew Synagogue</title>
 
   <!-- Fonts & CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -139,7 +139,7 @@
       <img src="assets/welcomeimage.png" alt="Smiling child">
     </div>
     <div class="split-copy">
-      <h2>Welcome to Ghihon Hebrew Synagogue</h2>
+      <h2>Welcome to Gihon Hebrew Synagogue</h2>
       <p>Lorem ipsum dolor sit amet consectetur. Sit at ornare nunc in pellentesque sit at odio.</p>
       <p>Massa enim nunc volutpat nisl sed augue eget massa commodo. Ligula magna viverra.</p>
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSdVRkMdUu2c-z2t7Dk3AYJaA61mGiOmbwbH8FJIIIjKoATaaQ/viewform?usp=sharing&ouid=106646172519560504580" 
@@ -197,11 +197,10 @@
     <h2 class="section-title">Stay Connected</h2>
     <p>Sign up to receive updates on events, parsha readings, and community news.</p>
     
-    <form class="newsletter-form" action="https://formspree.io/f/xvgbearn" method="POST">
-      <input type="email" name="email" placeholder="Enter your email address" required>
-      <button type="submit" class="btn btn-primary">Subscribe</button>
-    </form>
-    
+<form name="newsletter" method="POST" data-netlify="true" class="newsletter-form">
+  <input type="email" name="email" placeholder="Enter your email" required />
+  <button type="submit" class="btn btn-primary">Subscribe</button>
+</form>
     <p class="form-msg" id="formMsg"></p>
   </div>
 </section>
