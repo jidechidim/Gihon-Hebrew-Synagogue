@@ -23,7 +23,7 @@ body{
 .center{text-align:center}
 
 /* Buttons (shared) */
-.btn{display:inline-block; border-radius:999px; padding:.6rem 1rem; font-weight:700; text-decoration:none; border:2px solid transparent; transition:all .25s ease}
+.btn{display:inline-block; border-radius:0px; padding:.6rem 1rem; font-weight:700; text-decoration:none; border:2px solid transparent; transition:all .25s ease}
 .btn-donate{background:#0f2d4a; color:#fff}
 .btn-donate:hover{background:var(--brand); color:#fff}
 
@@ -277,7 +277,7 @@ body{
   font-weight: 700;
   text-decoration: none;
   border: 2px solid transparent;
-  border-radius: 999px;          /* pill */
+  border-radius: 0px;          /* pill */
   padding: .55rem 1rem;          /* same size everywhere */
   line-height: 1;
   white-space: nowrap;
