@@ -3,37 +3,103 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>News and Media — Gihon Hebrew Synagogue</title>
+  <title>News Article - Gihon Hebrew Synagogue</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="./css/styles.css">
+  <style>
+    /* Article content styling */
+    .article-container {
+      max-width: 800px;
+      margin: 3rem auto 5rem auto;
+      padding: 0 1rem;
+    }
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;900&display=swap" rel="stylesheet">
+    .article-container h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
 
-  <!-- Your shared/article styles (can share with news.css) -->
-  <link rel="stylesheet" href="/css/news.css">
+    .article-container img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin: 1.5rem 0;
+      display: block;
+    }
+
+    .article-container p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.5rem 1rem;
+      color: #007BFF;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .back-btn:hover {
+      color: #0056b3;
+    }
+  </style>
 </head>
+
 <body>
+  <!-- Injected partials -->
   <div id="__header"></div>
 
-<main class="page">
-  <article class="container narrow" id="article"></article>
-  <p id="articleMsg" class="form-msg" aria-live="polite"></p>
-</main>
-<script type="module" src="/js/news-article.js"></script>
-
-    <!-- Prev/Next -->
-    <nav class="container pager" aria-label="Article navigation">
-      <a class="pager-link prev" id="prevLink" href="#"><span aria-hidden="true">‹</span> Previous</a>
-      <a class="pager-link next" id="nextLink" href="#">Next <span aria-hidden="true">›</span></a>
-    </nav>
+  <main class="page">
+    <section class="article-container" id="articleContent">
+      <!-- Article content will be injected here -->
+    </section>
   </main>
 
+  <!-- Injected partials -->
   <div id="__footer"></div>
 
   <!-- Scripts -->
   <script type="module" src="./js/partials.js"></script>
-  <script src="/script.js"></script>
+  <script>
+    async function loadArticle() {
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get('slug');
 
+      try {
+        const res = await fetch('./data/news.json', { cache: 'no-cache' });
+        if (!res.ok) throw new Error('Failed to load news.json');
+
+        const articles = await res.json();
+        const article = articles.find(a => a.id == slug);
+
+        const container = document.getElementById('articleContent');
+
+        if (!article) {
+          container.innerHTML = '<p>Article not found.</p>';
+          return;
+        }
+
+        container.innerHTML = `
+          <h1>${article.title}</h1>
+          <img src="${article.image}" alt="${article.title}">
+          <p>${article.summary}</p>
+          ${article.content ? `<p>${article.content}</p>` : ''}
+          <a href="news.html" class="back-btn">← Back to News</a>
+        `;
+      } catch (e) {
+        console.error(e);
+        document.getElementById('articleContent').innerHTML =
+          '<p>Unable to load article.</p>';
+      }
+    }
+
+    loadArticle();
+  </script>
 </body>
 </html>

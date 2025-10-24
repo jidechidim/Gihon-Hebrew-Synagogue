@@ -5,7 +5,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>News and Media - Gihon Hebrew Synagogue</title>
-
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  
   <!-- Fonts & CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,97 +25,12 @@
       </div> 
     </section> 
  
-    <!-- Posts --> 
-    <section class="news-list" aria-label="Latest stories"> 
-      <div class="container"> 
- 
-        <!-- Post --> 
-        <article class="post"> 
-          <a class="post-media" href="#"> 
-            <img src="assets/newsimage1.png" alt="Community Outreach Week"> 
-          </a> 
-          <div class="post-body"> 
-            <h3 class="post-title"><a href="#">Community Outreach Week</a></h3> 
-            <p class="post-excerpt"> 
-              Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in 
-              gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. Amet molestie 
-              molestie fermentum amet in gravida eu augue hendrerit. Gravida et pharetra. 
-            </p> 
-            <a class="post-more" href="#">Read More</a> 
-          </div> 
-        </article> 
- 
-        <article class="post"> 
-          <a class="post-media" href="#"> 
-            <img src="assets/newsimage2.png" alt="Youth Sabbath"> 
-          </a> 
-          <div class="post-body"> 
-            <h3 class="post-title"><a href="#">Youth Sabbath</a></h3> 
-            <p class="post-excerpt"> 
-              Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in 
-              gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. 
-            </p> 
-            <a class="post-more" href="#">Read More</a> 
-          </div> 
-        </article> 
- 
-        <article class="post"> 
-          <a class="post-media" href="#"> 
-            <img src="assets/newsimage3.png" alt="Chanukah Festival"> 
-          </a> 
-          <div class="post-body"> 
-            <h3 class="post-title"><a href="#">Chanukah Festival (Festival of Light)</a></h3> 
-            <p class="post-excerpt"> 
-              Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in 
-              gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. 
-            </p> 
-            <a class="post-more" href="#">Read More</a> 
-          </div> 
-        </article> 
- 
-        <article class="post"> 
-          <a class="post-media" href="#"> 
-            <img src="assets/newsimage4.png" alt="Summer Camp"> 
-          </a> 
-          <div class="post-body"> 
-            <h3 class="post-title"><a href="#">Summer Camp</a></h3> 
-            <p class="post-excerpt"> 
-              Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in 
-              gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. 
-            </p> 
-            <a class="post-more" href="#">Read More</a> 
-          </div> 
-        </article> 
- 
-        <article class="post"> 
-          <a class="post-media" href="#"> 
-            <img src="assets/newsimage5.png" alt="Kids Summer Camp"> 
-          </a> 
-          <div class="post-body"> 
-            <h3 class="post-title"><a href="#">Kids Summer Camp</a></h3> 
-            <p class="post-excerpt"> 
-              Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in 
-              gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. 
-            </p> 
-            <a class="post-more" href="#">Read More</a> 
-          </div> 
-        </article> 
- 
-        <article class="post"> 
-          <a class="post-media" href="#"> 
-            <img src="assets/newsimage6.png" alt="Hebrew Classes for Kids"> 
-          </a> 
-          <div class="post-body"> 
-            <h3 class="post-title"><a href="#">Hebrew Classes for Kids</a></h3> 
-            <p class="post-excerpt"> 
-              Lorem ipsum dolor sit amet consectetur. Amet molestie molestie fermentum amet in 
-              gravida eu augue hendrerit. Gravida et pharetra accumsan ac posuere. 
-            </p> 
-            <a class="post-more" href="#">Read More</a> 
-          </div> 
-        </article> 
- 
-      </div>
+  <!-- News Section -->
+  <main class="page">
+      <!-- Container for JS-generated news cards -->
+      <div id="newsList" class="news-grid"></div>
+    </section>
+  </main>
  
   <!-- Injected partial -->
   <div id="__footer"></div>
@@ -123,26 +39,37 @@
   <script type="module" src="./js/partials.js"></script>
   <script src="./script.js"></script>
 
-  <script>
-async function loadNews(){
-  try{
-    const res = await fetch('data/news.json', {cache:'no-cache'});
-    const {items} = await res.json();
-    const wrap = document.querySelector('.news-list .container');
-    wrap.innerHTML = items.map(post => `
-      <article class="post">
-        <a class="post-media" href="news/${post.slug}.html">
-          <img src="${post.image}" alt="${post.title}">
-        </a>
-        <div class="post-body">
-          <h3 class="post-title"><a href="news/${post.slug}.html">${post.title}</a></h3>
-          <p class="post-excerpt">${post.excerpt || ''}</p>
-          <a class="post-more" href="news/${post.slug}.html">Read More</a>
-        </div>
-      </article>
-    `).join('');
-  } catch(e){
-    console.error(e);
+<script>
+async function loadNews() {
+  try {
+    const res = await fetch('./data/news.json', { cache: 'no-cache' });
+    if (!res.ok) throw new Error('Failed to load news.json');
+    const items = await res.json();
+
+    const wrap = document.getElementById('newsList');
+    if (!wrap) return;
+
+    wrap.innerHTML = items
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .map(post => `
+        <article class="post">
+          <a class="post-media" href="news-article.html?slug=${encodeURIComponent(post.id)}">
+            <img src="${post.image}" alt="${post.title}">
+          </a>
+          <div class="post-body">
+            <h3 class="post-title">
+              <a href="news-article.html?slug=${encodeURIComponent(post.id)}">${post.title}</a>
+            </h3>
+            <p class="post-excerpt">${post.summary || ''}</p>
+            <a class="post-more" href="news-article.html?slug=${encodeURIComponent(post.id)}" class="btn read-more">Read More</a>
+          </div>
+        </article>
+      `)
+      .join('');
+  } catch (e) {
+    console.error('Error loading news:', e);
+    document.getElementById('newsList').innerHTML =
+      '<p>Unable to load news at the moment.</p>';
   }
 }
 loadNews();

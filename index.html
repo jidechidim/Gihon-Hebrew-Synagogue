@@ -1,19 +1,19 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="./css/styles.css">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Gihon Hebrew Synagogue</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+
 
   <!-- Fonts & CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./css/styles.css">
 </head>
 
-<!-- Home has transparent header that turns white on scroll -->
 <body data-header="transparent">
 
   <!-- Injected partials -->
@@ -23,33 +23,34 @@
   <section class="hero" id="home" aria-label="Hero">
     <picture>
       <source media="(min-width: 1024px)" srcset="assets/heroimage.png">
-      <source media="(min-width: 640px)"  srcset="assets/heroimage.png">
-      <img src="assets/heroimage.png" alt="" class="hero-img">
+      <img src="assets/heroimage.png" alt="Hero Image" class="hero-img">
     </picture>
 
-<div class="hero-overlay"></div>
-<div class="container hero-content">
-  <h1>PROMOTING JEWISH LIFE AND ETHICS IN NIGERIA</h1>
-  <p>Learn about Ghihon Hebrew Synagogue.</p>
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLSdVRkMdUu2c-z2t7Dk3AYJaA61mGiOmbwbH8FJIIIjKoATaaQ/viewform?usp=sharing&ouid=106646172519560504580" 
-     class="btn btn-primary" 
-     target="_blank" 
-     rel="noopener noreferrer">
-     Join Our Community
-  </a>
-</div>
-</section>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <h1>PROMOTING JEWISH LIFE AND ETHICS IN NIGERIA</h1>
+      <p>Learn about Gihon Hebrew Synagogue.</p>
+      <a href="getinvolved.html"
+         class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+         Join Our Community
+      </a>
+    </div>
+  </section>
+
 
 <!-- ======== Weekly Parsha ======== -->
 <section id="parsha" class="section parsha">
   <div class="container narrow">
     <h1 class="section-title">Weekly Parsha</h1>
+
     <blockquote class="parsha-quote" cite="#">
-      <p id="parshaText">Loading parsha...</p>
-      <footer class="parsha-ref">
-        <a href="./parsha.html" id="parshaRef" class="ref">Fetching...</a>
+      <h3 id="parsha-title" class="parsha-title">Loading...</h3>
+      <p id="parsha-content" class="parsha-content" style="font-size:1.1rem; line-height:1.6;">Loading Parsha content...</p>
+      <footer class="parsha-ref" style="margin-top:1rem;">
+        <a href="./parsha.html" id="parshaRef" class="ref" style="font-weight:600; color:#0077cc; text-decoration:none;">Fetching reference...</a>
       </footer>
     </blockquote>
+    
     <div class="center">
       <a href="./parsha.html" class="btn btn-outline">Go to Parsha</a>
     </div>
@@ -57,186 +58,263 @@
 </section>
 
 
-  <!-- ======== Upcoming Events ======== -->
-  <section id="events" class="section events">
-    <div class="container">
-      <div class="section-head">
-        <h2 class="section-title">Upcoming Events</h2>
-        <a href="./events.html" class="see-more">See More</a>
-      </div>
-
-      <div class="cards-3">
-        <article class="card">
-          <img src="assets/eventimage1.png" alt="Event">
-          <div class="card-body">
-            <h3>Heading</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cras mattis consectetur purus sit amet fermentum.</p>
-            <ul class="meta">
-              <li><span class="dot"></span> 10:00 AM</li>
-              <li><span class="dot"></span> Friday, Nov 1, 2025</li>
-              <li><span class="dot"></span> Ghihon Hebrew Synagogue</li>
-            </ul>
-            <div class="card-actions">
-              <a class="btn btn-sm btn-outline" 
-   href="https://docs.google.com/forms/d/e/1FAIpQLSesIPV2-UR3pupTOylWumoKvWPdTCxMgbMc8pjzlkcOh-6Fng/viewform?usp=sharing&ouid=106646172519560504580" 
-   target="_blank" 
-   rel="noopener noreferrer">
-   Register
-</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="assets/eventimage2.png" alt="Event">
-          <div class="card-body">
-            <h3>Heading</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cras mattis consectetur purus sit amet fermentum.</p>
-            <ul class="meta">
-              <li><span class="dot"></span> 14:00 PM</li>
-              <li><span class="dot"></span> Friday, Nov 1, 2025</li>
-              <li><span class="dot"></span> Ghihon Hebrew Synagogue</li>
-            </ul>
-            <div class="card-actions">
-              <a class="btn btn-sm btn-outline" 
-   href="https://docs.google.com/forms/d/e/1FAIpQLSesIPV2-UR3pupTOylWumoKvWPdTCxMgbMc8pjzlkcOh-6Fng/viewform?usp=sharing&ouid=106646172519560504580" 
-   target="_blank" 
-   rel="noopener noreferrer">
-   Register
-</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="assets/eventimage3.png" alt="Event">
-          <div class="card-body">
-            <h3>Heading</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cras mattis consectetur purus sit amet fermentum.</p>
-            <ul class="meta">
-              <li><span class="dot"></span> 09:00 AM</li>
-              <li><span class="dot"></span> Friday, Nov 1, 2025</li>
-              <li><span class="dot"></span> Ghihon Hebrew Synagogue</li>
-            </ul>
-            <div class="card-actions">
-             <a class="btn btn-sm btn-outline" 
-   href="https://docs.google.com/forms/d/e/1FAIpQLSesIPV2-UR3pupTOylWumoKvWPdTCxMgbMc8pjzlkcOh-6Fng/viewform?usp=sharing&ouid=106646172519560504580" 
-   target="_blank" 
-   rel="noopener noreferrer">
-   Register
-</a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-<!-- ======== Welcome ======== -->
-<section id="about" class="section welcome">
-  <div class="container split">
-    <div class="split-media">
-      <img src="assets/welcomeimage.png" alt="Smiling child">
-    </div>
-    <div class="split-copy">
-      <h2>Welcome to Gihon Hebrew Synagogue</h2>
-      <p>Lorem ipsum dolor sit amet consectetur. Sit at ornare nunc in pellentesque sit at odio.</p>
-      <p>Massa enim nunc volutpat nisl sed augue eget massa commodo. Ligula magna viverra.</p>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdVRkMdUu2c-z2t7Dk3AYJaA61mGiOmbwbH8FJIIIjKoATaaQ/viewform?usp=sharing&ouid=106646172519560504580" 
-         class="btn btn-outline" 
-         target="_blank" 
-         rel="noopener noreferrer">
-         Join Our Community
-      </a>
-    </div>
-  </div>
-</section>
-
-  <!-- ======== Latest ======== -->
-  <section id="news" class="section latest">
-    <div class="container">
-      <div class="section-head">
-        <h2 class="section-title">Latest from Gihon</h2>
-        <a href="./news.html" class="see-more">See More</a>
-      </div>
-
-      <div class="latest-grid">
-        <article class="feature">
-          <img src="assets/newsimage1.png" alt="Feature story">
-          <div class="feature-meta">
-            <h3>Community Outreach Week</h3>
-            <a href="./news.html" class="read-more">Read more</a>
-          </div>
-        </article>
-
-        <aside class="thumbs">
-          <a class="thumb" href="./news.html">
-            <img src="assets/newsimage2.png" alt="Story 1">
-            <span>Community Outreach Week</span>
-          </a>
-          <a class="thumb" href="./news.html">
-            <img src="assets/newsimage3.png" alt="Story 2">
-            <span>Festival of Lights</span>
-          </a>
-          <a class="thumb" href="./news.html">
-            <img src="assets/newsimage4.png" alt="Story 3">
-            <span>Summer Camp</span>
-          </a>
-          <a class="thumb" href="./news.html">
-            <img src="assets/newsimage5.png" alt="Story 4">
-            <span>Summer Camp</span>
-          </a>
-        </aside>
-      </div>
-    </div>
-  </section>
-
-<!-- ===== Newsletter Section ===== -->
-<section class="newsletter section">
-  <div class="container narrow center">
-    <h2 class="section-title">Stay Connected</h2>
-    <p>Sign up to receive updates on events, parsha readings, and community news.</p>
+<!-- ======== Upcoming Events ======== -->
+<section id="events" class="section events">
+  <div class="container">
     
-<form name="newsletter" method="POST" data-netlify="true" class="newsletter-form">
-  <input type="email" name="email" placeholder="Enter your email" required />
-  <button type="submit" class="btn btn-primary">Subscribe</button>
-</form>
-    <p class="form-msg" id="formMsg"></p>
+    <div class="section-head">
+      <h2 class="section-title">Upcoming Events</h2>
+
+      <!-- Single container for all cards -->
+      <div class="events-wrapper">
+        <div class="cards-3">
+
+          <!-- Event 1 -->
+          <article class="card">
+            <img src="assets/eventimage1.png" alt="Event">
+            <div class="card-body">
+              <h3>Heading 1</h3>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cras mattis consectetur purus sit amet fermentum.</p>
+              <ul class="meta">
+                <li><span class="dot"></span> 10:00 AM</li>
+                <li><span class="dot"></span> Friday, Nov 1, 2025</li>
+                <li><span class="dot"></span> Gihon Hebrew Synagogue</li>
+              </ul>
+              <div class="card-actions">
+                <a class="btn btn-sm btn-outline" href="register-for-event.html">Register</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Event 2 -->
+          <article class="card">
+            <img src="assets/eventimage2.png" alt="Event">
+            <div class="card-body">
+              <h3>Heading 2</h3>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cras mattis consectetur purus sit amet fermentum.</p>
+              <ul class="meta">
+                <li><span class="dot"></span> 2:00 PM</li>
+                <li><span class="dot"></span> Friday, Nov 1, 2025</li>
+                <li><span class="dot"></span> Gihon Hebrew Synagogue</li>
+              </ul>
+              <div class="card-actions">
+                <a class="btn btn-sm btn-outline" href="register-for-event.html">Register</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Event 3 -->
+          <article class="card">
+            <img src="assets/eventimage3.png" alt="Event">
+            <div class="card-body">
+              <h3>Heading 3</h3>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cras mattis consectetur purus sit amet fermentum.</p>
+              <ul class="meta">
+                <li><span class="dot"></span> 9:00 AM</li>
+                <li><span class="dot"></span> Friday, Nov 1, 2025</li>
+                <li><span class="dot"></span> Gihon Hebrew Synagogue</li>
+              </ul>
+              <div class="card-actions">
+                <a class="btn btn-sm btn-outline" href="register-for-event.html">Register</a>
+              </div>
+            </div>
+          </article>
+
+        </div> <!-- .cards-3 -->
+
+        <!-- See More Button at the bottom -->
+        <div class="see-more-wrapper">
+          <a href="./events.html" class="see-more">See More</a>
+        </div>
+      </div> <!-- .events-wrapper -->
+
+    </div> <!-- .section-head -->
+  </div> <!-- .container -->
+</section>
+
+
+  <!-- ======== Welcome ======== -->
+  <section id="about" class="section welcome">
+    <div class="container split">
+      <div class="split-media">
+        <img src="assets/welcomeimage.png" alt="Smiling child">
+      </div>
+      <div class="split-copy">
+        <h2>Welcome to Gihon Hebrew Synagogue</h2>
+        <p>Lorem ipsum dolor sit amet consectetur. Sit at ornare nunc in pellentesque sit at odio.</p>
+        <p>Massa enim nunc volutpat nisl sed augue eget massa commodo. Ligula magna viverra.</p>
+        <a href="getinvolved.html"
+           class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+           Join Our Community
+        </a>
+      </div>
+    </div>
+  </section>
+
+<!-- ======== Latest ======== -->
+<section id="news" class="section latest">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title">Latest from Gihon</h2>
+      
+      <div class="latest-wrapper">
+        <div class="latest-grid">
+          <article class="feature">
+            <img src="assets/newsimage1.png" alt="Feature story">
+            <div class="feature-meta">
+              <h3>Community Outreach Week</h3>
+              <a href="./news.html" class="read-more">Read more</a>
+            </div>
+          </article>
+
+          <aside class="thumbs">
+            <a class="thumb" href="./news.html">
+              <img src="assets/newsimage2.png" alt="Story 1">
+              <span>Community Outreach Week</span>
+            </a>
+            <a class="thumb" href="./news.html">
+              <img src="assets/newsimage3.png" alt="Story 2">
+              <span>Festival of Lights</span>
+            </a>
+            <a class="thumb" href="./news.html">
+              <img src="assets/newsimage4.png" alt="Story 3">
+              <span>Summer Camp</span>
+            </a>
+            <a class="thumb" href="./news.html">
+              <img src="assets/newsimage5.png" alt="Story 3">
+              <span>Kids Summer Camp</span>
+            </a>
+          </aside>
+        </div>
+
+        <!-- See More link aligned at bottom -->
+        <div class="see-more-wrapper">
+          <a href="./news.html" class="see-more">See More</a>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-  <!-- Injected partial -->
+
+  <!-- ===== Newsletter Section ===== -->
+  <section class="newsletter section">
+    <div class="container narrow center">
+      <h2 class="section-title">Stay Connected</h2>
+      <p>Sign up to receive updates on events, parsha readings, and community news.</p>
+
+      <form class="newsletter-form" id="newsletterForm">
+        <input type="email" name="email" placeholder="Enter your email address" required>
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
+
+      <p class="form-msg" id="formMsg"></p>
+    </div>
+  </section>
+
+
+  <!-- Injected partials -->
   <div id="__footer"></div>
 
   <!-- Scripts -->
   <script type="module" src="./js/partials.js"></script>
   <script src="./script.js"></script>
+  <script src="./scripts/parsha.js"></script>
 
-  <script>
-  async function loadParsha() {
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const titleEl = document.getElementById("parsha-title");
+  const contentEl = document.getElementById("parsha-content");
+  const refEl = document.getElementById("parshaRef");
+
+  titleEl.textContent = "Loading this week's Parsha...";
+  contentEl.textContent = "Please wait...";
+  refEl.textContent = "Fetching reference...";
+
+  try {
+    // 1️⃣ Fetch Parsha from Hebcal
+    const hebcalRes = await fetch("https://www.hebcal.com/shabbat?cfg=json&geonameid=2328926&start=now&end=1");
+    if (!hebcalRes.ok) throw new Error("Hebcal API failed");
+    const hebcalData = await hebcalRes.json();
+
+    const thisWeek = hebcalData.items.find(item => item.category === "parashat");
+    if (!thisWeek) throw new Error("No parsha found");
+
+    const englishName = thisWeek.title.replace("Parashat ", "").trim();
+    const hebrewName = thisWeek.hebrew;
+   
+
+    // 2️⃣ Fetch local parsha.json
+    const localRes = await fetch("data/parsha.json");
+    if (!localRes.ok) throw new Error("Local parsha data not found");
+    const localData = await localRes.json();
+
+    const match = localData.find(
+      p => p.englishName.toLowerCase() === englishName.toLowerCase()
+    );
+
+    // 3️⃣ Inject content
+    titleEl.textContent = match?.englishName || englishName;
+    contentEl.textContent = match?.shortSummary || match?.summary || "No summary available.";
+    refEl.textContent = match?.refs?.[0] || "No reference available.";
+    refEl.href = "./parsha.html";
+
+  } catch (err) {
+    console.warn("⚠️ Parsha load failed, fallback triggered:", err);
+
     try {
-      const url = "https://www.hebcal.com/shabbat?cfg=json&geonameid=2352778&c=on"; 
-      const response = await fetch(url);
-      const data = await response.json();
+      const fallbackRes = await fetch("data/parsha.json");
+      const fallbackData = await fallbackRes.json();
+      const fallback = fallbackData[0];
 
-      const parshaItem = data.items.find(item => item.category === "parashat");
-
-      if (parshaItem) {
-        document.getElementById("parshaText").textContent = parshaItem.title;
-        document.getElementById("parshaRef").textContent = "Read more";
-        document.getElementById("parshaRef").href = "./parsha.html";
-      } else {
-        document.getElementById("parshaText").textContent = "No parsha this week.";
-        document.getElementById("parshaRef").textContent = "";
-      }
-    } catch (err) {
-      console.error("Error fetching parsha:", err);
-      document.getElementById("parshaText").textContent = "Unable to load parsha.";
-      document.getElementById("parshaRef").textContent = "";
+      titleEl.textContent = fallback.englishName || "Unknown Parsha";
+      contentEl.textContent = fallback.shortSummary || fallback.summary || "No summary available.";
+      refEl.textContent = fallback.refs?.[0] || "";
+      refEl.href = "./parsha.html";
+    } catch (innerErr) {
+      console.error("❌ Completely failed to load parsha:", innerErr);
+      titleEl.textContent = "Unable to load this week's Parsha.";
+      contentEl.textContent = "Please try again later.";
     }
   }
+});
+</script>
 
-  document.addEventListener("DOMContentLoaded", loadParsha);
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const container = document.querySelector(".cards-3");
+  try {
+    const res = await fetch("data/events.json", { cache: "no-cache" });
+    if (!res.ok) throw new Error("Failed to fetch events.json");
+    const events = await res.json();
+
+    // Sort by date ascending (earliest first) and take first 3
+    const upcoming = events
+      .sort((a, b) => new Date(a.date) - new Date(b.date))
+      .slice(0, 3);
+
+    container.innerHTML = upcoming.map(ev => `
+      <article class="card">
+        <img src="${ev.image}" alt="${ev.title}">
+        <div class="card-body">
+          <h3>${ev.title}</h3>
+          <p>${ev.summary}</p>
+          <ul class="meta">
+            <li><span class="dot"></span> ${new Date(ev.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</li>
+            <li><span class="dot"></span> ${new Date(ev.date).toLocaleDateString()}</li>
+            <li><span class="dot"></span> ${ev.location}</li>
+          </ul>
+          <div class="card-actions">
+            <a class="btn btn-sm btn-outline" href="register-for-event.html">Register</a>
+          </div>
+        </div>
+      </article>
+    `).join('');
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = "<p>Unable to load events.</p>";
+  }
+});
 </script>
 
 </body>

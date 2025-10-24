@@ -2,20 +2,22 @@
   {
     "id": 1,
     "englishName": "Bereishit",
-    "hebrewName": "בראשית",
+    "hebrewName": "בְּרֵאשִׁית",
     "book": "Genesis",
-    "refs": "Genesis 1:1–6:8",
+    "refs": ["Genesis 1:1–6:8"],
     "shortSummary": "The story of beginnings: creation, the first humans, and the dawn of humanity’s struggles.",
-    "summary": "In the opening chapters we are carried through the breathtaking moment of creation — light and sky, seas and earth, plants, animals — until humanity appears at the center. Adam and Eve explore the gift of a garden and the painful discovery of choice and consequence. Cain and Abel’s tragedy shows how jealousy can fracture relationships, and as people multiply, the world grows more complex and fragile. The parsha sets the stage for an ongoing story about human longing, responsibility, and the promise of renewal."
+    "summary": "In the opening chapters we are carried through the breathtaking moment of creation — light and sky, seas and earth, plants, animals — until humanity appears at the center. Adam and Eve explore the gift of a garden and the painful discovery of choice and consequence. Cain and Abel’s tragedy shows how jealousy can fracture relationships, and as people multiply, the world grows more complex and fragile. The parsha sets the stage for an ongoing story about human longing, responsibility, and the promise of renewal.",
+    "date": "2025-10-18"
   },
   {
     "id": 2,
     "englishName": "Noach",
     "hebrewName": "נֹחַ",
     "book": "Genesis",
-    "refs": "Genesis 6:9–11:32",
-    "shortSummary": "Noah’s ark, the flood, and God’s covenant — a story of destruction and a fresh start.",
-    "summary": "Noah stands as a quiet anchor in a turbulent world. When society’s cruelty reaches a breaking point, Noah’s obedience yields a vessel of salvation — an ark filled with life. The massive flood wipes the slate clean, and when the waters recede, Noah builds an altar and receives a covenant marked by a rainbow. The parsha ends with restless human beginnings again: the tower of Babel and the scattering of languages, a reminder that creation persists in imperfect, surprising ways."
+    "refs": ["Genesis 6:9–11:32"],
+    "shortSummary": "The flood, the ark, and the promise of a new world.",
+    "summary": "Noach, a righteous man in a corrupt world, is chosen to preserve life when God decides to cleanse the earth with a great flood. He builds the ark, gathering his family and every species of creature. After the waters subside, God makes a covenant, symbolized by the rainbow, never to destroy the earth again by flood. But as humanity rebuilds, pride leads to the Tower of Babel — and once again, people are scattered, learning that unity without humility can be its own downfall.",
+    "date": "2025-10-25"
   },
   {
     "id": 3,

@@ -274,3 +274,205 @@ body{
   .newsletter-form input{width:100%}
   .footer-grid{grid-template-columns:1fr;gap:10px}
 }
+
+.parsha-quote {
+  max-width: 1200px;          /* cap width at 1200px */
+  width: 90%;                /* responsive on smaller screens */
+  margin: 40px auto;         /* centered horizontally with spacing */
+  background: #f9f9f9;       /* soft background color */
+  border-left: 6px solid #0077cc; /* blue accent border */
+  padding: 30px 40px;        /* comfortable spacing */
+  border-radius: 10px;       /* smooth edges */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* subtle shadow */
+  font-style: italic;
+  text-align: center;
+  color: #333;
+  line-height: 1.7;
+  transition: all 0.3s ease;
+}
+
+/* Responsive fine-tuning for mobile */
+@media (max-width: 600px) {
+  .parsha-quote {
+    padding: 20px;
+    font-size: 0.95rem;
+  }
+}
+
+/* ===== Upcoming Events ===== */
+.section.events .section-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.events-wrapper {
+  width: 100%;
+}
+
+.cards-3 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.cards-3 .card {
+  flex: 1 1 300px;
+  max-width: 350px;
+}
+
+.see-more-wrapper {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* ===== Latest from Gihon ===== */
+.section.latest .section-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.latest-wrapper {
+  width: 100%;
+}
+
+.latest-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1.5rem;
+  align-items: start;
+}
+
+.feature img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.feature-meta {
+  margin-top: 0.75rem;
+}
+
+.feature-meta h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.thumbs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.thumb {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.thumb img {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.thumb span {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.see-more-wrapper {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .latest-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-meta h3 {
+    font-size: 1.1rem;
+  }
+
+  .thumb img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .thumb span {
+    font-size: 0.9rem;
+  }
+
+  .see-more-wrapper {
+    margin-top: 2.5rem;
+  }
+}
+
+.see-more {
+  position: relative;
+  display: inline-block;
+  font-weight: 600;
+  color: #666; /* Neutral gray for the default state */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.see-more::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #004aad; /* Your blue accent color */
+  transition: width 0.3s ease;
+}
+
+.see-more:hover {
+  color: #004aad; /* Shifts text to blue on hover */
+}
+
+.see-more:hover::after {
+  width: 100%; /* Underline slides in smoothly */
+}
+
+.form-msg {
+  margin-top: 1rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.form-msg {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.form-msg.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.form-msg.success {
+  color: #16a34a; /* green */
+}
+
+.form-msg.error {
+  color: #dc2626; /* red */
+}
+
+.form-msg.neutral {
+  color: #555; /* neutral gray */
+}
+

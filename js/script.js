@@ -61,3 +61,29 @@ if (form) {
 // Year
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+async function loadParsha() {
+  try {
+    const res = await fetch('parsha.json');
+    const data = await res.json();
+
+    // Auto-select based on week of the year (1–54)
+    const weekNum = Math.ceil((new Date().getTime() - new Date(new Date().getFullYear(), 0, 1)) / (7 * 24 * 60 * 60 * 1000));
+    const index = (weekNum - 1) % data.length;
+    const parsha = data[index];
+
+    // Update homepage content
+    const parshaName = document.getElementById('parshaName');
+    const parshaHebrew = document.getElementById('parshaHebrew');
+    const parshaSummary = document.getElementById('parshaSummary');
+    const parshaLink = document.getElementById('parshaLink');
+
+    if (parshaName) parshaName.textContent = parsha.english;
+    if (parshaHebrew) parshaHebrew.textContent = parsha.hebrew;
+    if (parshaSummary) parshaSummary.textContent = parsha.summary;
+    if (parshaLink) parshaLink.href = `parsha.html?id=${parsha.id}`;
+  } catch (err) {
+    console.error("Error loading Parsha:", err);
+  }
+}
+loadParsha();
