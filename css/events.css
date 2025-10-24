@@ -394,10 +394,12 @@ img{max-width:100%;display:block}
 
 /* Add spacing between event cards */
 .events-list .event {
-  margin-bottom: 1px;
+  margin-bottom: 1px; /* keeps regular spacing */
 }
 
-/* Extra bottom space for last event */
+/* Extra bottom space for last event to create gap before footer */
+.events-list .event:last-child,
 .events-list .last-event {
-  margin-bottom: 100px;
+  margin-bottom: 100px; /* 100px gap before footer */
 }
+
