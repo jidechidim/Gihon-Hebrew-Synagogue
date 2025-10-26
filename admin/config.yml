@@ -1,83 +1,108 @@
-local_backend: true
-
 backend:
-  name: git-gateway
+  name: github
+  repo: jidechidim/Gihon-Hebrew-Synagogue
   branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
 
+publish_mode: editorial_workflow
+
 collections:
-  # ----- News -----
-  - name: "news"
-    label: "News"
+  # 🏠 Home - pulls Events & News
+  - name: "home"
+    label: "Homepage"
     files:
-      - file: "data/news.json"
-        label: "News Items"
-        name: "news"
-        format: json
-        fields:
-          - label: Items
-            name: items
-            widget: list
-            summary: "{{fields.title}} — {{fields.date}}"
-            fields:
-              - {label: Title, name: title, widget: string}
-              - {label: Slug, name: slug, widget: string, hint: "used in URLs"}
-              - {label: Date, name: date, widget: datetime}
-              - {label: Excerpt, name: excerpt, widget: text}
-              - {label: Feature Image, name: image, widget: image}
-              - {label: Body, name: body, widget: markdown}
-              - {label: Tags, name: tags, widget: list, required: false}
-
-  # ----- Events -----
-  - name: "events"
-    label: "Events"
-    files:
-      - file: "data/events.json"
-        label: "Events"
+      - label: "Events"
         name: "events"
-        format: json
+        file: "data/events.json"
         fields:
-          - label: Items
-            name: items
-            widget: list
-            summary: "{{fields.title}} — {{fields.date}} @ {{fields.location}}"
+          - label: "Events"
+            name: "events"
+            widget: "list"
             fields:
-              - {label: Title, name: title, widget: string}
-              - {label: Slug, name: slug, widget: string}
-              - {label: Date & Time, name: date, widget: datetime}
-              - {label: Location, name: location, widget: string}
-              - {label: Image, name: image, widget: image}
-              - {label: Description, name: body, widget: markdown}
-              - {label: Register URL, name: registerUrl, widget: string, required: false}
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Time", name: "time", widget: "string" }
+              - { label: "Date", name: "date", widget: "string" }
+              - { label: "Location", name: "location", widget: "string" }
+              - { label: "Image", name: "image", widget: "image" }
 
-  # ----- Parsha (editable notes) -----
+      - label: "News"
+        name: "news"
+        file: "data/news.json"
+        fields:
+          - label: "News"
+            name: "news"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Summary", name: "summary", widget: "text" }
+              - { label: "Date", name: "date", widget: "string" }
+              - { label: "Image", name: "image", widget: "image" }
+              - { label: "Link", name: "link", widget: "string", required: false }
+
+  # 📖 About Page
+  - name: "about"
+    label: "About Page"
+    file: "data/about.json"
+    fields:
+      - { label: "Intro Title", name: "introTitle", widget: "string" }
+      - { label: "Intro Text", name: "introText", widget: "text" }
+      - { label: "Mission", name: "mission", widget: "text" }
+      - { label: "Vision", name: "vision", widget: "text" }
+      - label: "Values"
+        name: "values"
+        widget: "list"
+        fields:
+          - { label: "Quote", name: "quote", widget: "text" }
+      - label: "Board Section"
+        name: "board"
+        widget: "object"
+        fields:
+          - { label: "Image", name: "image", widget: "image" }
+          - { label: "Caption", name: "caption", widget: "string" }
+
+  # 👥 Leadership Page (folder-based)
+  - name: "leadership"
+    label: "Leadership Team"
+    folder: "data/leadership"
+    create: true
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role", name: "role", widget: "string" }
+      - { label: "Image", name: "image", widget: "image" }
+
+  # 📅 Parsha Data
   - name: "parsha"
     label: "Parsha"
-    files:
-      - file: "data/parsha.json"
-        label: "Current Parsha"
+    file: "data/parsha.json"
+    fields:
+      - label: "Parsha List"
         name: "parsha"
-        format: json
+        widget: "list"
         fields:
-          - {label: Name, name: name, widget: string}
-          - {label: Quote, name: quote, widget: text, required: false}
-          - {label: Refs, name: refs, widget: list, required: false, field: {label: Ref, name: ref, widget: string}}
+          - { label: "English Name", name: "englishName", widget: "string" }
+          - { label: "Hebrew Name", name: "hebrewName", widget: "string" }
+          - { label: "Book", name: "book", widget: "string" }
+          - { label: "Refs", name: "refs", widget: "list", field: { label: "Reference", name: "ref", widget: "string" } }
+          - { label: "Short Summary", name: "shortSummary", widget: "text" }
 
-  # ----- Pages (About/Donate) -----
-  - name: "pages"
-    label: "Pages"
-    files:
-      - file: "about.md"
-        label: "About Us"
-        name: "about"
+  # 📞 Contact / Footer
+  - name: "contact"
+    label: "Contact & Footer"
+    file: "data/contact.json"
+    fields:
+      - { label: "Address", name: "address", widget: "string" }
+      - { label: "Email", name: "email", widget: "string" }
+      - { label: "Phone", name: "phone", widget: "string" }
+      - label: "Social Links"
+        name: "socials"
+        widget: "list"
         fields:
-          - {label: Title, name: title, widget: string}
-          - {label: Body, name: body, widget: markdown}
-      - file: "donate.md"
-        label: "Donate"
-        name: "donate"
-        fields:
-          - {label: Title, name: title, widget: string}
-          - {label: Body, name: body, widget: markdown}
+          - { label: "Platform", name: "platform", widget: "string" }
+          - { label: "URL", name: "url", widget: "string" }
