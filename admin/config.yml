@@ -1,10 +1,7 @@
 backend:
-  name: github
-  repo: jidechidim/Gihon-Hebrew-Synagogue
-  branch: main
-  base_url: https://gihonwebsite.netlify.app
-  auth_type: /api/auth
-  app_id: 6GkWlhhbaswvpu6fEKtEwMmEyXiRnfPv
+  name: auth0
+  domain: dev-4dyketg2yg88xznp.us.auth0.com   # your Auth0 domain
+  client_id: 6GkWlhhbaswvpu6fEKtEwMmEyXiRnfPv # your Auth0 client ID
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"

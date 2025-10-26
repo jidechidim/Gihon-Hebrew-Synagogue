@@ -1,0 +1,16 @@
+{
+  "introTitle": "About Us",
+  "introText": "Gihon Hebrew Synagogue was founded in 1992; we are rooted in Torah observance as transmitted by Moshe Rabbeinu and oral Torah as expounded by Chazal; with an emphasis on preserving Jewish heritage while engaging with contemporary life. Our leaders are dedicated to offering spiritual guidance, education, and programs that meet the diverse needs of our community. Gihon Hebrew Synagogue is more than just a place of worship; we are a vibrant and welcoming community where Jewish values, tradition, and spirituality come together. Our synagogue is a home for individuals and families to grow in their faith, learn, and find support. Whether you are new to the faith, seeking a spiritual home, or looking to connect with others, you will find a place here with us.",
+  "mission": "To promote Torah observance, community unity, and a deepened connection to Jewish heritage while engaging the modern world.",
+  "vision": "To be a beacon of Jewish learning, faith, and compassion — nurturing generations that live with purpose and love for Hashem and community.",
+  "values": [
+    { "quote": "Building a strong, supportive Jewish community where everyone feels welcome" },
+    { "quote": "Honoring and preserving Jewish traditions while remaining open to evolving needs" },
+    { "quote": "Promoting Torah study and Jewish learning for all ages" },
+    { "quote": "Acting with kindness and compassion through charity and support for the needy" }
+  ],
+  "board": {
+    "image": "assets/aboutimage1.png",
+    "caption": "Members of the board and the executive council."
+  }
+}
