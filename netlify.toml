@@ -1,0 +1,8 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/api/auth"
+  to = "https://gihonhebrewsynagogue.org/.netlify/functions/auth"
+  status = 200
+  force = true
