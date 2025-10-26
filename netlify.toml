@@ -1,7 +1,7 @@
 # netlify.toml
 
 [build]
-  publish = "admin"          # Your CMS index.html lives in the admin folder
+  publish = "."          # Your CMS index.html lives in the admin folder
   functions = "netlify/functions"  # Folder for serverless functions like auth.js
   command = ""              # No build command if using plain HTML/CSS/JS
 
