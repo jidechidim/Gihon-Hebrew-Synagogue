@@ -87,7 +87,10 @@ collections:
           - { label: "English Name", name: "englishName", widget: "string" }
           - { label: "Hebrew Name", name: "hebrewName", widget: "string" }
           - { label: "Book", name: "book", widget: "string" }
-          - { label: "Refs", name: "refs", widget: "list", field: { label: "Reference", name: "ref", widget: "string" } }
+          - label: "Refs"
+            name: "refs"
+            widget: "list"
+            field: { label: "Reference", name: "ref", widget: "string" }
           - { label: "Short Summary", name: "shortSummary", widget: "text" }
 
   # 📞 Contact / Footer
