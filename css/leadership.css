@@ -299,3 +299,22 @@ body{
   outline: 0;
   box-shadow: 0 0 0 3px rgba(37,93,153,.2);
 }
+
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.member--solo {
+  grid-column: 1 / -1; /* make the solo member take the full row */
+}
+
+.avatar {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}

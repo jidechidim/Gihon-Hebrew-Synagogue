@@ -6,7 +6,6 @@
   <title>Gihon Hebrew Synagogue</title>
   <link rel="icon" type="image/png" href="assets/logo.png">
 
-
   <!-- Fonts & CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,286 +18,147 @@
   <!-- Injected partials -->
   <div id="__header"></div>
 
-  <!-- ======== Hero ======== -->
+  <!-- ===== Hero ===== -->
   <section class="hero" id="home" aria-label="Hero">
-    <picture>
-      <source media="(min-width: 1024px)" srcset="assets/heroimage.png">
-      <img src="assets/heroimage.png" alt="Hero Image" class="hero-img">
-    </picture>
-
+    <picture id="hero-picture"></picture>
     <div class="hero-overlay"></div>
-    <div class="container hero-content">
-      <h1>PROMOTING JEWISH LIFE AND ETHICS IN NIGERIA</h1>
-      <p>Learn about Gihon Hebrew Synagogue.</p>
-      <a href="getinvolved.html"class="btn btn-primary">
-         Join Our Community
-      </a>
+    <div class="container hero-content" id="hero-content"></div>
+  </section>
+
+  <!-- ===== Weekly Parsha ===== -->
+  <section id="parsha" class="section parsha">
+    <div class="container narrow">
+      <h1 class="section-title">Weekly Parsha</h1>
+
+      <blockquote class="parsha-quote" cite="#">
+        <h3 id="parshaName" class="parsha-title">Loading...</h3>
+        <p id="parshaSummary" class="parsha-content" style="font-size:1.1rem; line-height:1.6;">
+          Loading Parsha summary...
+        </p>
+        <footer class="parsha-ref" style="margin-top:1rem;">
+          <p id="parshaRefs" class="ref" style="font-weight:600; color:#0077cc; text-decoration:none;">
+            Fetching references...
+          </p>
+        </footer>
+      </blockquote>
+
+      <div class="center">
+        <a href="./parsha.html" class="btn btn-outline">Go to Parsha</a>
+      </div>
     </div>
   </section>
 
-
-<!-- ======== Weekly Parsha ======== -->
-<section id="parsha" class="section parsha">
-  <div class="container narrow">
-    <h1 class="section-title">Weekly Parsha</h1>
-
-    <blockquote class="parsha-quote" cite="#">
-      <h3 id="parsha-title" class="parsha-title">Loading...</h3>
-      <p id="parsha-content" class="parsha-content" style="font-size:1.1rem; line-height:1.6;">Loading Parsha content...</p>
-      <footer class="parsha-ref" style="margin-top:1rem;">
-        <a href="./parsha.html" id="parshaRef" class="ref" style="font-weight:600; color:#0077cc; text-decoration:none;">Fetching reference...</a>
-      </footer>
-    </blockquote>
-    
-    <div class="center">
-      <a href="./parsha.html" class="btn btn-outline">Go to Parsha</a>
-    </div>
-  </div>
-</section>
-
-
-<!-- ======== Upcoming Events ======== -->
-<section id="events" class="section events">
-  <div class="container">
-    
-    <div class="section-head">
-      <h2 class="section-title">Upcoming Events</h2>
-
-      <!-- Single container for all cards -->
-      <div class="events-wrapper">
-        <div class="cards-3">
-
-          <!-- Event 1 -->
-          <article class="card">
-            <img src="assets/eventimage1.png" alt="Event">
-            <div class="card-body">
-              <h3>Heading 1</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cras mattis consectetur purus sit amet fermentum.</p>
-              <ul class="meta">
-                <li><span class="dot"></span> 10:00 AM</li>
-                <li><span class="dot"></span> Friday, Nov 1, 2025</li>
-                <li><span class="dot"></span> Gihon Hebrew Synagogue</li>
-              </ul>
-              <div class="card-actions">
-                <a class="btn btn-sm btn-outline" href="register-for-event.html">Register</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Event 2 -->
-          <article class="card">
-            <img src="assets/eventimage2.png" alt="Event">
-            <div class="card-body">
-              <h3>Heading 2</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cras mattis consectetur purus sit amet fermentum.</p>
-              <ul class="meta">
-                <li><span class="dot"></span> 2:00 PM</li>
-                <li><span class="dot"></span> Friday, Nov 1, 2025</li>
-                <li><span class="dot"></span> Gihon Hebrew Synagogue</li>
-              </ul>
-              <div class="card-actions">
-                <a class="btn btn-sm btn-outline" href="register-for-event.html">Register</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Event 3 -->
-          <article class="card">
-            <img src="assets/eventimage3.png" alt="Event">
-            <div class="card-body">
-              <h3>Heading 3</h3>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cras mattis consectetur purus sit amet fermentum.</p>
-              <ul class="meta">
-                <li><span class="dot"></span> 9:00 AM</li>
-                <li><span class="dot"></span> Friday, Nov 1, 2025</li>
-                <li><span class="dot"></span> Gihon Hebrew Synagogue</li>
-              </ul>
-              <div class="card-actions">
-                <a class="btn btn-sm btn-outline" href="register-for-event.html">Register</a>
-              </div>
-            </div>
-          </article>
-
-        </div> <!-- .cards-3 -->
-
-        <!-- See More Button at the bottom -->
-        <div class="see-more-wrapper">
-          <a href="./events.html" class="see-more">See More</a>
+  <!-- ===== Upcoming Events ===== -->
+  <section id="events" class="section events">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Upcoming Events</h2>
+        <div class="events-wrapper">
+          <div class="cards-3" id="events-cards"></div>
+          <div class="see-more-wrapper">
+            <a href="./events.html" class="see-more">See More</a>
+          </div>
         </div>
-      </div> <!-- .events-wrapper -->
+      </div>
+    </div>
+  </section>
 
-    </div> <!-- .section-head -->
-  </div> <!-- .container -->
-</section>
-
-
-  <!-- ======== Welcome ======== -->
-  <section id="about" class="section welcome">
+  <!-- ===== Welcome / About ===== -->
+  <section id="welcome" class="welcome section bg-light">
     <div class="container split">
-      <div class="split-media">
-        <img src="assets/welcomeimage.png" alt="Smiling child">
-      </div>
-      <div class="split-copy">
-        <h2>Welcome to Gihon Hebrew Synagogue</h2>
-        <p>Lorem ipsum dolor sit amet consectetur. Sit at ornare nunc in pellentesque sit at odio.</p>
-        <p>Massa enim nunc volutpat nisl sed augue eget massa commodo. Ligula magna viverra.</p>
-        <a href="getinvolved.html" class="btn btn-outline">
-          Join Our Community
-        </a>
-      </div>
+      <div class="split-media" id="welcome-image"></div>
+      <div class="split-copy" id="welcome-copy"></div>
     </div>
   </section>
 
-<!-- ======== Latest ======== -->
-<section id="news" class="section latest">
-  <div class="container">
-    <div class="section-head">
-      <h2 class="section-title">Latest from Gihon</h2>
-      
-      <div class="latest-wrapper">
-        <div class="latest-grid">
-          <article class="feature">
-            <img src="assets/newsimage1.png" alt="Feature story">
-            <div class="feature-meta">
-              <h3>Community Outreach Week</h3>
-              <a href="./news.html" class="read-more">Read more</a>
-            </div>
-          </article>
 
-          <aside class="thumbs">
-            <a class="thumb" href="./news.html">
-              <img src="assets/newsimage2.png" alt="Story 1">
-              <span>Community Outreach Week</span>
-            </a>
-            <a class="thumb" href="./news.html">
-              <img src="assets/newsimage3.png" alt="Story 2">
-              <span>Festival of Lights</span>
-            </a>
-            <a class="thumb" href="./news.html">
-              <img src="assets/newsimage4.png" alt="Story 3">
-              <span>Summer Camp</span>
-            </a>
-            <a class="thumb" href="./news.html">
-              <img src="assets/newsimage5.png" alt="Story 3">
-              <span>Kids Summer Camp</span>
-            </a>
-          </aside>
-        </div>
+  <!-- ===== Latest News ===== -->
+  <section id="news" class="section latest">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Latest from Gihon</h2>
 
-        <!-- See More link aligned at bottom -->
-        <div class="see-more-wrapper">
-          <a href="./news.html" class="see-more">See More</a>
+        <div class="latest-wrapper">
+          <div class="latest-grid" id="news-grid"></div>
+          <div class="see-more-wrapper">
+            <a class="see-more" href="./news.html">See More</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
+  </section>
 
   <!-- ===== Newsletter Section ===== -->
   <section class="newsletter section">
     <div class="container narrow center">
       <h2 class="section-title">Stay Connected</h2>
       <p>Sign up to receive updates on events, parsha readings, and community news.</p>
-
       <form class="newsletter-form" id="newsletterForm">
         <input type="email" name="email" placeholder="Enter your email address" required>
         <button type="submit" class="btn btn-primary">Subscribe</button>
       </form>
-
       <p class="form-msg" id="formMsg"></p>
     </div>
   </section>
 
-
   <!-- Injected partials -->
   <div id="__footer"></div>
 
-  <!-- Scripts -->
-  <script type="module" src="./js/partials.js"></script>
-  <script src="./script.js"></script>
-  <script src="./scripts/parsha.js"></script>
+<!-- ===== Scripts ===== -->
+<script type="module" src="./js/partials.js"></script>
+<script src="./script.js"></script>
+<script src="./js/parsha.js"></script>
 
-<script>
+<script defer>
 document.addEventListener("DOMContentLoaded", async () => {
-  const titleEl = document.getElementById("parsha-title");
-  const contentEl = document.getElementById("parsha-content");
-  const refEl = document.getElementById("parshaRef");
-
-  titleEl.textContent = "Loading this week's Parsha...";
-  contentEl.textContent = "Please wait...";
-  refEl.textContent = "Fetching reference...";
-
   try {
-    // 1️⃣ Fetch Parsha from Hebcal
-    const hebcalRes = await fetch("https://www.hebcal.com/shabbat?cfg=json&geonameid=2328926&start=now&end=1");
-    if (!hebcalRes.ok) throw new Error("Hebcal API failed");
-    const hebcalData = await hebcalRes.json();
+    // ===== HERO =====
+    const homeRes = await fetch("data/home.json");
+    const homeData = await homeRes.json();
+    const heroPicture = document.getElementById("hero-picture");
+    const heroContent = document.getElementById("hero-content");
 
-    const thisWeek = hebcalData.items.find(item => item.category === "parashat");
-    if (!thisWeek) throw new Error("No parsha found");
+    heroPicture.innerHTML = `
+      <img src="${homeData.hero.image}" alt="${homeData.hero.alt}" class="hero-img">
+    `;
+    heroContent.innerHTML = `
+      <h1>${homeData.hero.title}</h1>
+      <p>${homeData.hero.subtitle}</p>
+      <a href="${homeData.hero.cta_link}" class="btn btn-primary">${homeData.hero.cta_text}</a>
+    `;
 
-    const englishName = thisWeek.title.replace("Parashat ", "").trim();
-    const hebrewName = thisWeek.hebrew;
-   
+    // ===== WELCOME SECTION =====
+    const welcomeImage = document.getElementById("welcome-image");
+    const welcomeCopy = document.getElementById("welcome-copy");
 
-    // 2️⃣ Fetch local parsha.json
-    const localRes = await fetch("data/parsha.json");
-    if (!localRes.ok) throw new Error("Local parsha data not found");
-    const localData = await localRes.json();
+    if (homeData.welcome) {
+      const { title, paragraphs, image, cta_text, cta_link } = homeData.welcome;
 
-    const match = localData.find(
-      p => p.englishName.toLowerCase() === englishName.toLowerCase()
-    );
-
-    // 3️⃣ Inject content
-    titleEl.textContent = match?.englishName || englishName;
-    contentEl.textContent = match?.shortSummary || match?.summary || "No summary available.";
-    refEl.textContent = match?.refs?.[0] || "No reference available.";
-    refEl.href = "./parsha.html";
-
-  } catch (err) {
-    console.warn("⚠️ Parsha load failed, fallback triggered:", err);
-
-    try {
-      const fallbackRes = await fetch("data/parsha.json");
-      const fallbackData = await fallbackRes.json();
-      const fallback = fallbackData[0];
-
-      titleEl.textContent = fallback.englishName || "Unknown Parsha";
-      contentEl.textContent = fallback.shortSummary || fallback.summary || "No summary available.";
-      refEl.textContent = fallback.refs?.[0] || "";
-      refEl.href = "./parsha.html";
-    } catch (innerErr) {
-      console.error("❌ Completely failed to load parsha:", innerErr);
-      titleEl.textContent = "Unable to load this week's Parsha.";
-      contentEl.textContent = "Please try again later.";
+      welcomeImage.innerHTML = `<img src="${image}" alt="${title}">`;
+      welcomeCopy.innerHTML = `
+        <h2>${title}</h2>
+        ${paragraphs.map(p => `<p>${p}</p>`).join("")}
+        <a class="btn btn-outline" href="${cta_link}">${cta_text}</a>
+      `;
     }
-  }
-});
-</script>
 
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const container = document.querySelector(".cards-3");
-  try {
-    const res = await fetch("data/events.json", { cache: "no-cache" });
-    if (!res.ok) throw new Error("Failed to fetch events.json");
-    const events = await res.json();
+    // ===== UPCOMING EVENTS =====
+    const eventsRes = await fetch("data/events.json");
+    const eventsData = await eventsRes.json();
+    const eventsContainer = document.getElementById("events-cards");
 
-    // Sort by date ascending (earliest first) and take first 3
-    const upcoming = events
+    const upcoming = eventsData
       .sort((a, b) => new Date(a.date) - new Date(b.date))
       .slice(0, 3);
 
-    container.innerHTML = upcoming.map(ev => `
+    eventsContainer.innerHTML = upcoming.map(ev => `
       <article class="card">
         <img src="${ev.image}" alt="${ev.title}">
         <div class="card-body">
           <h3>${ev.title}</h3>
           <p>${ev.summary}</p>
           <ul class="meta">
-            <li><span class="dot"></span> ${new Date(ev.date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</li>
+            <li><span class="dot"></span> ${new Date(ev.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</li>
             <li><span class="dot"></span> ${new Date(ev.date).toLocaleDateString()}</li>
             <li><span class="dot"></span> ${ev.location}</li>
           </ul>
@@ -307,10 +167,39 @@ document.addEventListener("DOMContentLoaded", async () => {
           </div>
         </div>
       </article>
-    `).join('');
+    `).join("");
+
+    // ===== LATEST NEWS =====
+    const newsContainer = document.getElementById("news-grid");
+    const newsRes = await fetch("data/news.json");
+    const newsData = await newsRes.json();
+
+    if (newsData.length > 0) {
+      const featured = newsData[0];
+      const thumbnails = newsData.slice(1, 5);
+
+      newsContainer.innerHTML = `
+        <article class="feature">
+          <a href="news.html">
+            <img src="${featured.image}" alt="${featured.title}">
+            <div class="feature-meta">
+              <h3>${featured.title}</h3>
+              <span class="read-more">Read more</span>
+            </div>
+          </a>
+        </article>
+        <aside class="thumbs">
+          ${thumbnails.map(item => `
+            <a class="thumb" href="news.html">
+              <img src="${item.image}" alt="${item.title}">
+              <span>${item.title}</span>
+            </a>
+          `).join("")}
+        </aside>
+      `;
+    }
   } catch (err) {
-    console.error(err);
-    container.innerHTML = "<p>Unable to load events.</p>";
+    console.error("Error loading homepage data:", err);
   }
 });
 </script>

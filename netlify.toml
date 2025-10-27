@@ -1,20 +1,26 @@
-# netlify.toml
-
 [build]
-  publish = "."          # Your CMS index.html lives in the admin folder
-  functions = "netlify/functions"  # Folder for serverless functions like auth.js
-  command = ""              # No build command if using plain HTML/CSS/JS
+  publish = "."                # root folder where your index.html is
+  functions = "netlify/functions"  # where your serverless functions live
+  # No build command needed since this is a static site
 
-# Redirect all Netlify Function calls to the functions folder
+[dev]
+  functions = "netlify/functions"
+  port = 8888
+  publish = "."
+
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
+
 [[redirects]]
   from = "/.netlify/functions/*"
   to = "/.netlify/functions/:splat"
   status = 200
   force = true
 
-# Optional: Redirect /admin to CMS index.html
-[[redirects]]
-  from = "/admin"
-  to = "/admin/index.html"
-  status = 200
-  force = true
+[functions.environment]
+  AUTH0_DOMAIN = "${AUTH0_DOMAIN}"
+  AUTH0_CLIENT_ID = "${AUTH0_CLIENT_ID}"
+  AUTH0_CLIENT_SECRET = "${AUTH0_CLIENT_SECRET}"
+  AUTH0_REDIRECT_URI = "${AUTH0_REDIRECT_URI}"

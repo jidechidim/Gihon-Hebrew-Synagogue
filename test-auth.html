@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Auth0 Test</title>
+</head>
+<body>
+  <h1>Auth0 Test Login</h1>
+  <button id="loginBtn">Login with Auth0</button>
+
+  <script>
+    const loginBtn = document.getElementById("loginBtn");
+
+    loginBtn.addEventListener("click", async () => {
+      try {
+        // Redirect user to Auth0 authorize endpoint
+        const domain = "https://dev-4dyketg2yg88xznp.us.auth0.com";
+        const clientId = "6GkWlhhbaswvpu6fEKtEwMmEyXiRnfPv";
+        const redirectUri = "https://gihonhebrewsynagogue.org/admin/";
+
+        const url = `${domain}/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=openid profile email`;
+        window.location.href = url;
+      } catch (err) {
+        console.error("Login failed:", err);
+      }
+    });
+  </script>
+</body>
+</html>

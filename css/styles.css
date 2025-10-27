@@ -475,4 +475,37 @@ body{
 .form-msg.neutral {
   color: #555; /* neutral gray */
 }
+/* --- Latest News cleanup & improved hover --- */
+.latest .feature a,
+.latest .thumbs a {
+  color: inherit;             /* Keep text same color as parent */
+  text-decoration: none;      /* Remove underline */
+  transition: all 0.3s ease; /* Smooth hover transitions */
+}
 
+.latest .feature a:hover,
+.latest .thumbs a:hover {
+  color: var(--brand-900, #1F4C83); /* Darker brand color on hover */
+  filter: brightness(1.05);         /* Slight brightening */
+}
+
+/* Titles and meta */
+.latest .feature-meta h3,
+.latest .thumb span {
+  color: var(--ink, #121212);
+  font-weight: 600;
+}
+
+/* Read more button / link */
+.latest .read-more {
+  color: var(--brand, #255D99);   /* Base brand color */
+  font-weight: 500;
+  border: none;
+  text-decoration: none;
+  transition: color 0.25s ease, filter 0.25s ease;
+}
+
+.latest .read-more:hover {
+  color: var(--brand-900, #1F4C83);  /* Slightly darker brand on hover */
+  filter: brightness(1.05);          /* Subtle pop */
+}

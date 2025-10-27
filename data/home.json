@@ -1,0 +1,25 @@
+{
+  "hero": {
+    "title": "PROMOTING JEWISH LIFE AND ETHICS IN NIGERIA",
+    "subtitle": "Learn about Gihon Hebrew Synagogue",
+    "cta_text": "Join Our Community",
+    "cta_link": "getinvolved.html",
+    "image": "assets/heroimage.png"
+  },
+  "welcome": {
+    "title": "Welcome to Gihon Hebrew Synagogue",
+    "paragraphs": [
+      "Lorem ipsum dolor sit amet consectetur. Sit at ornare nunc in pellentesque sit at odio.",
+      "Massa enim nunc volutpat nisl sed augue eget massa commodo. Ligula magna viverra."
+    ],
+    "cta_text": "Join Our Community",
+    "cta_link": "getinvolved.html",
+    "image": "assets/welcomeimage.png"
+  },
+  "newsletter": {
+    "title": "Stay Connected",
+    "description": "Sign up to receive updates on events, parsha readings, and community news.",
+    "placeholder_email": "Enter your email address",
+    "submit_text": "Subscribe"
+  }
+}

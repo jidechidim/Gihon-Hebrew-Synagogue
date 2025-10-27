@@ -14,88 +14,40 @@
 </head>
 
 <body>
-  
-  <!-- Injected partials -->
+
   <div id="__header"></div>
 
-  <!-- ===== Page ===== -->
   <main class="page" id="main">
-    <!-- Title + search + refs row -->
-    <section class="parsha-header" aria-labelledby="title">
+
+    <!-- Parsha Title + References -->
+    <section class="parsha-header" aria-labelledby="parshaName">
       <div class="container narrow center">
-        <h1 id="title">Weekly Parsha</h1>
-
-        <form class="parsha-search" role="search" aria-label="Search parsha">
-          <label class="sr-only" for="q">Search parsha</label>
-          <input id="q" name="q" type="search" placeholder="Search parsha" autocomplete="off" />
-          <span class="search-icon" aria-hidden="true">🔎</span>
-        </form>
-
+        <h1 id="parshaName">Loading Parsha...</h1>
+        <h3 id="parshaHebrew"></h3>
         <p class="refs" id="parshaRefs">
-          <a href="#" class="ref">Loading...</a>
+          <a href="#" class="ref">Loading references...</a>
         </p>
       </div>
     </section>
 
-    <!-- ======== Full Parsha ======== -->
-<section id="parsha" class="section parsha">
-  <div class="container narrow">
-    <h2 class="section-title" id="parshaName">Loading Parsha...</h2>
-    <h3 id="parshaHebrew"></h3>
-    <blockquote class="parsha-quote" cite="#">
-      <p id="parshaFull">Loading full text...</p>
-    </blockquote>
-  </div>
-</section>
+    <!-- Full Parsha Text -->
+    <section class="section parsha">
+      <div class="container narrow">
+        <blockquote class="parsha-quote" cite="#">
+          <p id="parshaFull">Loading full text...</p>
+        </blockquote>
+      </div>
+    </section>
 
-  <div id="parsha-title"></div>
-  <div id="parsha-content"></div>
+  </main>
 
-  <!-- Injected partial -->
   <div id="__footer"></div>
 
   <!-- Scripts -->
   <script type="module" src="./js/partials.js"></script>
-  <script src="./script.js"></script>
-  <script src="./scripts/parsha.js"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    // Step 1: Get this week's parsha name from Hebcal API
-    const hebcalRes = await fetch("https://www.hebcal.com/shabbat?cfg=json&geonameid=5128581"); 
-    // ^ You can replace geonameid with your city (e.g. 5128581 = New York, 2328926 = Lagos)
-    const hebcalData = await hebcalRes.json();
-    const thisWeek = hebcalData.items.find(item => item.category === "parashat");
-
-    if (!thisWeek) throw new Error("No parsha found for this week.");
-
-    const parshaName = thisWeek.hebrew;  // Hebrew name
-    const englishName = thisWeek.title.replace("Parashat ", "").trim();
-
-    // Step 2: Load your local parsha data for extra info
-    const localRes = await fetch("data/parsha.json");
-    const localData = await localRes.json();
-
-    // Try to match the parsha from your file
-    const match = localData.find(p => 
-      p.englishName.toLowerCase() === englishName.toLowerCase()
-    );
-
-    // Step 3: Inject into the page
-    document.getElementById("parshaName").textContent = match?.englishName || englishName;
-    document.getElementById("parshaHebrew").textContent = match?.hebrewName || parshaName;
-    document.getElementById("parshaFull").textContent = match?.summary || "No summary available.";
-    document.getElementById("parshaRefs").innerHTML = 
-      (match?.refs || []).map(ref => `<a href="#">${ref}</a>`).join(", ") || "No references available.";
-
-  } catch (err) {
-    console.error("Error loading parsha:", err);
-    document.getElementById("parshaFull").textContent =
-      "Unable to load this week's Parsha. Please try again later.";
-  }
-});
-</script>
+  <script src="./js/script.js"></script>
+  <script src="./js/parsha.js"></script>
 
 </body>
 </html>
+

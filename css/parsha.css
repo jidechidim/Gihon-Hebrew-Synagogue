@@ -401,3 +401,16 @@ mark {
   font-style: italic;
   color: #666;
 }
+
+/* Ensure the body takes full viewport height and arranges content vertically */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Full height of viewport */
+  margin: 0;
+}
+
+/* Main content should grow to fill space */
+main.page {
+  flex: 1; /* Take remaining space so footer is pushed down */
+}

@@ -1,0 +1,80 @@
+{
+  "hero": {
+    "image": "./assets/leadershipimage1.png",
+    "alt": "Members of the board and the executive council",
+    "figcaption": "Members of the board and the executive council. Left to right"
+  },
+  "members": [
+    {
+      "id": 1,
+      "name": "Avram Ben Avram",
+      "role": "President",
+      "image": "./assets/members1.png",
+      "alt": "Portrait of Avram Ben Avram"
+    },
+    {
+      "id": 2,
+      "name": "Yosef Ben Avram",
+      "role": "Secretary",
+      "image": "./assets/members2.png",
+      "alt": "Portrait of Yosef Ben Avram"
+    },
+    {
+      "id": 3,
+      "name": "John Ben Avram",
+      "role": "President",
+      "image": "./assets/members3.png",
+      "alt": "Portrait of John Ben Avram"
+    },
+    {
+      "id": 4,
+      "name": "Eli Ben Avram",
+      "role": "President",
+      "image": "./assets/members4.png",
+      "alt": "Portrait of Eli Ben Avram"
+    },
+    {
+      "id": 5,
+      "name": "James Ben Avram",
+      "role": "Secretary",
+      "image": "./assets/members5.png",
+      "alt": "Portrait of James Ben Avram"
+    },
+    {
+      "id": 6,
+      "name": "Yonah Ben Avram",
+      "role": "Secretary",
+      "image": "./assets/members6.png",
+      "alt": "Portrait of Yonah Ben Avram"
+    },
+    {
+      "id": 7,
+      "name": "Eliyah Ben Avram",
+      "role": "President",
+      "image": "./assets/members7.png",
+      "alt": "Portrait of Eliyah Ben Avram"
+    },
+    {
+      "id": 8,
+      "name": "David Ben Avram",
+      "role": "Secretary",
+      "image": "./assets/members8.png",
+      "alt": "Portrait of David Ben Avram"
+    },
+    {
+      "id": 9,
+      "name": "Caleb Ben Avram",
+      "role": "Secretary",
+      "image": "./assets/members9.png",
+      "alt": "Portrait of Caleb Ben Avram"
+    },
+    {
+      "id": 10,
+      "name": "Jacob Ben Avram",
+      "role": "President",
+      "image": "./assets/members10.png",
+      "alt": "Portrait of Jacob Ben Avram",
+      "solo": true
+    }
+  ]
+}
