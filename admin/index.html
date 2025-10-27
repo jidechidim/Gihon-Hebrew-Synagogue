@@ -1,62 +1,59 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Gihon Hebrew Synagogue Admin</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Gihon Hebrew Synagogue CMS</title>
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="stylesheet" href="https://unpkg.com/netlify-cms@^2.0.0/dist/cms.css" />
+  <link rel="stylesheet" href="https://unpkg.com/netlify-cms@^2.0.0/dist/cms.css">
+  <style>
+    body { font-family: sans-serif; background:#f4f4f4; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
+    .login-container { text-align:center; background:white; padding:40px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15); }
+    #login-btn { padding:12px 24px; font-size:16px; cursor:pointer; background:#0077cc; color:white; border:none; border-radius:4px; }
+    #login-btn:hover { background:#005fa3; }
+  </style>
 </head>
 <body>
-  <div class="login-container" style="text-align:center; margin-top:100px;">
+  <div class="login-container">
     <h1>Gihon Hebrew Synagogue CMS</h1>
-    <button id="login-btn" style="padding:12px 24px; font-size:16px; cursor:pointer;">
-      Login with Auth0
-    </button>
+    <button id="login-btn">Login with Auth0</button>
   </div>
 
-  <script src="https://cdn.auth0.com/js/auth0/9.23/auth0.min.js"></script>
   <script>
-    const auth0 = new auth0.WebAuth({
-      domain: "dev-4dyketg2yg88xznp.us.auth0.com",
-      clientID: "6GkWlhhbaswvpu6fEKtEwMmEyXiRnfPv",
-      redirectUri: "https://gihonhebrewsynagogue.org/admin/",
-      responseType: "code",
-      scope: "openid profile email"
-    });
-
     const loginBtn = document.getElementById("login-btn");
+
+    // Redirect to Netlify function that triggers Auth0 login
     loginBtn.addEventListener("click", () => {
-      auth0.authorize();
+      window.location.href = "/.netlify/functions/auth-login";
     });
 
-    // Handle callback
-    window.addEventListener("load", () => {
-      const query = window.location.search;
-      if (query.includes("code=")) {
-        const code = new URLSearchParams(window.location.search).get("code");
+    // Check for Auth0 callback with code
+    window.addEventListener("DOMContentLoaded", async () => {
+      const code = new URLSearchParams(window.location.search).get("code");
+      if (!code) return;
 
-        fetch("/.netlify/functions/auth/auth.js", {
+      try {
+        // Exchange code for access token via serverless function
+        const res = await fetch("/.netlify/functions/auth/auth", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ code })
-        })
-        .then(res => res.json())
-        .then(data => {
-          if(data.access_token) {
-            // Initialize Netlify CMS with the Auth0 token
-            window.CMS = window.CMS || {};
-            window.CMS_USER = {
-              token: data.access_token
-            };
-            const script = document.createElement("script");
-            script.src = "https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js";
-            document.body.appendChild(script);
-          } else {
-            alert("Authentication failed. Please try again.");
-          }
-        })
-        .catch(err => console.error("Auth Error:", err));
+        });
+
+        const data = await res.json();
+
+        if (data.access_token) {
+          // Inject Netlify CMS with token
+          window.CMS_USER = { token: data.access_token };
+          const script = document.createElement("script");
+          script.src = "https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js";
+          document.body.appendChild(script);
+        } else {
+          alert("Authentication failed");
+        }
+      } catch (err) {
+        console.error("Auth Error:", err);
+        alert("Authentication failed. Check console for details.");
       }
     });
   </script>

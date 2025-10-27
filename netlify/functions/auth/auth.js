@@ -6,13 +6,11 @@ export async function handler(event, context) {
   try {
     const { code } = JSON.parse(event.body);
 
-    // 🔒 Credentials from Netlify environment variables
     const domain = process.env.AUTH0_DOMAIN;
     const clientId = process.env.AUTH0_CLIENT_ID;
     const clientSecret = process.env.AUTH0_CLIENT_SECRET;
     const redirectUri = process.env.AUTH0_REDIRECT_URI;
 
-    // Use URLSearchParams for x-www-form-urlencoded
     const params = new URLSearchParams();
     params.append("grant_type", "authorization_code");
     params.append("client_id", clientId);
@@ -46,9 +44,6 @@ export async function handler(event, context) {
     };
   } catch (error) {
     console.error("Auth0 Error:", error);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: "Internal Server Error" }),
-    };
+    return { statusCode: 500, body: JSON.stringify({ error: "Internal Server Error" }) };
   }
-};
+}
