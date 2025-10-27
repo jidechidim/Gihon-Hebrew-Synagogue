@@ -1,7 +1,7 @@
 backend:
   name: auth0
-  domain: dev-4dyketg2yg88xznp.us.auth0.com   # your Auth0 domain
-  client_id: 6GkWlhhbaswvpu6fEKtEwMmEyXiRnfPv # your Auth0 client ID
+  auth_type: /api/auth   # serverless function handles the login securely
+  app_id: CMS_AUTH_APP   # optional identifier, can be anything
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
