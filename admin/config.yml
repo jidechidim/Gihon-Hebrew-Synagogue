@@ -1,7 +1,6 @@
 backend:
-  name: auth0
-  auth_type: /api/auth
-  app_id: CMS_AUTH_APP
+  name: git-gateway
+  branch: main
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"

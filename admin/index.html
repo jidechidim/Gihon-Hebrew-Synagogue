@@ -1,82 +1,25 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gihon Hebrew Synagogue CMS</title>
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="stylesheet" href="https://unpkg.com/netlify-cms@^2.0.0/dist/cms.css">
-  <style>
-    body {
-      font-family: sans-serif;
-      background:#f4f4f4;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      height:100vh;
-      margin:0;
-    }
-    .login-container {
-      text-align:center;
-      background:white;
-      padding:40px;
-      border-radius:8px;
-      box-shadow:0 4px 12px rgba(0,0,0,0.15);
-    }
-    #login-btn {
-      padding:12px 24px;
-      font-size:16px;
-      cursor:pointer;
-      background:#0077cc;
-      color:white;
-      border:none;
-      border-radius:4px;
-    }
-    #login-btn:hover { background:#005fa3; }
-  </style>
 </head>
 <body>
-  <div class="login-container">
-    <h1>Gihon Hebrew Synagogue CMS</h1>
-    <button id="login-btn">Login with Auth0</button>
-  </div>
-
+  <script src="https://unpkg.com/netlify-identity-widget@^1.9.0/dist/netlify-identity-widget.js"></script>
+  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
   <script>
-    const loginBtn = document.getElementById("login-btn");
-
-    // Redirect to Netlify function to trigger Auth0 login
-    loginBtn.addEventListener("click", () => {
-      window.location.href = "/.netlify/functions/auth-login";
-    });
-
-    // Handle Auth0 callback
-    window.addEventListener("DOMContentLoaded", async () => {
-      const code = new URLSearchParams(window.location.search).get("code");
-      if (!code) return;
-
-      try {
-        const res = await fetch("/.netlify/functions/auth", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ code })
-        });
-
-        const data = await res.json();
-
-        if (data.access_token) {
-          // Inject Netlify CMS with token
-          window.CMS_USER = { token: data.access_token };
-          const script = document.createElement("script");
-          script.src = "https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js";
-          document.body.appendChild(script);
-        } else {
-          alert("Authentication failed");
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
         }
-      } catch (err) {
-        console.error("Auth Error:", err);
-        alert("Authentication failed. Check console for details.");
-      }
-    });
+      });
+    }
   </script>
 </body>
 </html>
