@@ -1,8 +1,7 @@
 backend:
-  name: github
-  repo: jidechidim/Gihon-Hebrew-Synagogue
-  branch: main
-  auth_endpoint: auth
+  name: auth0
+  auth_type: /.netlify/functions/auth-login
+  app_id: GIHON_CMS_AUTH
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"

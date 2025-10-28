@@ -1,5 +1,4 @@
 // netlify/functions/auth-login.js
-// netlify/functions/auth/login.js
 export async function handler(event, context) {
   const domain = process.env.AUTH0_DOMAIN;
   const clientId = process.env.AUTH0_CLIENT_ID;

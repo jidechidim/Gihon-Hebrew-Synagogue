@@ -6,10 +6,8 @@
     <title>Gihon Hebrew Synagogue CMS</title>
     <link rel="icon" type="image/png" href="../assets/logo.png" />
 
-    <!-- ✅ Load CMS from jsDelivr (more reliable than unpkg) -->
+    <!-- ✅ Load Netlify CMS via jsDelivr (stable source) -->
     <script src="https://cdn.jsdelivr.net/npm/netlify-cms-app@2.15.72/dist/netlify-cms.js"></script>
-
-    <!-- Optional CMS styling -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/netlify-cms-app@2.15.72/dist/netlify-cms.css"
@@ -18,11 +16,11 @@
 
   <body>
     <script>
-      // Initialize the CMS
-      if (typeof window.CMS !== "undefined") {
+      // Initialize CMS once loaded
+      if (window.CMS) {
         window.CMS.init();
       } else {
-        console.error("Netlify CMS failed to load.");
+        console.error("Netlify CMS failed to load properly.");
       }
     </script>
   </body>
