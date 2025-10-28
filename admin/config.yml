@@ -1,9 +1,12 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: jidechidim/Gihon-Hebrew-Synagogue
   branch: main
+  auth_endpoint: auth
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
+
 publish_mode: editorial_workflow
 
 collections:
