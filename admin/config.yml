@@ -5,11 +5,10 @@ backend:
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
-
 publish_mode: editorial_workflow
 
 collections:
-  # 🏠 Home - pulls Events & News
+  # 🏠 Home
   - name: "home"
     label: "Homepage"
     files:
@@ -46,8 +45,8 @@ collections:
   - name: "about"
     label: "About Page"
     files:
-      - label: "About Page Content"
-        name: "aboutPage"
+      - label: "About Content"
+        name: "about"
         file: "data/about.json"
         fields:
           - { label: "Intro Title", name: "introTitle", widget: "string" }
@@ -83,25 +82,28 @@ collections:
     label: "Parsha"
     files:
       - label: "Parsha List"
-        name: "parshaList"
+        name: "parsha"
         file: "data/parsha.json"
         fields:
-          - label: "Parsha"
+          - label: "Parsha List"
             name: "parsha"
             widget: "list"
             fields:
               - { label: "English Name", name: "englishName", widget: "string" }
               - { label: "Hebrew Name", name: "hebrewName", widget: "string" }
               - { label: "Book", name: "book", widget: "string" }
-              - { label: "Refs", name: "refs", widget: "list", field: { label: "Reference", name: "ref", widget: "string" } }
+              - label: "Refs"
+                name: "refs"
+                widget: "list"
+                field: { label: "Reference", name: "ref", widget: "string" }
               - { label: "Short Summary", name: "shortSummary", widget: "text" }
 
   # 📞 Contact / Footer
   - name: "contact"
     label: "Contact & Footer"
     files:
-      - label: "Contact Information"
-        name: "contactInfo"
+      - label: "Contact Info"
+        name: "contact"
         file: "data/contact.json"
         fields:
           - { label: "Address", name: "address", widget: "string" }
