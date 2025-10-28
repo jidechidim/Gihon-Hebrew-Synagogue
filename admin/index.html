@@ -5,20 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Gihon Hebrew Synagogue CMS</title>
     <link rel="icon" type="image/png" href="../assets/logo.png" />
-    <!-- Netlify CMS stylesheet -->
+
+    <!-- ✅ Load CMS from jsDelivr (more reliable than unpkg) -->
+    <script src="https://cdn.jsdelivr.net/npm/netlify-cms-app@2.15.72/dist/netlify-cms.js"></script>
+
+    <!-- Optional CMS styling -->
     <link
       rel="stylesheet"
-      href="https://unpkg.com/netlify-cms-app@^2.15.0/dist/netlify-cms.css"
+      href="https://cdn.jsdelivr.net/npm/netlify-cms-app@2.15.72/dist/netlify-cms.css"
     />
   </head>
 
   <body>
-    <!-- Netlify CMS script -->
-    <script src="https://unpkg.com/netlify-cms-app@^2.15.0/dist/netlify-cms.js"></script>
-
     <script>
-      // Initialize Netlify CMS
-      NetlifyCmsApp.init();
+      // Initialize the CMS
+      if (typeof window.CMS !== "undefined") {
+        window.CMS.init();
+      } else {
+        console.error("Netlify CMS failed to load.");
+      }
     </script>
   </body>
 </html>
