@@ -1,7 +1,7 @@
 backend:
   name: auth0
-  auth_type: /api/auth   # serverless function handles the login securely
-  app_id: CMS_AUTH_APP   # optional identifier, can be anything
+  auth_type: /api/auth
+  app_id: CMS_AUTH_APP
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
@@ -45,25 +45,28 @@ collections:
   # 📖 About Page
   - name: "about"
     label: "About Page"
-    file: "data/about.json"
-    fields:
-      - { label: "Intro Title", name: "introTitle", widget: "string" }
-      - { label: "Intro Text", name: "introText", widget: "text" }
-      - { label: "Mission", name: "mission", widget: "text" }
-      - { label: "Vision", name: "vision", widget: "text" }
-      - label: "Values"
-        name: "values"
-        widget: "list"
+    files:
+      - label: "About Page Content"
+        name: "aboutPage"
+        file: "data/about.json"
         fields:
-          - { label: "Quote", name: "quote", widget: "text" }
-      - label: "Board Section"
-        name: "board"
-        widget: "object"
-        fields:
-          - { label: "Image", name: "image", widget: "image" }
-          - { label: "Caption", name: "caption", widget: "string" }
+          - { label: "Intro Title", name: "introTitle", widget: "string" }
+          - { label: "Intro Text", name: "introText", widget: "text" }
+          - { label: "Mission", name: "mission", widget: "text" }
+          - { label: "Vision", name: "vision", widget: "text" }
+          - label: "Values"
+            name: "values"
+            widget: "list"
+            fields:
+              - { label: "Quote", name: "quote", widget: "text" }
+          - label: "Board Section"
+            name: "board"
+            widget: "object"
+            fields:
+              - { label: "Image", name: "image", widget: "image" }
+              - { label: "Caption", name: "caption", widget: "string" }
 
-  # 👥 Leadership Page (folder-based)
+  # 👥 Leadership Page
   - name: "leadership"
     label: "Leadership Team"
     folder: "data/leadership"
@@ -78,32 +81,35 @@ collections:
   # 📅 Parsha Data
   - name: "parsha"
     label: "Parsha"
-    file: "data/parsha.json"
-    fields:
+    files:
       - label: "Parsha List"
-        name: "parsha"
-        widget: "list"
+        name: "parshaList"
+        file: "data/parsha.json"
         fields:
-          - { label: "English Name", name: "englishName", widget: "string" }
-          - { label: "Hebrew Name", name: "hebrewName", widget: "string" }
-          - { label: "Book", name: "book", widget: "string" }
-          - label: "Refs"
-            name: "refs"
+          - label: "Parsha"
+            name: "parsha"
             widget: "list"
-            field: { label: "Reference", name: "ref", widget: "string" }
-          - { label: "Short Summary", name: "shortSummary", widget: "text" }
+            fields:
+              - { label: "English Name", name: "englishName", widget: "string" }
+              - { label: "Hebrew Name", name: "hebrewName", widget: "string" }
+              - { label: "Book", name: "book", widget: "string" }
+              - { label: "Refs", name: "refs", widget: "list", field: { label: "Reference", name: "ref", widget: "string" } }
+              - { label: "Short Summary", name: "shortSummary", widget: "text" }
 
   # 📞 Contact / Footer
   - name: "contact"
     label: "Contact & Footer"
-    file: "data/contact.json"
-    fields:
-      - { label: "Address", name: "address", widget: "string" }
-      - { label: "Email", name: "email", widget: "string" }
-      - { label: "Phone", name: "phone", widget: "string" }
-      - label: "Social Links"
-        name: "socials"
-        widget: "list"
+    files:
+      - label: "Contact Information"
+        name: "contactInfo"
+        file: "data/contact.json"
         fields:
-          - { label: "Platform", name: "platform", widget: "string" }
-          - { label: "URL", name: "url", widget: "string" }
+          - { label: "Address", name: "address", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Phone", name: "phone", widget: "string" }
+          - label: "Social Links"
+            name: "socials"
+            widget: "list"
+            fields:
+              - { label: "Platform", name: "platform", widget: "string" }
+              - { label: "URL", name: "url", widget: "string" }
