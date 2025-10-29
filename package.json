@@ -1,0 +1,25 @@
+{
+  "name": "gihon-hebrew-synagougue",
+  "version": "1.0.0",
+  "description": "Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jidechidim/Gihon-Hebrew-Synagogue.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jidechidim/Gihon-Hebrew-Synagogue/issues"
+  },
+  "homepage": "https://github.com/jidechidim/Gihon-Hebrew-Synagogue#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "jsonwebtoken": "^9.0.2",
+    "node-fetch": "^3.3.2"
+  }
+}
