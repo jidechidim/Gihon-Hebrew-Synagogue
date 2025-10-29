@@ -1,7 +1,6 @@
 [build]
-  publish = "."                # root folder where your index.html is
-  functions = "netlify/functions"  # where your serverless functions live
-  # No build command needed since this is a static site
+  publish = "."
+  functions = "netlify/functions"
 
 [dev]
   functions = "netlify/functions"
@@ -14,7 +13,7 @@
   status = 200
 
 [[redirects]]
-  from = "/.netlify/functions/*"
+  from = "/functions/*"
   to = "/.netlify/functions/:splat"
   status = 200
   force = true

@@ -1,11 +1,12 @@
 backend:
   name: auth0
-  auth_type: /.netlify/functions/auth-login
-  app_id: GIHON_CMS_AUTH
+  auth_type: implicit
+  app_id: $AUTH0_CLIENT_ID
+  site_domain: gihonhebrewsynagogue.org
+  base_url: /.netlify/functions
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
-
 publish_mode: editorial_workflow
 
 collections:

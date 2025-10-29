@@ -1,49 +1,18 @@
-// netlify/functions/auth/auth.js
+const querystring = require("querystring");
 
-import fetch from "node-fetch";
+const domain = process.env.AUTH0_DOMAIN;
+const clientId = process.env.AUTH0_CLIENT_ID;
+const clientSecret = process.env.AUTH0_CLIENT_SECRET;
+const redirectUri = process.env.AUTH0_REDIRECT_URI;
 
-export async function handler(event, context) {
-  try {
-    const { code } = JSON.parse(event.body);
-
-    const domain = process.env.AUTH0_DOMAIN;
-    const clientId = process.env.AUTH0_CLIENT_ID;
-    const clientSecret = process.env.AUTH0_CLIENT_SECRET;
-    const redirectUri = process.env.AUTH0_REDIRECT_URI;
-
-    const params = new URLSearchParams();
-    params.append("grant_type", "authorization_code");
-    params.append("client_id", clientId);
-    params.append("client_secret", clientSecret);
-    params.append("code", code);
-    params.append("redirect_uri", redirectUri);
-
-    const response = await fetch(`https://${domain}/oauth/token`, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: params.toString(),
-    });
-
-    const data = await response.json();
-
-    if (data.error) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: data.error, description: data.error_description }),
-      };
-    }
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        access_token: data.access_token,
-        id_token: data.id_token,
-        token_type: data.token_type,
-        expires_in: data.expires_in,
-      }),
-    };
-  } catch (error) {
-    console.error("Auth0 Error:", error);
-    return { statusCode: 500, body: JSON.stringify({ error: "Internal Server Error" }) };
-  }
+function authUrl() {
+  const qs = querystring.stringify({
+    client_id: clientId,
+    response_type: "code",
+    scope: "openid profile email",
+    redirect_uri: redirectUri,
+  });
+  return `https://${domain}/authorize?${qs}`;
 }
+
+module.exports = { authUrl, domain, clientId, clientSecret, redirectUri };
