@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/jidechidim/Gihon-Hebrew-Synagogue#readme",
   "dependencies": {
+    "@supabase/supabase-js": "^2.78.0",
     "dotenv": "^17.2.3",
+    "formidable": "^3.5.4",
     "jsonwebtoken": "^9.0.2",
     "node-fetch": "^3.3.2"
   }

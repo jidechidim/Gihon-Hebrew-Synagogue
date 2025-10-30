@@ -1,11 +1,13 @@
 {
   "address": "17 Grace Pavilon Street, Prayer Road, Jikwoyi Phase II, Jikwoyi, FCT-Abuja",
   "email": "gihonhebrewsynagogue25@gmail.com",
-  "phone": "+234 803 323 8539",
-  "phone": "+234 806 083 1801",
+  "phones": [
+    "+234 803 323 8539",
+    "+234 806 083 1801"
+  ],
   "socials": [
     { "platform": "Facebook", "url": "https://facebook.com/gihonhebrew" },
-    { "platform": "Instagram", "url": "https://instagram.com/gihonhebrew" }
+    { "platform": "Instagram", "url": "https://instagram.com/gihonhebrew" },
     { "platform": "YouTube", "url": "https://youtube.com/@gihonhebrew" }
   ]
 }

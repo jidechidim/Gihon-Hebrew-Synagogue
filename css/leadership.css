@@ -318,3 +318,11 @@ body{
   border-radius: 12px;
   object-fit: cover;
 }
+
+.member .avatar {
+  width: 150px;        /* adjust size */
+  height: 150px;       /* same as width to make it square first */
+  border-radius: 50%;  /* makes it a perfect circle */
+  object-fit: cover;   /* ensures the image fills the circle without stretching */
+  border: 2px solid #ccc; /* optional: adds a thin border around each image */
+}

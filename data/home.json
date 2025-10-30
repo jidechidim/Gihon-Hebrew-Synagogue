@@ -4,7 +4,7 @@
     "subtitle": "Learn about Gihon Hebrew Synagogue",
     "cta_text": "Join Our Community",
     "cta_link": "getinvolved.html",
-    "image": "assets/heroimage.png"
+    "image": "public/assets/heroimage.png"
   },
   "welcome": {
     "title": "Welcome to Gihon Hebrew Synagogue",
@@ -14,7 +14,7 @@
     ],
     "cta_text": "Join Our Community",
     "cta_link": "getinvolved.html",
-    "image": "assets/welcomeimage.png"
+    "image": "public/assets/welcomeimage.png"
   },
   "newsletter": {
     "title": "Stay Connected",

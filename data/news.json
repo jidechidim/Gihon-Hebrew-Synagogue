@@ -3,7 +3,7 @@
     "id": 1,
     "title": "Community Outreach",
     "date": "2025-10-01",
-    "image": "assets/news/newsimage1.png",
+    "image": "public/assets/news/newsimage1.png",
     "summary": "Gihon Hebrew Synagogue engages with the local community through volunteer initiatives and charity programs.",
     "content": "Our Community Outreach program aims to connect synagogue members with local neighborhoods. We organize food drives, support local schools, and collaborate with charities. Volunteers of all ages are welcome to join and make a meaningful impact in our community."
   },
@@ -11,7 +11,7 @@
     "id": 2,
     "title": "Youth Sabbath",
     "date": "2025-10-05",
-    "image": "assets/news/newsimage2.png",
+    "image": "public/assets/news/newsimage2.png",
     "summary": "A special Sabbath dedicated to youth participation and learning.",
     "content": "Youth Sabbath encourages young members of our congregation to take active roles in services and discussions. Through interactive activities and peer-led sessions, we nurture leadership, community spirit, and a deeper understanding of our faith."
   },
@@ -19,7 +19,7 @@
     "id": 3,
     "title": "Chanukah Festival",
     "date": "2025-12-20",
-    "image": "assets/news/newsimage3.png",
+    "image": "public/assets/news/newsimage3.png",
     "summary": "Celebrating Chanukah with lights, music, and community joy.",
     "content": "Our annual Chanukah Festival brings together families for candle lighting, music, and storytelling. Enjoy traditional foods, games, and community activities that celebrate the Festival of Lights and strengthen our bonds."
   },
@@ -27,7 +27,7 @@
     "id": 4,
     "title": "Summer Camp",
     "date": "2025-07-01",
-    "image": "assets/news/newsimage4.png",
+    "image": "public/assets/news/newsimage4.png",
     "summary": "Summer learning and fun activities for all ages.",
     "content": "Gihon Summer Camp combines educational programs with creative and recreational activities. Participants explore Jewish history, arts and crafts, sports, and outdoor adventures, fostering personal growth and lasting friendships."
   },
@@ -35,7 +35,7 @@
     "id": 5,
     "title": "Kids Summer Camp",
     "date": "2025-07-15",
-    "image": "assets/news/newsimage5.png",
+    "image": "public/assets/news/newsimage5.png",
     "summary": "Special summer sessions designed for our youngest members.",
     "content": "Our Kids Summer Camp offers age-appropriate learning and fun. With interactive storytelling, music, games, and arts, children experience the joy of community, creativity, and Jewish values in a supportive environment."
   },
@@ -43,7 +43,7 @@
     "id": 6,
     "title": "Hebrew Classes for Kids",
     "date": "2025-09-01",
-    "image": "assets/news/newsimage6.png",
+    "image": "public/assets/news/newsimage6.png",
     "summary": "Building Hebrew literacy and understanding through fun lessons.",
     "content": "Our Hebrew Classes for Kids teach language fundamentals, reading, and basic prayers in an engaging way. Classes are interactive, combining songs, games, and exercises that make learning Hebrew enjoyable and effective."
   }

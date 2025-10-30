@@ -1,25 +1,25 @@
-// Fetch and render leadership data dynamically
-async function renderLeadership() {
-  const response = await fetch('./leadership.json');
-  const data = await response.json();
+async function loadLeadership() {
+  try {
+    // Fetch leadership.json from the root /data folder
+    const res = await fetch('/data/leadership.json');
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
-  // ===== Hero Image =====
-  const heroSection = document.querySelector('.council-hero .hero-figure');
-  if (heroSection) {
-    heroSection.innerHTML = `
-      <img src="${data.hero.image}" alt="${data.hero.alt}" />
-      <figcaption>${data.hero.figcaption}</figcaption>
-    `;
-  }
+    const data = await res.json();
 
-  // ===== Members Grid =====
-  const membersGrid = document.querySelector('.members-grid');
-  if (membersGrid) {
-    membersGrid.innerHTML = ''; // clear existing items
+    // Update hero section
+    const heroImg = document.querySelector('.hero-figure img');
+    const heroCaption = document.querySelector('.hero-figure figcaption');
+    heroImg.src = data.hero.image;
+    heroImg.alt = data.hero.alt;
+    heroCaption.textContent = data.hero.figcaption;
+
+    // Populate members grid
+    const membersGrid = document.getElementById('membersGrid');
+    membersGrid.innerHTML = '';
 
     data.members.forEach(member => {
       const li = document.createElement('li');
-      li.classList.add('member');
+      li.className = 'member';
       if (member.solo) li.classList.add('member--solo');
 
       li.innerHTML = `
@@ -31,10 +31,15 @@ async function renderLeadership() {
           </figcaption>
         </figure>
       `;
+
       membersGrid.appendChild(li);
     });
+
+    console.log('✅ Leadership data loaded successfully!');
+  } catch (err) {
+    console.error('❌ Error loading leadership.json:', err);
+    alert('Failed to load leadership data. Check console for details.');
   }
 }
 
-// Call the function
-renderLeadership();
+document.addEventListener('DOMContentLoaded', loadLeadership);

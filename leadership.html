@@ -1,155 +1,97 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="./css/leadership.css">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Leadership Team - Gihon Hebrew Synagogue</title>
-  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="icon" type="image/png" href="/assets/logo.png">
   
   <!-- Fonts & CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./leadership.css" />
+  <link rel="stylesheet" href="./css/leadership.css" />
 </head>
-
-  <!-- Injected partials -->
+<body>
+  <!-- Header (injected by partials.js) -->
   <div id="__header"></div>
 
   <main class="page" id="main">
-    <!-- ===== Hero ===== -->
+    <!-- Hero section -->
     <section class="council-hero" aria-labelledby="pageTitle">
       <div class="container narrow center">
         <h1 id="pageTitle">Our Board and Executive Council</h1>
-
         <figure class="hero-figure">
-          <!-- Replace with your real image -->
-          <img src="./assets/leadershipimage1.png" alt="Members of the board and the executive council" />
+          <img src="/assets/leadershipimage1.png" alt="Members of the board and the executive council" />
           <figcaption>Members of the board and the executive council. Left to right</figcaption>
         </figure>
       </div>
     </section>
 
-    <!-- ===== Members ===== -->
+    <!-- Members section -->
     <section class="members" aria-labelledby="membersTitle">
       <div class="container narrow center">
         <h2 id="membersTitle">Our Members</h2>
       </div>
 
       <div class="container">
-        <ul class="members-grid" role="list">
-          <!-- 1 -->
-          <li class="member">
-            <figure>
-              <img class="avatar" src="./assets/members1.png" alt="Portrait of Avram Ben Avram" />
-              <figcaption>
-                <strong>Avram Ben Avram</strong>
-                <span>President</span>
-              </figcaption>
-            </figure>
-          </li>
-          <!-- 2 -->
-          <li class="member">
-            <figure>
-              <img class="avatar" src="./assets/members2.png" alt="Portrait of Yosef Ben Avram" />
-              <figcaption>
-                <strong>Yosef Ben Avram</strong>
-                <span>Secretary</span>
-              </figcaption>
-            </figure>
-          </li>
-          <!-- 3 -->
-          <li class="member">
-            <figure>
-              <img class="avatar" src="./assets/members3.png" alt="Portrait of John Ben Avram" />
-              <figcaption>
-                <strong>John Ben Avram</strong>
-                <span>President</span>
-              </figcaption>
-            </figure>
-          </li>
-          <!-- 4 -->
-          <li class="member">
-            <figure>
-              <img class="avatar" src="./assets/members4.png" alt="Portrait of Eli Ben Avram" />
-              <figcaption>
-                <strong>Eli Ben Avram</strong>
-                <span>President</span>
-              </figcaption>
-            </figure>
-          </li>
-          <!-- 5 -->
-          <li class="member">
-            <figure>
-              <img class="avatar" src="./assets/members5.png" alt="Portrait of James Ben Avram" />
-              <figcaption>
-                <strong>James Ben Avram</strong>
-                <span>Secretary</span>
-              </figcaption>
-            </figure>
-          </li>
-          <!-- 6 -->
-          <li class="member">
-            <figure>
-              <img class="avatar" src="./assets/members6.png" alt="Portrait of Yonah Ben Avram" />
-              <figcaption>
-                <strong>Yonah Ben Avram</strong>
-                <span>Secretary</span>
-              </figcaption>
-            </figure>
-          </li>
-          <!-- 7 -->
-          <li class="member">
-            <figure>
-              <img class="avatar" src="./assets/members7.png" alt="Portrait of Eliyah Ben Avram" />
-              <figcaption>
-                <strong>Eliyah Ben Avram</strong>
-                <span>President</span>
-              </figcaption>
-            </figure>
-          </li>
-          <!-- 8 -->
-          <li class="member">
-            <figure>
-              <img class="avatar" src="./assets/members8.png" alt="Portrait of David Ben Avram" />
-              <figcaption>
-                <strong>David Ben Avram</strong>
-                <span>Secretary</span>
-              </figcaption>
-            </figure>
-          </li>
-          <!-- 9 -->
-          <li class="member">
-            <figure>
-              <img class="avatar" src="./assets/members9.png" alt="Portrait of Caleb Ben Avram" />
-              <figcaption>
-                <strong>Caleb Ben Avram</strong>
-                <span>Secretary</span>
-              </figcaption>
-            </figure>
-          </li>
-          <!-- 10 (centered on its own row at large sizes) -->
-          <li class="member member--solo">
-            <figure>
-              <img class="avatar" src="./assets/members10.png" alt="Portrait of Jacob Ben Avram" />
-              <figcaption>
-                <strong>Jacob Ben Avram</strong>
-                <span>President</span>
-              </figcaption>
-            </figure>
-          </li>
+        <ul class="members-grid" role="list" id="membersGrid">
+          <!-- JS will inject members here -->
         </ul>
       </div>
     </section>
   </main>
 
-  <!-- Footer (injected by partials.js) -->
+  <!-- Footer -->
   <div id="__footer"></div>
 
   <!-- Scripts -->
   <script type="module" src="./js/partials.js"></script>
-  <script src="./script.js"></script>
+  <script>
+    async function loadLeadership() {
+      try {
+        // Fetch leadership.json
+        const res = await fetch('/data/leadership.json');
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 
+        const data = await res.json();
+
+        // Update hero section
+        const heroImg = document.querySelector('.hero-figure img');
+        const heroCaption = document.querySelector('.hero-figure figcaption');
+        heroImg.src = data.hero.image.replace('/public', '');
+        heroImg.alt = data.hero.alt;
+        heroCaption.textContent = data.hero.figcaption;
+
+        // Populate members
+        const membersGrid = document.getElementById('membersGrid');
+        membersGrid.innerHTML = '';
+
+        data.members.forEach(member => {
+          const li = document.createElement('li');
+          li.className = 'member';
+          if (member.solo) li.classList.add('member--solo');
+
+          li.innerHTML = `
+            <figure>
+              <img class="avatar" src="${member.image.replace('/public','')}" alt="${member.alt}" />
+              <figcaption>
+                <strong>${member.name}</strong>
+                <span>${member.role}</span>
+              </figcaption>
+            </figure>
+          `;
+          membersGrid.appendChild(li);
+        });
+
+        console.log('✅ Leadership data loaded successfully');
+      } catch (err) {
+        console.error('❌ Failed to load leadership.json:', err);
+        alert('Failed to load leadership data. Check console for details.');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadLeadership);
+  </script>
 </body>
 </html>
