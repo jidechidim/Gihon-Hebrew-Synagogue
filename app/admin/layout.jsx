@@ -1,40 +1,102 @@
-// /app/admin/layout.jsx
+// /app/(admin)/layout.jsx
+"use client";
+
+import "./globals.css";
 import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useEffect, useState, createContext } from "react";
 
-export const metadata = {
-  title: "Admin Panel",
-  description: "Admin dashboard for managing the site",
-};
+export const SessionContext = createContext(null);
 
-export default function AdminLayout({ children }) {
+function AdminLayoutContent({ children }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const supabase = createClientComponentClient();
+
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+
+    async function checkSession() {
+      try {
+        const { data } = await supabase.auth.getSession();
+        if (!active) return;
+
+        setSession(data.session);
+        setLoading(false);
+
+        if (!data.session && pathname.startsWith("/admin") && pathname !== "/admin/login") {
+          router.replace("/admin/login");
+          return;
+        }
+
+        if (data.session && pathname === "/admin/login") {
+          router.replace("/admin/home");
+          return;
+        }
+      } catch (err) {
+        console.error("Auth check failed:", err);
+        setLoading(false);
+      }
+    }
+
+    checkSession();
+    return () => { active = false };
+  }, [pathname, router, supabase]);
+
+  if (loading) {
+    return (
+      <div style={{ textAlign: "center", padding: 60, fontFamily: "sans-serif" }}>
+        <p>Checking access…</p>
+      </div>
+    );
+  }
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    router.replace("/admin/login");
+  }
+
+  const showNav = session && pathname !== "/admin/login";
+
   return (
-    <div className="admin-container" style={{ display: "flex", minHeight: "100vh" }}>
-      {/* Sidebar */}
-      <aside
-        className="admin-sidebar"
-        style={{
-          width: "250px",
-          backgroundColor: "#255D99",
-          color: "#fff",
-          padding: "2rem",
-        }}
-      >
-        <h2>Admin Menu</h2>
-        <ul style={{ listStyle: "none", padding: 0 }}>
-        </ul>
-      </aside>
+    <SessionContext.Provider value={session}>
+      {showNav && (
+        <nav style={{ background: "#111", padding: "12px 20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ display: "flex", gap: "16px" }}>
+            <Link href="/admin/home" style={{ color: "#fff" }}>Home</Link>
+            <Link href="/admin/about" style={{ color: "#fff" }}>About</Link>
+            <Link href="/admin/leadership" style={{ color: "#fff" }}>Leadership</Link>
+            <Link href="/admin/contact" style={{ color: "#fff" }}>Contact</Link>
+          </div>
 
-      {/* Main content */}
-      <main
-        className="admin-main"
-        style={{
-          flex: 1,
-          padding: "2rem",
-          backgroundColor: "#f9f9f9",
-        }}
-      >
-        {children}
-      </main>
-    </div>
+          <button
+            onClick={handleLogout}
+            style={{ background: "#e33", color: "#fff", padding: "6px 12px", border: "none", borderRadius: "6px", cursor: "pointer" }}
+          >
+            Logout
+          </button>
+        </nav>
+      )}
+
+      <main style={{ padding: "0px" }}>{children}</main>
+    </SessionContext.Provider>
+  );
+}
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <head>
+        <title>Gihon Hebrew Synagogue Admin</title>
+        <link rel="icon" type="image/png" href="/assets/logo.png" />
+      </head>
+      <body>
+        <AdminLayoutContent>{children}</AdminLayoutContent>
+      </body>
+    </html>
   );
 }
