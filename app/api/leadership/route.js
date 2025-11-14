@@ -1,4 +1,7 @@
-import { readJSON, writeJSON } from "@/lib/fsUtils";
+import { writeFileToPublic } from "@/lib/fsUtils";
+
+// use writeFileToPublic(fileName, data) wherever you write to public/assets
+
 
 export async function GET() {
   const data = await readJSON("leadership.json");
