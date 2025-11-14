@@ -1,22 +1,25 @@
 "use client";
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { SessionContext } from "../../layout";
-
-export const runtime = "nodejs";
 
 const supabase = createClientComponentClient();
 
 export default function ContactAdmin() {
-  const session = useContext(SessionContext);
+  const [session, setSession] = useState(null);
   const [data, setData] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!session) return;
+    async function fetchData() {
+      const { data: sessionData } = await supabase.auth.getSession();
+      if (!sessionData.session) {
+        window.location.href = "/admin/login";
+        return;
+      }
+      setSession(sessionData.session);
 
-    async function loadData() {
       const { data: row } = await supabase
         .from("cms_content")
         .select("data")
@@ -26,12 +29,15 @@ export default function ContactAdmin() {
       setData(
         row?.data || { address: "", email: "", phones: [""], socials: [] }
       );
+
+      setLoading(false);
     }
 
-    loadData();
-  }, [session]);
+    fetchData();
+  }, []);
 
-  if (!session) return <p>Checking access…</p>;
+  if (loading) return <p>Checking access…</p>;
+  if (!session) return null;
   if (!data) return <p>Loading content…</p>;
 
   const saveData = async () => {
@@ -45,77 +51,115 @@ export default function ContactAdmin() {
     else alert("✅ Changes saved!");
   };
 
-  // Phone handlers
   const updatePhone = (index, value) => {
     const newPhones = [...data.phones];
     newPhones[index] = value;
     setData({ ...data, phones: newPhones });
   };
-
   const addPhone = () => setData({ ...data, phones: [...data.phones, ""] });
   const removePhone = (index) =>
     setData({ ...data, phones: data.phones.filter((_, i) => i !== index) });
 
-  // Social handlers
   const updateSocial = (index, field, value) => {
     const newSocials = [...data.socials];
-    newSocials[index][field] = value;
+    newSocials[index] = { ...newSocials[index], [field]: value };
     setData({ ...data, socials: newSocials });
   };
-
   const addSocial = () =>
     setData({ ...data, socials: [...data.socials, { platform: "", url: "" }] });
-
   const removeSocial = (index) =>
     setData({ ...data, socials: data.socials.filter((_, i) => i !== index) });
 
   return (
-    <div>
+    <div style={{ maxWidth: 800, margin: "0 auto", padding: 20 }}>
       <h2>Contact Page Editor</h2>
 
-      <label>Address</label>
-      <input
-        value={data.address}
-        onChange={(e) => setData({ ...data, address: e.target.value })}
-      />
+      {/* Address Section */}
+      <section style={{ border: "1px solid #ccc", padding: 16, marginBottom: 20 }}>
+        <h3>Address & Email</h3>
+        <label>Address</label>
+        <input
+          value={data.address}
+          onChange={(e) => setData({ ...data, address: e.target.value })}
+          style={{ width: "100%", marginBottom: 8 }}
+        />
 
-      <label>Email</label>
-      <input
-        value={data.email}
-        onChange={(e) => setData({ ...data, email: e.target.value })}
-      />
+        <label>Email</label>
+        <input
+          value={data.email}
+          onChange={(e) => setData({ ...data, email: e.target.value })}
+          style={{ width: "100%" }}
+        />
+      </section>
 
-      <h3>Phones</h3>
-      {data.phones.map((phone, i) => (
-        <div key={i} style={{ marginBottom: "5px" }}>
-          <input
-            value={phone}
-            onChange={(e) => updatePhone(i, e.target.value)}
-          />
-          <button onClick={() => removePhone(i)}>Remove</button>
-        </div>
-      ))}
-      <button onClick={addPhone}>Add Phone</button>
+      {/* Phones Section */}
+      <section style={{ border: "1px solid #ccc", padding: 16, marginBottom: 20 }}>
+        <h3>Phones</h3>
+        {data.phones.map((phone, i) => (
+          <div key={i} style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 8 }}>
+            <input
+              value={phone}
+              onChange={(e) => updatePhone(i, e.target.value)}
+              style={{ flex: 1 }}
+            />
+            <button
+              type="button"
+              onClick={() => removePhone(i)}
+              style={{ background: "#e33", color: "#fff", border: "none", borderRadius: 4, padding: "4px 8px" }}
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={addPhone}
+          style={{ padding: "6px 12px", marginTop: 4 }}
+        >
+          Add Phone
+        </button>
+      </section>
 
-      <h3>Social Links</h3>
-      {data.socials.map((social, i) => (
-        <div key={i} style={{ marginBottom: "5px" }}>
-          <input
-            placeholder="Platform"
-            value={social.platform}
-            onChange={(e) => updateSocial(i, "platform", e.target.value)}
-          />
-          <input
-            placeholder="URL"
-            value={social.url}
-            onChange={(e) => updateSocial(i, "url", e.target.value)}
-          />
-          <button onClick={() => removeSocial(i)}>Remove</button>
-        </div>
-      ))}
-      <button onClick={addSocial}>Add Social</button>
+      {/* Social Links Section */}
+      <section style={{ border: "1px solid #ccc", padding: 16, marginBottom: 20 }}>
+        <h3>Social Links</h3>
+        {data.socials.map((social, i) => (
+          <div key={i} style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 8 }}>
+            <input
+              placeholder="Platform"
+              value={social.platform}
+              onChange={(e) => updateSocial(i, "platform", e.target.value)}
+              style={{ flex: 1 }}
+            />
+            <input
+              placeholder="URL"
+              value={social.url}
+              onChange={(e) => updateSocial(i, "url", e.target.value)}
+              style={{ flex: 2 }}
+            />
+            <button
+              type="button"
+              onClick={() => removeSocial(i)}
+              style={{ background: "#e33", color: "#fff", border: "none", borderRadius: 4, padding: "4px 8px" }}
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={addSocial}
+          style={{ padding: "6px 12px", marginTop: 4 }}
+        >
+          Add Social
+        </button>
+      </section>
 
-      <button onClick={saveData} disabled={saving} style={{ marginTop: 10 }}>
+      <button
+        onClick={saveData}
+        disabled={saving}
+        style={{ marginTop: 10, padding: "8px 16px", fontSize: 16 }}
+      >
         {saving ? "Saving..." : "Save Changes"}
       </button>
     </div>

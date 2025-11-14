@@ -6,7 +6,6 @@ import { supabase } from "/lib/supabaseClient";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-
 export default function HomePage() {
   const [homeData, setHomeData] = useState(null);
   const [events, setEvents] = useState([]);
@@ -119,17 +118,17 @@ export default function HomePage() {
             <blockquote className="parsha-quote">
               <h3 className="parsha-title">{currentParsha.englishName}</h3>
               <p className="parsha-content">{currentParsha.shortSummary}</p>
-              <footer className="parsha-ref">
+              <div className="parsha-ref">
                 <p className="ref">{currentParsha.refs.join(", ")}</p>
-              </footer>
+              </div>
             </blockquote>
           ) : (
             <blockquote className="parsha-quote">
               <h3 className="parsha-title">Loading...</h3>
               <p className="parsha-content">Fetching Parsha summary...</p>
-              <footer className="parsha-ref">
+              <div className="parsha-ref">
                 <p className="ref">Fetching references...</p>
-              </footer>
+              </div>
             </blockquote>
           )}
 

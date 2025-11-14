@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
-export const runtime = "nodejs";
-
 export default function AdminLogin() {
   const router = useRouter();
   const supabase = createClientComponentClient();
@@ -15,7 +13,7 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Skip login if already signed in
+  // Redirect if already logged in
   useEffect(() => {
     async function checkSession() {
       const { data } = await supabase.auth.getSession();
@@ -24,32 +22,37 @@ export default function AdminLogin() {
     checkSession();
   }, [router, supabase]);
 
-  async function handleLogin(e) {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (error) throw new Error(error.message);
+      if (signInError) throw new Error(signInError.message);
 
-      // Redirect immediately after successful login
       router.replace("/admin/home");
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Login failed");
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
-    <div style={{ maxWidth: 420, margin: "80px auto", padding: 32, background: "#fff", borderRadius: 12, boxShadow: "0 2px 12px rgba(0,0,0,0.08)" }}>
-      <h2 style={{ marginBottom: 20 }}>Gihon Hebrew Synagogue Admin Login</h2>
-
+    <div style={{
+      maxWidth: 420,
+      margin: "80px auto",
+      padding: 32,
+      background: "#fff",
+      borderRadius: 12,
+      boxShadow: "0 2px 12px rgba(0,0,0,0.08)"
+    }}>
+      <h2 style={{ marginBottom: 20 }}>Admin Login</h2>
       <form onSubmit={handleLogin}>
         <label>Email</label>
         <input
@@ -60,7 +63,6 @@ export default function AdminLogin() {
           required
           style={{ width: "100%", padding: 10, marginBottom: 12, borderRadius: 6, border: "1px solid #ddd" }}
         />
-
         <label>Password</label>
         <input
           type="password"
@@ -70,13 +72,20 @@ export default function AdminLogin() {
           required
           style={{ width: "100%", padding: 10, borderRadius: 6, border: "1px solid #ddd" }}
         />
-
         {error && <p style={{ color: "red", marginTop: 8 }}>{error}</p>}
-
         <button
           type="submit"
           disabled={loading}
-          style={{ marginTop: 14, width: "100%", padding: 10, background: "#000", color: "#fff", borderRadius: 6, cursor: loading ? "wait" : "pointer", border: "none" }}
+          style={{
+            marginTop: 14,
+            width: "100%",
+            padding: 10,
+            background: "#000",
+            color: "#fff",
+            borderRadius: 6,
+            cursor: loading ? "wait" : "pointer",
+            border: "none"
+          }}
         >
           {loading ? "Signing in..." : "Sign In"}
         </button>

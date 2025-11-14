@@ -1,23 +1,28 @@
 "use client";
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { SessionContext } from "../../layout";
 import ImageUpload from "../../components/ImageUpload";
-
-export const runtime = "nodejs";
 
 const supabase = createClientComponentClient();
 
 export default function LeadershipAdmin() {
-  const session = useContext(SessionContext);
+  const [session, setSession] = useState(null);
   const [data, setData] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!session) return;
+    async function fetchData() {
+      // Check session
+      const { data: sessionData } = await supabase.auth.getSession();
+      if (!sessionData.session) {
+        window.location.href = "/admin/login";
+        return;
+      }
+      setSession(sessionData.session);
 
-    async function loadData() {
+      // Load leadership data
       const { data: row } = await supabase
         .from("cms_content")
         .select("data")
@@ -30,12 +35,15 @@ export default function LeadershipAdmin() {
           members: [],
         }
       );
+
+      setLoading(false);
     }
 
-    loadData();
-  }, [session]);
+    fetchData();
+  }, []);
 
-  if (!session) return <p>Checking access…</p>;
+  if (loading) return <p>Checking access…</p>;
+  if (!session) return null;
   if (!data) return <p>Loading content…</p>;
 
   const saveData = async () => {
@@ -54,7 +62,7 @@ export default function LeadershipAdmin() {
 
   const updateMember = (index, field, value) => {
     const newMembers = [...data.members];
-    newMembers[index][field] = value;
+    newMembers[index] = { ...newMembers[index], [field]: value };
     setData({ ...data, members: newMembers });
   };
 
@@ -75,48 +83,71 @@ export default function LeadershipAdmin() {
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: 800, margin: "0 auto", padding: 20 }}>
       <h2>Leadership Page Editor</h2>
 
       {/* Hero Section */}
-      <h3>Hero Section</h3>
-      <label>Figcaption</label>
-      <input value={data.hero.figcaption} onChange={(e) => updateHero("figcaption", e.target.value)} />
-      <label>Alt Text</label>
-      <input value={data.hero.alt} onChange={(e) => updateHero("alt", e.target.value)} />
-      <ImageUpload
-        label="Hero Image"
-        value={data.hero.image}
-        onChange={(url) => updateHero("image", url)}
-        bucket="content"
-      />
+      <section style={{ border: "1px solid #ccc", padding: 16, marginBottom: 20 }}>
+        <h3>Hero Section</h3>
+        <label>Figcaption</label>
+        <input value={data.hero.figcaption} onChange={(e) => updateHero("figcaption", e.target.value)} />
+        <label>Alt Text</label>
+        <input value={data.hero.alt} onChange={(e) => updateHero("alt", e.target.value)} />
+        <ImageUpload
+          label="Hero Image"
+          value={data.hero.image}
+          onChange={(url) => updateHero("image", url)}
+          bucket="content"
+        />
+      </section>
 
-      {/* Members */}
-      <h3>Members</h3>
-      {data.members.map((member, i) => (
-        <div key={member.id} style={{ border: "1px solid #ccc", padding: "10px", marginBottom: "10px" }}>
-          <label>Name</label>
-          <input value={member.name} onChange={(e) => updateMember(i, "name", e.target.value)} />
+      {/* Members Section */}
+      <section style={{ border: "1px solid #ccc", padding: 16, marginBottom: 20 }}>
+        <h3>Members</h3>
+        {data.members.map((member, i) => (
+          <section
+            key={member.id}
+            style={{ border: "1px solid #aaa", padding: 12, marginBottom: 12 }}
+          >
+            <label>Name</label>
+            <input value={member.name} onChange={(e) => updateMember(i, "name", e.target.value)} />
 
-          <label>Role</label>
-          <input value={member.role} onChange={(e) => updateMember(i, "role", e.target.value)} />
+            <label>Role</label>
+            <input value={member.role} onChange={(e) => updateMember(i, "role", e.target.value)} />
 
-          <label>Alt Text</label>
-          <input value={member.alt} onChange={(e) => updateMember(i, "alt", e.target.value)} />
+            <label>Alt Text</label>
+            <input value={member.alt} onChange={(e) => updateMember(i, "alt", e.target.value)} />
 
-          <ImageUpload
-            label="Member Image"
-            value={member.image}
-            onChange={(url) => updateMember(i, "image", url)}
-            bucket="content"
-          />
+            <ImageUpload
+              label="Member Image"
+              value={member.image}
+              onChange={(url) => updateMember(i, "image", url)}
+              bucket="content"
+            />
 
-          <button onClick={() => removeMember(i)} style={{ marginTop: "5px" }}>Remove Member</button>
-        </div>
-      ))}
-      <button onClick={addMember}>Add Member</button>
+            <button
+              type="button"
+              onClick={() => removeMember(i)}
+              style={{ marginTop: 8, background: "#e33", color: "#fff", padding: "4px 8px", border: "none", borderRadius: 4 }}
+            >
+              Remove Member
+            </button>
+          </section>
+        ))}
+        <button
+          type="button"
+          onClick={addMember}
+          style={{ padding: "6px 12px", marginBottom: 10 }}
+        >
+          Add Member
+        </button>
+      </section>
 
-      <button onClick={saveData} disabled={saving} style={{ marginTop: 10 }}>
+      <button
+        onClick={saveData}
+        disabled={saving}
+        style={{ marginTop: 10, padding: "8px 16px", fontSize: 16 }}
+      >
         {saving ? "Saving..." : "Save Changes"}
       </button>
     </div>

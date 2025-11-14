@@ -1,27 +1,40 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Link from "next/link";
-import { createClient } from "@supabase/supabase-js";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { SessionContext } from "../../layout";
 
 export const runtime = "nodejs";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
+const supabase = createClientComponentClient();
 
 export default function AdminNewsList() {
+  const session = useContext(SessionContext);
   const [items, setItems] = useState([]);
 
-  async function loadData() {
-    const { data } = await supabase.from("news").select("*").order("id", { ascending: false });
-    setItems(data || []);
-  }
+  const loadData = async () => {
+    if (!session) return;
+
+    try {
+      const { data, error } = await supabase
+        .from("news")
+        .select("*")
+        .order("id", { ascending: false });
+
+      if (error) throw error;
+      setItems(data || []);
+    } catch (err) {
+      console.error("Error loading news:", err.message);
+      alert("Failed to load news: " + err.message);
+    }
+  };
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [session]);
+
+  if (!session) return <p>Checking access…</p>;
 
   return (
     <div style={{ padding: "2rem" }}>

@@ -1,14 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabaseClient";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { SessionContext } from "../../layout";
 
 export const runtime = "nodejs";
+
+const supabase = createClientComponentClient();
 
 export default function EventPage({ params }) {
   const { id } = params;
   const router = useRouter();
+  const session = useContext(SessionContext);
+
   const [data, setData] = useState({
     title: "",
     description: "",
@@ -18,75 +23,85 @@ export default function EventPage({ params }) {
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
 
-  // Fetch event data
   useEffect(() => {
-    async function fetchEvent() {
-      const { data: event, error } = await supabase
-        .from("events")
-        .select("*")
-        .eq("id", id)
-        .single();
+    if (!session) return;
 
-      if (error) {
-        alert("Error loading event: " + error.message);
-      } else {
-        setData({
-          title: event.title,
-          description: event.description,
-          date: event.date,
-          image: event.image || "",
-        });
+    const fetchEvent = async () => {
+      try {
+        const { data: event, error } = await supabase
+          .from("events")
+          .select("*")
+          .eq("id", id)
+          .single();
+
+        if (error) throw error;
+
+        if (event) {
+          setData({
+            title: event.title || "",
+            description: event.description || "",
+            date: event.date || "",
+            image: event.image || "",
+          });
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Error loading event: " + err.message);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
-    }
+    };
 
     fetchEvent();
-  }, [id]);
+  }, [id, session]);
 
-  // Upload image to Supabase Storage
-  async function uploadImage(file) {
+  if (!session) return <p>Checking access…</p>;
+  if (loading) return <p>Loading event…</p>;
+
+  const uploadImage = async (file) => {
     if (!file) return;
     setUploading(true);
+
     const fileExt = file.name.split(".").pop();
     const fileName = `${Date.now()}.${fileExt}`;
-    const filePath = fileName;
 
-    const { error } = await supabase.storage
-      .from("events-images")
-      .upload(filePath, file, { upsert: true });
+    try {
+      const { error } = await supabase.storage
+        .from("events-images")
+        .upload(fileName, file, { upsert: true });
 
-    if (error) {
-      alert("Upload failed: " + error.message);
+      if (error) throw error;
+
+      const { data: urlData } = supabase.storage
+        .from("events-images")
+        .getPublicUrl(fileName);
+
+      setData({ ...data, image: urlData.publicUrl });
+    } catch (err) {
+      console.error(err);
+      alert("Upload failed: " + err.message);
+    } finally {
       setUploading(false);
-      return;
     }
+  };
 
-    const { publicUrl } = supabase.storage
-      .from("events-images")
-      .getPublicUrl(filePath)
-      .data;
-
-    setData({ ...data, image: publicUrl });
-    setUploading(false);
-  }
-
-  // Update event in Supabase
-  async function saveEvent(e) {
+  const saveEvent = async (e) => {
     e.preventDefault();
-    const { error } = await supabase
-      .from("events")
-      .update(data)
-      .eq("id", id);
+    try {
+      const { error } = await supabase
+        .from("events")
+        .update(data)
+        .eq("id", id);
 
-    if (error) {
-      alert("Error saving event: " + error.message);
-    } else {
+      if (error) throw error;
+
       alert("Event updated!");
       router.push("/admin/events");
+    } catch (err) {
+      console.error(err);
+      alert("Error saving event: " + err.message);
     }
-  }
-
-  if (loading) return <p>Loading event...</p>;
+  };
 
   return (
     <div className="max-w-xl mx-auto p-4">
@@ -128,7 +143,7 @@ export default function EventPage({ params }) {
             accept="image/*"
             onChange={(e) => uploadImage(e.target.files[0])}
           />
-          {uploading && <p>Uploading image...</p>}
+          {uploading && <p>Uploading image…</p>}
           {data.image && (
             <img
               src={data.image}
