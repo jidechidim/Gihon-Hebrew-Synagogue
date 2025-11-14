@@ -1,7 +1,7 @@
 // /app/(admin)/layout.jsx
 "use client";
 
-import "./globals.css";
+import "../globals.css";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
