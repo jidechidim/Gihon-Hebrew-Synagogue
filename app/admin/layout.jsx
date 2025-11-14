@@ -1,14 +1,10 @@
-// /app/admin/layout.jsx
 "use client";
 
-import "../globals.css";
-import Link from "next/link";
+import { useState, useEffect, createContext } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useEffect, useState, createContext } from "react";
 
-// Named export for context
-export const SessionContext = createContext(null);
+export const SessionContext = createContext(null); // named export, not default
 
 export default function AdminLayout({ children }) {
   const router = useRouter();
@@ -31,7 +27,9 @@ export default function AdminLayout({ children }) {
 
         if (!data.session && pathname.startsWith("/admin") && pathname !== "/admin/login") {
           router.replace("/admin/login");
-        } else if (data.session && pathname === "/admin/login") {
+        }
+
+        if (data.session && pathname === "/admin/login") {
           router.replace("/admin/home");
         }
       } catch (err) {
@@ -41,15 +39,11 @@ export default function AdminLayout({ children }) {
     }
 
     checkSession();
-    return () => { active = false; };
+    return () => { active = false };
   }, [pathname, router, supabase]);
 
   if (loading) {
-    return (
-      <div style={{ textAlign: "center", padding: 60, fontFamily: "sans-serif" }}>
-        Checking access…
-      </div>
-    );
+    return <div style={{ textAlign: "center", padding: 60, fontFamily: "sans-serif" }}><p>Checking access…</p></div>;
   }
 
   async function handleLogout() {
@@ -64,12 +58,11 @@ export default function AdminLayout({ children }) {
       {showNav && (
         <nav style={{ background: "#111", padding: "12px 20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div style={{ display: "flex", gap: "16px" }}>
-            <Link href="/admin/home" style={{ color: "#fff" }}>Home</Link>
-            <Link href="/admin/about" style={{ color: "#fff" }}>About</Link>
-            <Link href="/admin/leadership" style={{ color: "#fff" }}>Leadership</Link>
-            <Link href="/admin/contact" style={{ color: "#fff" }}>Contact</Link>
+            <a href="/admin/home" style={{ color: "#fff" }}>Home</a>
+            <a href="/admin/about" style={{ color: "#fff" }}>About</a>
+            <a href="/admin/leadership" style={{ color: "#fff" }}>Leadership</a>
+            <a href="/admin/contact" style={{ color: "#fff" }}>Contact</a>
           </div>
-
           <button
             onClick={handleLogout}
             style={{ background: "#e33", color: "#fff", padding: "6px 12px", border: "none", borderRadius: "6px", cursor: "pointer" }}
@@ -78,8 +71,7 @@ export default function AdminLayout({ children }) {
           </button>
         </nav>
       )}
-
-      <main style={{ padding: 0 }}>{children}</main>
+      <main style={{ padding: "0px" }}>{children}</main>
     </SessionContext.Provider>
   );
 }
