@@ -3,7 +3,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { SessionContext } from "../../layout";
 
 export const runtime = "nodejs";
 
