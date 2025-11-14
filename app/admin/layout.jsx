@@ -1,4 +1,4 @@
-// /app/(admin)/layout.jsx
+// /app/admin/layout.jsx
 "use client";
 
 import "../globals.css";
@@ -7,9 +7,10 @@ import { useRouter, usePathname } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useEffect, useState, createContext } from "react";
 
+// Named export for context
 export const SessionContext = createContext(null);
 
-function AdminLayoutContent({ children }) {
+export default function AdminLayout({ children }) {
   const router = useRouter();
   const pathname = usePathname();
   const supabase = createClientComponentClient();
@@ -30,12 +31,8 @@ function AdminLayoutContent({ children }) {
 
         if (!data.session && pathname.startsWith("/admin") && pathname !== "/admin/login") {
           router.replace("/admin/login");
-          return;
-        }
-
-        if (data.session && pathname === "/admin/login") {
+        } else if (data.session && pathname === "/admin/login") {
           router.replace("/admin/home");
-          return;
         }
       } catch (err) {
         console.error("Auth check failed:", err);
@@ -44,13 +41,13 @@ function AdminLayoutContent({ children }) {
     }
 
     checkSession();
-    return () => { active = false };
+    return () => { active = false; };
   }, [pathname, router, supabase]);
 
   if (loading) {
     return (
       <div style={{ textAlign: "center", padding: 60, fontFamily: "sans-serif" }}>
-        <p>Checking access…</p>
+        Checking access…
       </div>
     );
   }
@@ -82,21 +79,7 @@ function AdminLayoutContent({ children }) {
         </nav>
       )}
 
-      <main style={{ padding: "0px" }}>{children}</main>
+      <main style={{ padding: 0 }}>{children}</main>
     </SessionContext.Provider>
-  );
-}
-
-export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
-      <head>
-        <title>Gihon Hebrew Synagogue Admin</title>
-        <link rel="icon" type="image/png" href="/assets/logo.png" />
-      </head>
-      <body>
-        <AdminLayoutContent>{children}</AdminLayoutContent>
-      </body>
-    </html>
   );
 }
