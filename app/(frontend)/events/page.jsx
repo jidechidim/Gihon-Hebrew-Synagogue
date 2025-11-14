@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "/lib/supabaseClient";
-import "/public/css/events.css";
-
-export const runtime = "nodejs";
+import { supabase } from "@lib/supabaseClient";
+import "./events.css";
 
 export default function EventsPage() {
   const [events, setEvents] = useState([]);

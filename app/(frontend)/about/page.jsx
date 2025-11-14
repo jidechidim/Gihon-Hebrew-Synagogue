@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "/lib/supabaseClient";
-import "/public/css/about.css";
-
-export const runtime = "nodejs";
+import { supabase } from "@lib/supabaseClient";
+import "./about.css";
 
 export default function AboutPage() {
   const [aboutData, setAboutData] = useState(null);

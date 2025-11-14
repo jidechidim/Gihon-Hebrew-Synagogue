@@ -3,12 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import "/public/css/news.css";
-
-export const runtime = "nodejs";
-
-const supabase = createClientComponentClient();
+import { supabase } from "@/lib/supabaseClient";
+import "./news.css";
 
 export default function NewsPage() {
   const [news, setNews] = useState([]);

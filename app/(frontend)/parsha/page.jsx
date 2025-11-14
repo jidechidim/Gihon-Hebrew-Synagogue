@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import "/public/css/parsha.css";
+import "./parsha.css";
 
 export default function ParshaPage() {
   const [parsha, setParsha] = useState({

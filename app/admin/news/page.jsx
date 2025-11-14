@@ -3,7 +3,7 @@
 import { useEffect, useState, useContext } from "react";
 import Link from "next/link";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { SessionContext } from "../../layout";
+import { SessionContext } from "../layout";
 
 export const runtime = "nodejs";
 

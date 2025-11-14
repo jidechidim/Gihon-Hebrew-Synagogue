@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import "/public/css/calendar.css";
-
-export const runtime = "nodejs";
+import "./calendar.css";
 
 export default function CalendarPage() {
   const [calendarItems, setCalendarItems] = useState([]);

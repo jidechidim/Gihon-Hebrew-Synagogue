@@ -1,12 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import "/public/css/leadership.css";
-
-export const runtime = "nodejs";
-
-const supabase = createClientComponentClient();
+import { supabase } from "@/lib/supabaseClient";
+import "./leadership.css";
 
 export default function LeadershipPage() {
   const [hero, setHero] = useState(null);
