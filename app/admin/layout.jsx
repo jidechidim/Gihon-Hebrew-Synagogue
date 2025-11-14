@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, createContext } from "react";
+import { createContext, useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
@@ -25,18 +25,13 @@ export default function AdminLayout({ children }) {
       setSession(data.session);
       setLoading(false);
 
-      if (!data.session && pathname !== "/admin/login") {
-        router.replace("/admin/login");
-      }
-
-      if (data.session && pathname === "/admin/login") {
-        router.replace("/admin/home");
-      }
+      if (!data.session && pathname !== "/admin/login") router.replace("/admin/login");
+      if (data.session && pathname === "/admin/login") router.replace("/admin/home");
     }
 
     checkSession();
     return () => { active = false };
-  }, [pathname]);
+  }, [pathname, router, supabase]);
 
   if (loading) return <p style={{ padding: 40 }}>Checking access…</p>;
 
@@ -50,19 +45,18 @@ export default function AdminLayout({ children }) {
   return (
     <SessionContext.Provider value={session}>
       {showNav && (
-        <nav style={{ background: "#111", color: "#fff", padding: 14 }}>
+        <nav style={{ background: "#111", color: "#fff", padding: 14, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div style={{ display: "flex", gap: 16 }}>
             <Link href="/admin/home">Home</Link>
             <Link href="/admin/about">About</Link>
             <Link href="/admin/leadership">Leadership</Link>
             <Link href="/admin/contact">Contact</Link>
           </div>
-          <button onClick={logout} style={{ float: "right" }}>
+          <button onClick={logout} style={{ background: "#e33", color: "#fff", border: "none", padding: "6px 12px", borderRadius: "6px", cursor: "pointer" }}>
             Logout
           </button>
         </nav>
       )}
-
       <main>{children}</main>
     </SessionContext.Provider>
   );
