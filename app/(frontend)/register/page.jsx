@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import "/public/css/register.css";
 
+export const runtime = "nodejs";
 
 const supabase = createClientComponentClient();
 

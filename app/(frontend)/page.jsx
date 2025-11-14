@@ -3,6 +3,10 @@
 import { useEffect, useState } from "react";
 import { supabase } from "/lib/supabaseClient";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+
 export default function HomePage() {
   const [homeData, setHomeData] = useState(null);
   const [events, setEvents] = useState([]);

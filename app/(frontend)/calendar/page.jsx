@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import "/public/css/calendar.css";
 
+export const runtime = "nodejs";
+
 export default function CalendarPage() {
   const [calendarItems, setCalendarItems] = useState([]);
   const [loading, setLoading] = useState(true);

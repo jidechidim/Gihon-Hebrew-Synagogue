@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { supabase } from "/lib/supabaseClient";
 import "/public/css/events.css";
 
+export const runtime = "nodejs";
+
 export default function EventsPage() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);

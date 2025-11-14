@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 
+export const runtime = "nodejs";
+
 export default function NewsPage({ params }) {
   const { id } = params;
   const router = useRouter();

@@ -7,6 +7,8 @@ import Image from "next/image";
 import Link from "next/link";
 import "/public/css/newsarticle.css";
 
+export const runtime = "nodejs";
+
 const supabase = createClientComponentClient();
 
 export default function NewsArticlePage() {

@@ -5,6 +5,8 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContext } from "../../layout";
 import ImageUpload from "../../components/ImageUpload";
 
+export const runtime = "nodejs";
+
 const supabase = createClientComponentClient();
 
 export default function HomeAdmin() {

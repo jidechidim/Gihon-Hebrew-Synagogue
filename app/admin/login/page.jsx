@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
+export const runtime = "nodejs";
+
 export default function AdminLogin() {
   const router = useRouter();
   const supabase = createClientComponentClient();

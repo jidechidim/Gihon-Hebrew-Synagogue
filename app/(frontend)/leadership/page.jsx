@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import "/public/css/leadership.css";
 
+export const runtime = "nodejs";
+
 const supabase = createClientComponentClient();
 
 export default function LeadershipPage() {

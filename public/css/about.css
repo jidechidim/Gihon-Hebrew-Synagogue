@@ -242,7 +242,7 @@ body{
 /* ===== Values ===== */
 .values{background:var(--panel); padding:150px 0}
 .values h2{
-  margin:0 0 6px; font-weight:800; font-size:clamp(20px,1vw + 16px,24px);
+  margin:0 0 6px; font-weight:700; font-size:clamp(20px,1vw + 16px,24px);
 }
 .values-kicker{margin:0 0 22px; color:var(--muted)}
 
@@ -263,7 +263,7 @@ body{
 
 /* ===== Board ===== */
 .board{padding:150px 0 150px}
-.board h2{margin:0 0 18px; font-weight:800}
+.board h2{margin:0 0 18px; font-weight:700}
 .board-figure{margin:0 0 10px}
 .board-figure img{
   width:100%; height:520px; object-fit:cover; border-radius:6px; box-shadow:var(--shadow);
