@@ -1,15 +1,19 @@
 import { writeFileToPublic } from "@/lib/fsUtils";
 
-// use writeFileToPublic(fileName, data) wherever you write to public/assets
-
-
-export async function GET() {
-  const data = await readJSON("leadership.json");
-  return new Response(JSON.stringify(data), { status: 200 });
-}
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function POST(req) {
-  const body = await req.json();
-  await writeJSON("leadership.json", body);
-  return new Response(JSON.stringify({ success: true }), { status: 200 });
+  try {
+    const body = await req.json();
+    // Example: save leadership team data
+    const fileName = "leadership.json";
+    await writeFileToPublic(fileName, JSON.stringify(body, null, 2));
+
+    return new Response(JSON.stringify({ message: "Leadership saved", url: `/assets/${fileName}` }), {
+      status: 200,
+    });
+  } catch (err) {
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+  }
 }
