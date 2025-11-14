@@ -1,0 +1,416 @@
+/* ===== Tokens (from your guide) ===== */
+:root{
+  --brand:#255D99;        /* primary */
+  --brand-900:#1C467D;    /* darker */
+  --brand-100:#A8BED6;    /* light/tint */
+  --ink:#121212;          /* body/headings */
+  --muted:#64748b;        /* secondary text */
+  --paper:#ffffff;        /* base */
+  --paper-2:#F5F7FA;      /* soft section */
+  --outline:#dbe3ec;      /* borders */
+  --radius:14px;
+  --shadow:0 10px 25px rgba(2,6,23,.08);
+  --max:1120px;           /* content width */
+}
+
+/* ===== Base ===== */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img{max-width:100%;display:block}
+body{
+  font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink); line-height:1.65; background:var(--paper);
+}
+.container{width:min(92vw,var(--max)); margin-inline:auto}
+.container.narrow{width:min(820px,92vw)}
+.center{text-align:center}
+.sr-only{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(1px,1px,1px,1px)}
+
+/* ===== Header (uses your existing JS classes/IDs) ===== */
+.site-header{position:fixed; top:0; inset-inline:0; z-index:60; background:#fff; box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.nav-wrap{display:flex; align-items:center; gap:1rem; padding:10px 0}
+.brand{display:flex; align-items:center; gap:.6rem; text-decoration:none}
+.site-header .brand img{height:40px; width:auto}
+@media (max-width:640px){ .site-header .brand img{height:32px} }
+
+.brand-text{font-weight:700; color:var(--ink)}
+.desktop-nav{margin-left:auto}
+.desktop-nav ul{display:flex; gap:1.1rem; list-style:none; margin:0; padding:0}
+.desktop-nav a{color:var(--ink); text-decoration:none; font-weight:600}
+.desktop-nav a.active{text-decoration:underline}
+.btn{display:inline-block; border-radius:999px; padding:.6rem 1rem; font-weight:700; text-decoration:none}
+.btn-donate{background:#0f2d4a; color:#fff}
+
+/* ===============================
+   Header / Navigation
+================================== */
+
+
+/* Desktop nav links */
+.desktop-nav a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+  transition:color .25s ease;
+}
+.site-header.scrolled .desktop-nav a{color:var(--ink)}
+.desktop-nav a:hover{color:var(--brand)}
+.desktop-nav a.active{color:var(--brand)}
+
+/* Donate button (shared) */
+.btn-donate{
+  margin-left:1rem;
+  background:#0f2d4a;
+  color:#fff;
+  padding:.55rem 1rem;
+  border-radius:0px;
+  font-weight:700;
+  text-decoration:none;
+  border:2px solid transparent;
+  transition:background .25s ease, color .25s ease, transform .05s ease;
+}
+.btn-donate:hover{
+  background:var(--brand);
+  color:#fff;
+}
+.btn-donate:active{transform:translateY(1px)}
+.btn-donate:focus-visible{
+  outline:0;
+  box-shadow:0 0 0 3px rgba(37,93,153,.2);
+}
+
+/* Hamburger */
+.hamburger{
+  display:none;
+  width:44px;height:44px;
+  background:transparent;
+  border:0;
+  position:relative;
+}
+.hamburger span{
+  position:absolute;
+  left:10px;right:10px;
+  height:2px;
+  background:#fff;
+  transition:transform .25s,top .25s,opacity .25s;
+}
+.hamburger span:nth-child(1){top:14px}
+.hamburger span:nth-child(2){top:21px}
+.hamburger span:nth-child(3){top:28px}
+.site-header.scrolled .hamburger span{background:var(--ink)}
+.hamburger.active span:nth-child(1){top:21px;transform:rotate(45deg)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){top:21px;transform:rotate(-45deg)}
+
+/* Drawer */
+.mobile-drawer{
+  position:fixed;
+  inset-block:0;
+  left:-320px;
+  width:300px;
+  background:#fff;
+  z-index:70;
+  box-shadow:var(--shadow);
+  padding:18px;
+  transition:left .25s;
+}
+.mobile-drawer.open{left:0}
+.mobile-drawer ul{
+  list-style:none;
+  margin:0;padding:0;
+  display:grid;
+  gap:.5rem;
+}
+.mobile-drawer a{
+  display:block;
+  padding:.7rem .4rem;
+  color:var(--ink);
+  font-weight:700;
+  text-decoration:none;
+  transition:color .25s ease;
+}
+.mobile-drawer a:hover,
+.mobile-drawer a.active{color:var(--brand)}
+
+/* Drawer donate button */
+.mobile-drawer .drawer-cta{
+  margin-top:.5rem;
+  text-align:left;
+}
+.mobile-drawer .drawer-cta .btn-donate{
+  width:auto;
+  display:inline-block;
+  padding:.55rem 1rem;
+  border-radius:0px;
+  background:#0f2d4a;
+  color:#fff;
+  transition:background .25s ease,color .25s ease;
+}
+.mobile-drawer .drawer-cta .btn-donate:hover{
+  background:var(--brand);
+  color:#fff;
+}
+
+.drawer-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,.32);
+  backdrop-filter:blur(2px);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .25s;
+  z-index:65;
+}
+.drawer-backdrop.show{opacity:1;pointer-events:auto}
+
+
+/* --- Responsive toggle --- */
+@media (max-width:900px){
+  .desktop-nav { display:none; }
+  .hamburger { display:inline-block; }
+  .btn-donate { margin-left:auto; } /* keeps Donate on far right */
+}
+
+/* Keep page below fixed header */
+.page{padding-top:50px}
+
+/* ===== Page header block ===== */
+.parsha-header{
+  padding:50px 0 12px;
+  border-bottom:1px solid var(--outline);
+}
+.parsha-header h1{
+  margin:0 0 18px;
+  font-weight:700;
+  font-size:clamp(26px,1.2vw + 22px,34px);
+  letter-spacing:.2px;
+}
+
+/* Search */
+.parsha-search{
+  position:relative; width:min(380px,86vw); margin:0 auto 14px;
+}
+.parsha-search input{
+  width:100%; padding:.78rem 2.2rem .78rem .95rem;
+  border:1.5px solid var(--outline); border-radius:999px; outline:none;
+  transition:border-color .18s, box-shadow .18s;
+}
+.parsha-search input:focus{
+  border-color:var(--brand); box-shadow:0 0 0 3px rgba(37,93,153,.12);
+}
+.search-icon{position:absolute; right:.8rem; top:50%; transform:translateY(-50%); color:#94a3b8; font-size:.95rem}
+
+/* References row */
+.refs{margin:8px 0 0; font-weight:600; color:#111827}
+.refs .ref{color:inherit; text-decoration:none}
+.refs .ref:hover{color:var(--brand)}
+.refs .sep{display:inline-block; margin:0 .9rem; color:#6b7280}
+.result-meta{margin-top:7px; color:var(--muted); font-size:.95rem; min-height:1.1em}
+
+/* ===== Reading ===== */
+.parsha-content{padding:50px 0 12px}
+.reading{width:min(880px,92vw)}
+.reading p{margin:0 0 1.15rem}
+
+/* ===== Pager (Previous left, Next right) ===== */
+.pager{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; /* left spacer | (optional) center | right spacer */
+  align-items: center;
+  gap: 1px;
+  padding: 8px 0 28px;
+}
+
+/* Pill buttons */
+.pager-link{
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 600;
+  padding: .55rem 1rem;
+  border: 1px solid var(--outline);
+  border-radius: 999px;
+  transition: color .2s ease, border-color .2s ease, background .2s ease;
+}
+.pager-link:hover{
+  color: var(--brand);
+  border-color: var(--brand);
+  background: rgba(37,93,153,.06);
+}
+
+/* Force edges */
+.pager-link.prev{
+  grid-column: 1;
+  justify-self: start;   /* stick to left */
+  text-align: left;
+}
+.pager-link.next{
+  grid-column: 3;
+  justify-self: end;     /* stick to right */
+  text-align: right;
+}
+
+/* Optional: tighter spacing on very small screens (still left/right) */
+@media (max-width: 560px){
+  .pager{ gap: 12px; }
+}
+
+/* ===== Weekly Parsha styles ===== */
+.parsha-quote {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 2rem 1.5rem 1.5rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.parsha-quote p {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+
+.parsha-ref {
+  display: flex;
+  justify-content: center;
+  gap: .6rem;
+  flex-wrap: wrap;
+}
+
+
+/* ===== Footer ===== */
+.site-footer{background:#255D99; color:#fff}
+.footer-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; padding:36px 0}
+.logo-badge img{width:64px; height:64px; background:#fff; border-radius:50%}
+.foot-col h4{margin:.2rem 0 .6rem}
+.foot-col ul{list-style:none; margin:0; padding:0; display:grid; gap:.35rem}
+.foot-col a{color:#fff; text-decoration:none; opacity:.95}
+.foot-col a:hover{opacity:1; text-decoration:underline}
+.footer-bottom{display:flex; align-items:center; justify-content:space-between; padding:14px 0; border-top:1px solid rgba(255,255,255,.15)}
+.footer-bottom .legal{display:flex; gap:14px; list-style:none; margin:0; padding:0}
+.footer-bottom a{color:#fff; text-decoration:none; opacity:.9}
+.footer-bottom a:hover{opacity:1}
+
+/* ===== Responsive ===== */
+@media (max-width:1024px){
+  .footer-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:820px){
+  .reading{width:min(680px,92vw)}
+  .footer-grid{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .parsha-header{padding:44px 0 10px}
+  .refs .sep{margin:0 .6rem}
+  .reading{width:min(560px,92vw)}
+  .pager{padding:24px 0 56px}
+  .footer-bottom{flex-direction:column; align-items:flex-start; gap:10px}
+}
+
+/* Center the Weekly Parsha section content */
+#parsha {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+#parsha .container {
+  max-width: 700px;
+  text-align: center;
+}
+
+/* Make sure the blockquote doesn’t look weird */
+.parsha-quote {
+  margin: 1.5rem auto;
+  font-style: italic;
+  border-left: none;
+  padding-left: 0;
+}
+
+.parsha-quote {
+  max-width: 900px; /* was probably around 600–700px */
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fafafa;
+  border-left: 4px solid #0077cc;
+  font-style: italic;
+  text-align: center;
+  line-height: 1.8;
+}
+
+mark {
+  background: #ffe066;
+  color: inherit;
+  padding: 0 2px;
+  border-radius: 2px;
+  transition: background 0.2s ease-in-out;
+}
+
+/* Highlight */
+mark {
+  background: #ffe066;
+  color: inherit;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* Results grid */
+.parsha-results {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.parsha-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.parsha-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 7px rgba(0,0,0,0.08);
+}
+
+.parsha-card h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+.parsha-card .hebrew {
+  color: #cc3366;
+  font-size: 1.1em;
+  margin-left: 0.4rem;
+}
+
+.parsha-card .summary {
+  margin-top: 0.75rem;
+  color: #444;
+  line-height: 1.5;
+}
+
+.no-results {
+  text-align: center;
+  font-style: italic;
+  color: #666;
+}
+
+/* Ensure the body takes full viewport height and arranges content vertically */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Full height of viewport */
+  margin: 0;
+}
+
+/* Main content should grow to fill space */
+main.page {
+  flex: 1; /* Take remaining space so footer is pushed down */
+}
