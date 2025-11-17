@@ -45,13 +45,11 @@ export default function HomePage() {
         // ===== Fetch current week's parsha =====
         const parshaRes = await fetch("/data/parsha.json");
         if (!parshaRes.ok) throw new Error("Failed to load Parsha data");
-
         const data = await parshaRes.json();
 
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
-        // 1) find parsha where today is between start & end
         let currentParsha = data.find(item => {
           const start = new Date(item.startDate);
           const end = new Date(item.endDate);
@@ -60,7 +58,6 @@ export default function HomePage() {
           return today >= start && today <= end;
         });
 
-        // 2) if none matches, find the next upcoming parsha
         if (!currentParsha) {
           currentParsha = data.find(item => {
             const start = new Date(item.startDate);
@@ -69,11 +66,9 @@ export default function HomePage() {
           });
         }
 
-        // 3) final fallback
         if (!currentParsha) currentParsha = data[data.length - 1];
 
         setParsha(currentParsha);
-
       } catch (err) {
         console.error("Error loading homepage data:", err);
       }
@@ -93,7 +88,6 @@ export default function HomePage() {
 
   return (
     <main>
-
       {/* ===== HERO ===== */}
       <section className="hero" id="home" aria-label="Hero">
         <picture>
@@ -233,7 +227,38 @@ export default function HomePage() {
             {homeData.newsletter?.title || "Stay Connected"}
           </h2>
           <p>{homeData.newsletter?.description}</p>
-          <form className="newsletter-form">
+          <form
+            className="newsletter-form"
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const email = e.target.email.value.trim();
+              if (!email) {
+                alert("Please enter a valid email.");
+                return;
+              }
+
+              const formData = new FormData();
+              formData.append("email", email);
+
+              try {
+                const res = await fetch("https://formspree.io/f/xvgbearn", {
+                  method: "POST",
+                  body: formData,
+                  headers: { Accept: "application/json" },
+                });
+
+                if (res.ok) {
+                  alert("Thank you for subscribing!");
+                  e.target.reset();
+                } else {
+                  alert("Something went wrong. Please try again.");
+                }
+              } catch (err) {
+                console.error(err);
+                alert("Error submitting form. Check your connection.");
+              }
+            }}
+          >
             <input
               type="email"
               name="email"

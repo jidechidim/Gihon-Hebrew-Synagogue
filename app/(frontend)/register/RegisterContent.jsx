@@ -71,14 +71,14 @@ export default function RegisterContent() {
     setSubmitting(true);
 
     const formData = new FormData();
-    formData.append("Full Name", formState.fullName);
-    formData.append("Email", formState.email);
-    if (formState.phone) formData.append("Phone", formState.phone);
-    formData.append("Event Selection", formState.eventSelection);
+    formData.append("fullName", formState.fullName);
+    formData.append("email", formState.email);
+    if (formState.phone) formData.append("phone", formState.phone);
+    formData.append("eventSelection", formState.eventSelection);
     if (formState.specialRequirements)
-      formData.append("Special Requirements", formState.specialRequirements);
-    formData.append("Number of Guests", formState.numberOfGuests);
-    if (formState.consent) formData.append("Consent", "Yes");
+      formData.append("specialRequirements", formState.specialRequirements);
+    formData.append("numberOfGuests", formState.numberOfGuests);
+    formData.append("consent", formState.consent ? "Yes" : "No");
 
     try {
       const res = await fetch("https://formspree.io/f/xqayrqlk", {
@@ -102,17 +102,11 @@ export default function RegisterContent() {
   };
 
   if (loading)
-    return (
-      <p className="container narrow center mt-10">
-        Loading events...
-      </p>
-    );
+    return <p className="container narrow center mt-10">Loading events...</p>;
 
   if (error)
     return (
-      <p className="container narrow center mt-10 text-red-600">
-        {error}
-      </p>
+      <p className="container narrow center mt-10 text-red-600">{error}</p>
     );
 
   return (
@@ -197,7 +191,12 @@ export default function RegisterContent() {
           />
         </label>
 
-        <label className="checkbox-field">
+        {/* ✅ Full-width, block-style checkbox */}
+        <div className="checkbox-group">
+          <label className="checkbox-label">
+            I consent to being contacted with updates about this event
+            <span className="required">*</span>
+          </label>
           <input
             type="checkbox"
             name="consent"
@@ -205,15 +204,9 @@ export default function RegisterContent() {
             checked={formState.consent}
             onChange={handleChange}
           />
-          I consent to being contacted with updates about this event{" "}
-          <span className="required">*</span>
-        </label>
+        </div>
 
-        <button
-          type="submit"
-          className="btn btn-primary"
-          disabled={submitting}
-        >
+        <button type="submit" className="btn btn-primary" disabled={submitting}>
           {submitting ? "Submitting..." : "Register"}
         </button>
       </form>
@@ -246,11 +239,21 @@ export default function RegisterContent() {
           border-radius: var(--radius);
           font: inherit;
         }
-        .checkbox-field {
+
+        /* ✅ Block-style checkbox */
+        .checkbox-group {
           display: flex;
-          align-items: center;
-          gap: 0.4rem;
+          flex-direction: column;
+          gap: 0.3rem;
         }
+        .checkbox-label {
+          font-weight: 600;
+        }
+        .checkbox-group input[type="checkbox"] {
+          width: auto;
+          margin: 0;
+        }
+
         .required {
           color: #c00;
         }
