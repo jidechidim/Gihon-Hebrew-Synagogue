@@ -164,8 +164,11 @@ Future Enhancements
 👤
 
 Author
+
 Jidechi Dimunah
+
 Product Designer & Frontend Architect
+
 User-centered. Minimalist. Built to last.
 
 
