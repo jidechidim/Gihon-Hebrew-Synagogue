@@ -1,10 +1,13 @@
-🕍 Gihon Hebrew Synagogue Platform
+🕍 
+Gihon Hebrew Synagogue Platform
 A modern, scalable web platform built to power the online presence of Gihon Hebrew Synagogue, including weekly Parsha content, announcements, and community-facing pages.
 
 Designed with clarity, performance, and long-term maintainability in mind.
 
 
-📘 Overview
+
+📘 
+Overview
 This project is a Next.js App Router application built with TypeScript and Tailwind CSS, using a structured data approach to manage religious and community content.
 The platform prioritizes:
 * Accurate weekly Parsha presentation
@@ -12,7 +15,9 @@ The platform prioritizes:
 * A future-ready architecture that can scale with content and features
 
 
-🧱 Tech Stack
+
+🧱 
+Tech Stack
 
 Frontend Framework
 * Next.js (App Router)
@@ -33,7 +38,9 @@ Tooling
 * Modern build pipeline via Next.js
 
 
-🧠 Technical Decisions
+
+🧠
+Technical Decisions
 * Next.js (App Router)
 Chosen for server-first rendering, clean routing, and production scalability. Supports SEO and performance without architectural rewrites.
 
@@ -56,7 +63,9 @@ Reserved for future localization, routing rules, or access control without prema
 Leverages native Next.js optimizations for reliability and simplicity in production.
 
 
-📖 Parsha Content Strategy
+
+📖 
+Parsha Content Strategy
 The platform is designed to support weekly Torah portions (Parshas) with accuracy and flexibility.
 
 Current Direction
@@ -72,14 +81,18 @@ Planned Improvements
 This avoids fragile “week index” logic and ensures long-term correctness.
 
 
-🎨 Design & UX Principles
+
+🎨
+Design & UX Principles
 * Minimalist, respectful visual language
 * Clear typography and hierarchy
 * Mobile-first layout
 * Tailwind-based design tokens to ensure consistency as the platform scales
 
 
-▶️ Local Development
+
+▶️
+Local Development
 Prerequisites
 * Node.js (v18+ recommended)
 * npm or yarn
@@ -94,7 +107,9 @@ Visit:
 http://localhost:3000
 
 
-🚀 Deployment
+
+🚀
+Deployment
 This project is deployment-ready for:
 * Vercel (recommended for Next.js)
 * Any Node-compatible hosting environment
@@ -103,17 +118,25 @@ Environment variables should be managed via hosting provider settings.
 A .env.example file should be used for reference — never commit secrets.
 
 
-🛠️ Future Enhancements
+
+🛠️
+Future Enhancements
 * SEO metadata & Open Graph support
 * Multilingual content (English / Hebrew)
 * Events calendar
 * Admin-friendly content editing layer
 * Sermon audio/video integration
 
-👤 Author
+
+
+👤
+Author
 Jidechi Dimunah
 Product Designer & Frontend Architect
 User-centered. Minimalist. Built to last.
 
-📄 License
+
+
+📄 
+License
 Private project — all rights reserved.
