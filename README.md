@@ -1,4 +1,4 @@
-🕍 
+ 
 
 Gihon Hebrew Synagogue Platform
 
@@ -8,7 +8,7 @@ Designed with clarity, performance, and long-term maintainability in mind.
 
 
 
-📘 
+
 
 Overview
 
@@ -22,7 +22,7 @@ The platform prioritizes:
 
 
 
-🧱 
+
 
 Tech Stack
 
@@ -50,7 +50,7 @@ Tooling
 
 
 
-🧠
+
 
 Technical Decisions
 
@@ -77,7 +77,7 @@ Leverages native Next.js optimizations for reliability and simplicity in product
 
 
 
-📖 
+ 
 
 Parsha Content Strategy
 
@@ -99,7 +99,7 @@ This avoids fragile “week index” logic and ensures long-term correctness.
 
 
 
-🎨
+
 
 Design & UX Principles
 
@@ -111,7 +111,7 @@ Design & UX Principles
 
 
 
-▶️
+
 
 Local Development
 Prerequisites
@@ -133,7 +133,7 @@ http://localhost:3000
 
 
 
-🚀
+
 
 Deployment
 
@@ -148,7 +148,7 @@ A .env.example file should be used for reference — never commit secrets.
 
 
 
-🛠️
+
 
 Future Enhancements
 
@@ -161,7 +161,7 @@ Future Enhancements
 
 
 
-👤
+
 
 Author
 
@@ -174,7 +174,7 @@ User-centered. Minimalist. Built to last.
 
 
 
-📄 
+ 
 
 License
 
