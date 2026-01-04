@@ -106,6 +106,7 @@ export default function Header() {
             <li><Link href="/about">About Us</Link></li>
             <li><Link href="/getinvolved">Get Involved</Link></li>
             <li><Link href="/parshiyot">Parshiyot</Link></li>
+            <li><Link href="/parsha">Parshiyot</Link></li>
             <li><Link href="/events">Events</Link></li>
             <li><Link href="/news">News & Media</Link></li>
           </ul>
