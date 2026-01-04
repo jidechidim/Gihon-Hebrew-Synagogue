@@ -105,7 +105,6 @@ export default function Header() {
             <li><Link href="/">Home</Link></li>
             <li><Link href="/about">About Us</Link></li>
             <li><Link href="/getinvolved">Get Involved</Link></li>
-            <li><Link href="/parshiyot">Parshiyot</Link></li>
             <li><Link href="/parsha">Parshiyot</Link></li>
             <li><Link href="/events">Events</Link></li>
             <li><Link href="/news">News & Media</Link></li>
@@ -149,7 +148,7 @@ export default function Header() {
           <li><Link href="/" onClick={closeMenu}>Home</Link></li>
           <li><Link href="/about" onClick={closeMenu}>About Us</Link></li>
           <li><Link href="/getinvolved" onClick={closeMenu}>Get Involved</Link></li>
-          <li><Link href="/parshiyot" onClick={closeMenu}>Parshiyot</Link></li>
+          <li><Link href="/parsha" onClick={closeMenu}>Parshiyot</Link></li>
           <li><Link href="/events" onClick={closeMenu}>Events</Link></li>
           <li><Link href="/news" onClick={closeMenu}>News & Media</Link></li>
           <li className="drawer-cta">
