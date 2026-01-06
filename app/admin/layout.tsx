@@ -49,6 +49,8 @@ export default function AdminLayout({ children }) {
           <div style={{ display: "flex", gap: 16 }}>
             <Link href="/admin/home">Home</Link>
             <Link href="/admin/about">About</Link>
+            <Link href="/admin/events">Events</Link>
+            <Link href="/admin/news">News</Link>
             <Link href="/admin/leadership">Leadership</Link>
             <Link href="/admin/contact">Contact</Link>
           </div>
