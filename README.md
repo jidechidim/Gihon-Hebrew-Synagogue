@@ -16,7 +16,7 @@ This project is a Next.js App Router application built with TypeScript and Tailw
 
 The platform prioritizes:
 
-* Accurate weekly Parsha presentation
+* Accurate weekly Parshiyot presentation
 * Clean, accessible UI(User Interface)
 * A future-ready architecture that can scale with content and features
 
