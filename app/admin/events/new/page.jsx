@@ -1,65 +1,66 @@
 "use client";
 
-import { useState } from "react";
-import { createClient } from "@supabase/supabase-js";
+import { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { SessionContext } from "../layout";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
+const supabase = createClientComponentClient();
 
 export default function NewEventPage() {
+  const session = useContext(SessionContext);
   const router = useRouter();
-  const [title, setTitle] = useState("");
-  const [date, setDate] = useState("");
+  const [form, setForm] = useState({
+    title: "",
+    date: "",
+    image: "",
+    summary: "",
+    location: "",
+    register_url: "",
+  });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
-  async function handleSubmit(e) {
+  if (!session) return <p>Checking access…</p>;
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
 
-    const { error } = await supabase
-      .from("events")
-      .insert([{ title, date }]);
+    try {
+      const { data, error } = await supabase.from("events").insert([
+        {
+          ...form,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        },
+      ]);
 
-    setLoading(false);
-
-    if (error) {
-      setError(error.message);
-      return;
+      if (error) throw error;
+      router.push("/admin/events");
+    } catch (err) {
+      console.error("Failed to create event:", err.message);
+      alert("Error creating event: " + err.message);
+    } finally {
+      setLoading(false);
     }
-
-    router.push("/admin/events");
-  }
+  };
 
   return (
-    <div style={{ padding: "2rem", maxWidth: 500 }}>
-      <h2>Add New Event</h2>
-
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Event title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          required
-        />
-
-        <button disabled={loading}>
-          {loading ? "Saving..." : "Create Event"}
-        </button>
+    <div style={{ padding: "2rem" }}>
+      <h2>Create New Event</h2>
+      <form onSubmit={handleSubmit} style={{ display: "grid", gap: "1rem", maxWidth: 500 }}>
+        <input name="title" placeholder="Title" value={form.title} onChange={handleChange} required />
+        <input type="date" name="date" value={form.date} onChange={handleChange} required />
+        <input name="image" placeholder="Image URL" value={form.image} onChange={handleChange} />
+        <textarea name="summary" placeholder="Summary" value={form.summary} onChange={handleChange} />
+        <input name="location" placeholder="Location" value={form.location} onChange={handleChange} />
+        <input name="register_url" placeholder="Register URL" value={form.register_url} onChange={handleChange} />
+        <button type="submit" disabled={loading}>{loading ? "Creating…" : "Create Event"}</button>
       </form>
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }
