@@ -3,7 +3,7 @@
 import { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { SessionContext } from "../layout";
+import { SessionContext } from "../../layout";
 
 const supabase = createClientComponentClient();
 
