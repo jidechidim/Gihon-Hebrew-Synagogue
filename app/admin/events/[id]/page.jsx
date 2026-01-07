@@ -1,164 +1,74 @@
 "use client";
 
-import { useEffect, useState, useContext } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useContext } from "react";
+import { useRouter, useParams } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-
-export const runtime = "nodejs";
+import { SessionContext } from "@/app/layout";
+import EventForm from "@/components/admin/EventForm";
+import { deleteFile } from "@/lib/storage";
 
 const supabase = createClientComponentClient();
 
-export default function EventPage({ params }) {
-  const { id } = params;
-  const router = useRouter();
+export default function EditEventPage() {
   const session = useContext(SessionContext);
-
-  const [data, setData] = useState({
-    title: "",
-    description: "",
-    date: "",
-    image: "",
-  });
-  const [loading, setLoading] = useState(true);
-  const [uploading, setUploading] = useState(false);
+  const router = useRouter();
+  const { id } = useParams();
+  const [event, setEvent] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!session) return;
-
-    const fetchEvent = async () => {
-      try {
-        const { data: event, error } = await supabase
-          .from("events")
-          .select("*")
-          .eq("id", id)
-          .single();
-
-        if (error) throw error;
-
-        if (event) {
-          setData({
-            title: event.title || "",
-            description: event.description || "",
-            date: event.date || "",
-            image: event.image || "",
-          });
-        }
-      } catch (err) {
-        console.error(err);
-        alert("Error loading event: " + err.message);
-      } finally {
-        setLoading(false);
-      }
+    const load = async () => {
+      const { data, error } = await supabase.from("events").select("*").eq("id", id).single();
+      if (error) return alert(error.message);
+      setEvent(data);
     };
+    load();
+  }, [session, id]);
 
-    fetchEvent();
-  }, [id, session]);
-
-  if (!session) return <p>Checking access…</p>;
-  if (loading) return <p>Loading event…</p>;
-
-  const uploadImage = async (file) => {
-    if (!file) return;
-    setUploading(true);
-
-    const fileExt = file.name.split(".").pop();
-    const fileName = `${Date.now()}.${fileExt}`;
-
+  const updateEvent = async (form) => {
+    setLoading(true);
     try {
-      const { error } = await supabase.storage
-        .from("events-images")
-        .upload(fileName, file, { upsert: true });
-
-      if (error) throw error;
-
-      const { data: urlData } = supabase.storage
-        .from("events-images")
-        .getPublicUrl(fileName);
-
-      setData({ ...data, image: urlData.publicUrl });
-    } catch (err) {
-      console.error(err);
-      alert("Upload failed: " + err.message);
-    } finally {
-      setUploading(false);
-    }
-  };
-
-  const saveEvent = async (e) => {
-    e.preventDefault();
-    try {
-      const { error } = await supabase
-        .from("events")
-        .update(data)
-        .eq("id", id);
-
-      if (error) throw error;
-
-      alert("Event updated!");
+      await supabase.from("events").update({ ...form, updated_at: new Date().toISOString() }).eq("id", id);
       router.push("/admin/events");
     } catch (err) {
-      console.error(err);
-      alert("Error saving event: " + err.message);
+      alert("Update failed: " + err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
+  const handleDelete = async () => {
+    if (!confirm("Delete this event?")) return;
+    if (event.image) await deleteFile("events", event.image);
+    await supabase.from("events").delete().eq("id", id);
+    router.push("/admin/events");
+  };
+
+  const togglePublished = async () => {
+    await supabase.from("events").update({ published: !event.published }).eq("id", id);
+    setEvent({ ...event, published: !event.published });
+  };
+
+  if (!session || !event) return <p>Loading…</p>;
+
   return (
-    <div className="max-w-xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Edit Event</h1>
-      <form onSubmit={saveEvent} className="flex flex-col gap-4">
-        <div>
-          <label className="block font-semibold">Title</label>
-          <input
-            type="text"
-            value={data.title}
-            onChange={(e) => setData({ ...data, title: e.target.value })}
-            className="w-full border rounded p-2"
-          />
-        </div>
+    <div className="p-4 max-w-xl mx-auto">
+      <h2>Edit Event</h2>
+      <button
+        onClick={togglePublished}
+        className={`px-2 py-1 rounded ${event.published ? "bg-green-500" : "bg-gray-400"} text-white`}
+      >
+        {event.published ? "Published" : "Draft"}
+      </button>
+      <button
+        onClick={handleDelete}
+        className="ml-2 px-2 py-1 rounded bg-red-600 text-white"
+      >
+        Delete
+      </button>
 
-        <div>
-          <label className="block font-semibold">Description</label>
-          <textarea
-            value={data.description}
-            onChange={(e) => setData({ ...data, description: e.target.value })}
-            className="w-full border rounded p-2"
-          />
-        </div>
-
-        <div>
-          <label className="block font-semibold">Date</label>
-          <input
-            type="date"
-            value={data.date}
-            onChange={(e) => setData({ ...data, date: e.target.value })}
-            className="w-full border rounded p-2"
-          />
-        </div>
-
-        <div>
-          <label className="block font-semibold">Image</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => uploadImage(e.target.files[0])}
-          />
-          {uploading && <p>Uploading image…</p>}
-          {data.image && (
-            <img
-              src={data.image}
-              alt="Event image"
-              className="w-48 mt-2 rounded"
-            />
-          )}
-        </div>
-
-        <button
-          type="submit"
-          className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-        >
-          Save Event
-        </button>
-      </form>
+      <EventForm initialData={event} onSubmit={updateEvent} loading={loading} />
     </div>
   );
 }

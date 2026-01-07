@@ -42,7 +42,7 @@
     "app/(frontend)/**/*.jsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
-  ],
+, "lib/supabaseServer.ts"  ],
   "exclude": [
     "node_modules",
     ".next"
