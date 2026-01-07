@@ -106,7 +106,7 @@ export default function HomePage() {
       {/* ===== WEEKLY PARSHA ===== */}
       <section id="parsha" className="section parsha">
         <div className="container narrow">
-          <h1 className="section-title">Weekly Parsha</h1>
+          <h1 className="section-title">Weekly Parshiyot</h1>
 
           {currentParsha ? (
             <blockquote className="parsha-quote">
