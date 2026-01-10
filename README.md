@@ -1,6 +1,4 @@
- 
-
-Gihon Hebrew Synagogue Website
+ Gihon Hebrew Synagogue Website
 
 A modern, scalable website built to power the online presence of Gihon Hebrew Synagogue, including weekly Parsha content, announcements, and community-facing pages.
 
