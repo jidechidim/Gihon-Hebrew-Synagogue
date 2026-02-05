@@ -131,9 +131,10 @@ export default function Header() {
       >
         <Link
           href="/"
-          className="brand"
+          className="brand drawer-brand"
           aria-label="Gihon Hebrew Synagogue Home"
           onClick={closeMenu}
+          style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "20px" }}
         >
           <Image
             src="/assets/logo.png"

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@lib/supabaseClient";
+import { supabase } from "@lib/supabase/client";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -97,9 +97,12 @@ export default function HomePage() {
         <div className="container hero-content">
           <h1>{homeData.hero.title}</h1>
           <p>{homeData.hero.subtitle}</p>
-          <a href={homeData.hero.cta_link} className="btn btn-primary">
-            {homeData.hero.cta_text}
-          </a>
+          <div className="hero-ctas">
+            <a href={homeData.hero.cta_link} className="btn btn-primary">
+              {homeData.hero.cta_text}
+            </a>
+            <a href="/about" className="btn btn-outline">Learn More</a>
+          </div>
         </div>
       </section>
 

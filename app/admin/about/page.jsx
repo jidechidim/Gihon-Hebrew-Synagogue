@@ -91,33 +91,75 @@ export default function AboutAdmin() {
       <h2>About Page Editor</h2>
 
       {/* Intro Section */}
-      <section style={{ border: "1px solid #ccc", padding: 16, marginBottom: 20 }}>
-        <h3>Intro Section</h3>
-        <label>Title</label>
-        <input value={data.intro.title} onChange={(e) => updateIntro("title", e.target.value)} />
-        <label>Lede</label>
-        <textarea value={data.intro.lede} onChange={(e) => updateIntro("lede", e.target.value)} rows={4} />
-        <label>Image Alt Text</label>
-        <input value={data.intro.image_alt} onChange={(e) => updateIntro("image_alt", e.target.value)} />
-        <ImageUpload
-          label="Intro Image"
-          value={data.intro.image}
-          onChange={(url) => updateIntro("image", url)}
-          bucket="content"
-        />
+      <section
+        style={{
+          border: "1px solid #ccc",
+          padding: 16,
+          marginBottom: 20,
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 16,
+        }}
+      >
+        <h3 style={{ width: "100%" }}>Intro Section</h3>
+
+        <div style={{ flex: "1 1 45%", minWidth: 220, display: "flex", flexDirection: "column" }}>
+          <label>Title</label>
+          <input style={{ width: "100%" }} value={data.intro.title} onChange={(e) => updateIntro("title", e.target.value)} />
+        </div>
+
+        <div style={{ flex: "1 1 45%", minWidth: 220, display: "flex", flexDirection: "column" }}>
+          <label>Lede</label>
+          <textarea style={{ width: "100%" }} value={data.intro.lede} onChange={(e) => updateIntro("lede", e.target.value)} rows={4} />
+        </div>
+
+        <div style={{ flex: "1 1 45%", minWidth: 220, display: "flex", flexDirection: "column" }}>
+          <label>Image Alt Text</label>
+          <input style={{ width: "100%" }} value={data.intro.image_alt} onChange={(e) => updateIntro("image_alt", e.target.value)} />
+        </div>
+
+        <div style={{ flex: "1 1 45%", minWidth: 220, display: "flex", flexDirection: "column" }}>
+          <ImageUpload
+            label="Intro Image"
+            value={data.intro.image}
+            onChange={(url) => updateIntro("image", url)}
+            bucket="content"
+          />
+        </div>
       </section>
 
       {/* Mission & Vision */}
-      <section style={{ border: "1px solid #ccc", padding: 16, marginBottom: 20 }}>
-        <h3>Mission & Vision</h3>
-        <label>Mission Title</label>
-        <input value={data.mission_vision.mission.title} onChange={(e) => updateMissionVision("mission", "title", e.target.value)} />
-        <label>Mission Text</label>
-        <textarea value={data.mission_vision.mission.text} onChange={(e) => updateMissionVision("mission", "text", e.target.value)} rows={4} />
-        <label>Vision Title</label>
-        <input value={data.mission_vision.vision.title} onChange={(e) => updateMissionVision("vision", "title", e.target.value)} />
-        <label>Vision Text</label>
-        <textarea value={data.mission_vision.vision.text} onChange={(e) => updateMissionVision("vision", "text", e.target.value)} rows={4} />
+      <section
+        style={{
+          border: "1px solid #ccc",
+          padding: 16,
+          marginBottom: 20,
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 16,
+        }}
+      >
+        <h3 style={{ width: "100%" }}>Mission & Vision</h3>
+
+        <div style={{ flex: "1 1 45%", minWidth: 220, display: "flex", flexDirection: "column" }}>
+          <label>Mission Title</label>
+          <input style={{ width: "100%" }} value={data.mission_vision.mission.title} onChange={(e) => updateMissionVision("mission", "title", e.target.value)} />
+        </div>
+
+        <div style={{ flex: "1 1 45%", minWidth: 320, display: "flex", flexDirection: "column" }}>
+          <label>Mission Text</label>
+          <textarea style={{ width: "100%" }} value={data.mission_vision.mission.text} onChange={(e) => updateMissionVision("mission", "text", e.target.value)} rows={4} />
+        </div>
+
+        <div style={{ flex: "1 1 45%", minWidth: 220, display: "flex", flexDirection: "column" }}>
+          <label>Vision Title</label>
+          <input style={{ width: "100%" }} value={data.mission_vision.vision.title} onChange={(e) => updateMissionVision("vision", "title", e.target.value)} />
+        </div>
+
+        <div style={{ flex: "1 1 45%", minWidth: 320, display: "flex", flexDirection: "column" }}>
+          <label>Vision Text</label>
+          <textarea style={{ width: "100%" }} value={data.mission_vision.vision.text} onChange={(e) => updateMissionVision("vision", "text", e.target.value)} rows={4} />
+        </div>
       </section>
 
       {/* Values */}
@@ -125,7 +167,7 @@ export default function AboutAdmin() {
         <h3>Values</h3>
         {data.values.map((v, i) => (
           <div key={i} style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 8 }}>
-            <input value={v} onChange={(e) => updateValue(i, e.target.value)} />
+            <input style={{ flex: "1 1 auto" }} value={v} onChange={(e) => updateValue(i, e.target.value)} />
             <button type="button" onClick={() => removeValue(i)}>Remove</button>
           </div>
         ))}
@@ -133,25 +175,49 @@ export default function AboutAdmin() {
       </section>
 
       {/* Board */}
-      <section style={{ border: "1px solid #ccc", padding: 16, marginBottom: 20 }}>
-        <h3>Board</h3>
-        <label>Caption</label>
-        <input value={data.board.caption} onChange={(e) => updateBoard("caption", e.target.value)} />
-        <label>CTA Text</label>
-        <input value={data.board.cta_text} onChange={(e) => updateBoard("cta_text", e.target.value)} />
-        <label>CTA Link</label>
-        <input value={data.board.cta_link} onChange={(e) => updateBoard("cta_link", e.target.value)} />
-        <label>Image Alt Text</label>
-        <input value={data.board.image_alt} onChange={(e) => updateBoard("image_alt", e.target.value)} />
-        <ImageUpload
-          label="Board Image"
-          value={data.board.image}
-          onChange={(url) => updateBoard("image", url)}
-          bucket="content"
-        />
+      <section
+        style={{
+          border: "1px solid #ccc",
+          padding: 16,
+          marginBottom: 20,
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 16,
+        }}
+      >
+        <h3 style={{ width: "100%" }}>Board</h3>
+
+        <div style={{ flex: "1 1 45%", minWidth: 220, display: "flex", flexDirection: "column" }}>
+          <label>Caption</label>
+          <input style={{ width: "100%" }} value={data.board.caption} onChange={(e) => updateBoard("caption", e.target.value)} />
+        </div>
+
+        <div style={{ flex: "1 1 45%", minWidth: 220, display: "flex", flexDirection: "column" }}>
+          <label>CTA Text</label>
+          <input style={{ width: "100%" }} value={data.board.cta_text} onChange={(e) => updateBoard("cta_text", e.target.value)} />
+        </div>
+
+        <div style={{ flex: "1 1 45%", minWidth: 220, display: "flex", flexDirection: "column" }}>
+          <label>CTA Link</label>
+          <input style={{ width: "100%" }} value={data.board.cta_link} onChange={(e) => updateBoard("cta_link", e.target.value)} />
+        </div>
+
+        <div style={{ flex: "1 1 45%", minWidth: 220, display: "flex", flexDirection: "column" }}>
+          <label>Image Alt Text</label>
+          <input style={{ width: "100%" }} value={data.board.image_alt} onChange={(e) => updateBoard("image_alt", e.target.value)} />
+        </div>
+
+        <div style={{ flex: "1 1 45%", minWidth: 220, display: "flex", flexDirection: "column" }}>
+          <ImageUpload
+            label="Board Image"
+            value={data.board.image}
+            onChange={(url) => updateBoard("image", url)}
+            bucket="content"
+          />
+        </div>
       </section>
 
-      <button onClick={saveData} disabled={saving} style={{ marginTop: 10, padding: "8px 16px", fontSize: 16 }}>
+      <button onClick={saveData} disabled={saving} className="btn btn-outline" style={{ marginTop: 10 }}>
         {saving ? "Saving..." : "Save Changes"}
       </button>
     </div>

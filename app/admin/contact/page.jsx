@@ -158,7 +158,8 @@ export default function ContactAdmin() {
       <button
         onClick={saveData}
         disabled={saving}
-        style={{ marginTop: 10, padding: "8px 16px", fontSize: 16 }}
+        className="btn btn-outline"
+        style={{ marginTop: 10 }}
       >
         {saving ? "Saving..." : "Save Changes"}
       </button>

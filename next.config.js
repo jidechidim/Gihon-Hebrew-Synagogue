@@ -1,8 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      "opekmaxzucoswrbntpli.supabase.co", // ✅ your Supabase project domain
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "opekmaxzucoswrbntpli.supabase.co",
+        pathname: "/storage/v1/object/public/uploads/**",
+      },
     ],
   },
 };

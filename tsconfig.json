@@ -1,21 +1,23 @@
 {
   "compilerOptions": {
+    "target": "ES2017",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": false,
-    "noEmit": true,
-    "incremental": true,
-    "module": "esnext",
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
     "jsx": "react-jsx",
+    "allowJs": true,
+    "checkJs": false,
+    "strict": false,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "incremental": true,
     "plugins": [
       {
         "name": "next"
@@ -26,25 +28,33 @@
       "@/*": [
         "./*"
       ],
-      "@lib/*": [
-        "lib/*"
+      "@app/*": [
+        "./app/*"
       ],
-      "@css/*": [
-        "app/(frontend)/public/css/*"
+      "@lib/*": [
+        "./lib/*"
+      ],
+      "@components/*": [
+        "./app/(frontend)/components/*"
+      ],
+      "@styles/*": [
+        "./app/(frontend)/styles/*"
+      ],
+      "@assets/*": [
+        "./public/*"
       ]
-    },
-    "target": "ES2017"
+    }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "app/(frontend)/**/*.jsx",
+    "**/*.js",
+    "**/*.jsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
-, "lib/supabaseServer.ts"  ],
+  ],
   "exclude": [
-    "node_modules",
-    ".next"
+    "node_modules"
   ]
 }
