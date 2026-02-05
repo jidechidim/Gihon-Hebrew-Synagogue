@@ -46,6 +46,8 @@ body{
 .btn:focus-visible{outline:0; box-shadow:0 0 0 3px rgba(37,93,153,.2)}
 .btn-primary{background:var(--brand);color:#fff}
 .btn-primary:hover{background:var(--brand-900)}
+.btn-primary--red{background:#dc2626;color:#fff;border-color:transparent}
+.btn-primary--red:hover{background:#b91c1c}
 .btn-outline{background:transparent;color:var(--brand);border-color:var(--brand)}
 .btn-outline:hover{background:var(--brand);color:#fff}
 .btn-donate{background:#0f2d4a;color:#fff;padding:.55rem 1rem}
@@ -86,9 +88,9 @@ body{
 @media (max-width:480px) { .brand-text { font-size:.8rem } }
 @media (max-width:320px) { .brand-text { font-size:.75rem } }
 
-/* Desktop nav (right-aligned) */
-.desktop-nav{margin-left:auto; margin-right:100px;}
-.desktop-nav ul{display:flex;gap:1.25rem;list-style:none;margin:0;padding:0}
+/* Desktop nav (centered on wide screens; compact gaps) */
+.desktop-nav{display:flex;margin-left:auto;margin-right:auto;justify-content:center;align-items:center;gap:20px}
+.desktop-nav ul{display:flex;gap:20px;list-style:none;margin:0;padding:0}
 
 /* Desktop nav links */
 .desktop-nav a{
@@ -98,6 +100,11 @@ body{
 .desktop-nav a:hover,
 .desktop-nav a:focus-visible,
 .desktop-nav a.active{color:var(--brand)}
+
+/* Admin-specific: ensure hover uses primary brand color (overrides inline/tailwind hover classes) */
+.admin-header .desktop-nav a:hover{
+  color:var(--brand) !important;
+}
 
 /* Donate on the far right */
 .btn.btn-donate{margin-left:0}
@@ -121,7 +128,12 @@ body{
 /* Mobile layout */
 @media (max-width:900px){
   .desktop-nav{display:none}
-  .hamburger{display:inline-block}
+  /* Frontend: keep hamburger left-aligned with brand */
+  .hamburger{display:inline-block;margin-left:0}
+  /* Admin header: override to align hamburger to the right in admin area */
+  .admin-header .hamburger{margin-left:auto}
+  /* Ensure desktop logout is hidden on mobile to avoid duplicate logout buttons */
+  .logout-desktop{display:none !important}
   .btn.btn-donate{margin-left:auto}
 }
 
@@ -162,6 +174,9 @@ body{
 /* Reserve content space below header */
 .page{padding-top:60px}
 
+/* Admin pages: add extra top margin to offset fixed admin header */
+.admin-page{margin-top:50px}
+
 /* ===============================
    Hero
 ================================== */
@@ -174,6 +189,13 @@ body{
 .hero-content{position:relative;color:#fff;width:min(1220px,92vw);margin-inline:auto}
 .hero h1{margin:0 0 .8rem;font-size:clamp(30px,3.2vw + 18px,60px);line-height:1.1}
 .hero p{margin:0 0 1.1rem;opacity:.95}
+
+.hero-ctas{display:inline-flex;gap:12px;align-items:center}
+.hero-ctas .btn{min-width:120px}
+
+/* Admin events thumbnail styling */
+.admin-event-image{width:100%;height:300px;object-fit:cover;border-radius:8px;display:block}
+.admin-event-image.mb-2{margin-bottom:.5rem}
 
 /* ===============================
    Sections

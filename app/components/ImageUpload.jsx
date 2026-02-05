@@ -7,7 +7,7 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
-export default function ImageUpload({ label, value, onChange, folder = "general" }) {
+export default function ImageUpload({ label, value, onChange, folder = "general", previewHeight = 180 }) {
   const [uploading, setUploading] = useState(false);
 
   async function handleUpload(e) {
@@ -50,7 +50,9 @@ export default function ImageUpload({ label, value, onChange, folder = "general"
           src={value}
           alt="Preview"
           style={{
-            width: 180,
+            width: "100%",
+            height: previewHeight,
+            objectFit: "cover",
             borderRadius: 8,
             marginBottom: 8,
             border: "1px solid #ddd"

@@ -3,9 +3,10 @@
 import { useState, useEffect, useContext } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { SessionContext } from "@/app/layout";
-import EventForm from "@/components/admin/EventForm";
+import { SessionContext } from "../../layout";
 import { deleteFile } from "@/lib/storage";
+import AdminContainer from "../../components/AdminContainer";
+import ImageUpload from "../../../components/ImageUpload";
 
 const supabase = createClientComponentClient();
 
@@ -18,24 +19,21 @@ export default function EditEventPage() {
 
   useEffect(() => {
     if (!session) return;
+
     const load = async () => {
       const { data, error } = await supabase.from("events").select("*").eq("id", id).single();
       if (error) return alert(error.message);
       setEvent(data);
     };
+
     load();
   }, [session, id]);
 
   const updateEvent = async (form) => {
     setLoading(true);
-    try {
-      await supabase.from("events").update({ ...form, updated_at: new Date().toISOString() }).eq("id", id);
-      router.push("/admin/events");
-    } catch (err) {
-      alert("Update failed: " + err.message);
-    } finally {
-      setLoading(false);
-    }
+    await supabase.from("events").update({ ...form, updated_at: new Date().toISOString() }).eq("id", id);
+    setLoading(false);
+    router.push("/admin/events");
   };
 
   const handleDelete = async () => {
@@ -48,27 +46,91 @@ export default function EditEventPage() {
   const togglePublished = async () => {
     await supabase.from("events").update({ published: !event.published }).eq("id", id);
     setEvent({ ...event, published: !event.published });
+    setForm((f) => ({ ...f, published: !f.published }));
   };
 
-  if (!session || !event) return <p>Loading…</p>;
+  const [form, setForm] = useState(null);
+
+  // keep local form state in sync with loaded event
+  useEffect(() => {
+    if (event) setForm(event);
+  }, [event]);
+
+  const updateField = (k, v) => setForm((s) => ({ ...s, [k]: v }));
+
+  if (!session || !event || !form) return <p>Loading…</p>;
 
   return (
-    <div className="p-4 max-w-xl mx-auto">
+    <AdminContainer>
       <h2>Edit Event</h2>
-      <button
-        onClick={togglePublished}
-        className={`px-2 py-1 rounded ${event.published ? "bg-green-500" : "bg-gray-400"} text-white`}
-      >
-        {event.published ? "Published" : "Draft"}
-      </button>
-      <button
-        onClick={handleDelete}
-        className="ml-2 px-2 py-1 rounded bg-red-600 text-white"
-      >
-        Delete
-      </button>
 
-      <EventForm initialData={event} onSubmit={updateEvent} loading={loading} />
-    </div>
+      <section
+        style={{
+          border: "1px solid #ccc",
+          padding: 16,
+          marginBottom: 20,
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 16,
+        }}
+      >
+        <div style={{ width: "100%", display: "flex", alignItems: "center", gap: 10 }}>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <button
+              onClick={togglePublished}
+              className={`px-2 py-1 rounded text-white ${form.published ? "bg-green-600" : "bg-gray-400"}`}
+            >
+              {form.published ? "Published" : "Draft"}
+            </button>
+            <button onClick={handleDelete} className="px-2 py-1 rounded bg-red-600 text-white">
+              Delete
+            </button>
+          </div>
+        </div>
+
+        <div style={{ width: "100%" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <label>
+              <div style={{ fontWeight: 600, marginBottom: 6 }}>Title</div>
+              <input type="text" value={form.title || ""} onChange={(e) => updateField("title", e.target.value)} style={{ width: "100%", padding: 8, border: "1px solid #ccc", borderRadius: 6 }} />
+            </label>
+
+            <label>
+              <div style={{ fontWeight: 600, marginBottom: 6 }}>Date</div>
+              <input type="date" value={form.date || ""} onChange={(e) => updateField("date", e.target.value)} style={{ width: "100%", padding: 8, border: "1px solid #ccc", borderRadius: 6 }} />
+            </label>
+
+            <label>
+              <div style={{ fontWeight: 600, marginBottom: 6 }}>Summary</div>
+              <textarea value={form.summary || ""} onChange={(e) => updateField("summary", e.target.value)} style={{ width: "100%", padding: 8, border: "1px solid #ccc", borderRadius: 6 }} />
+            </label>
+
+            <label>
+              <div style={{ fontWeight: 600, marginBottom: 6 }}>Location</div>
+              <input type="text" value={form.location || ""} onChange={(e) => updateField("location", e.target.value)} style={{ width: "100%", padding: 8, border: "1px solid #ccc", borderRadius: 6 }} />
+            </label>
+
+            <label>
+              <div style={{ fontWeight: 600, marginBottom: 6 }}>Register URL</div>
+              <input type="text" value={form.register_url || ""} onChange={(e) => updateField("register_url", e.target.value)} style={{ width: "100%", padding: 8, border: "1px solid #ccc", borderRadius: 6 }} />
+            </label>
+
+            <label>
+              <div style={{ fontWeight: 600, marginBottom: 6 }}>Image</div>
+              <ImageUpload label="Event Image" value={form.image} onChange={(url) => updateField("image", url)} folder="events" previewHeight={300} />
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <button
+        onClick={() => updateEvent(form)}
+        disabled={loading}
+        className="btn btn-outline"
+        style={{ marginTop: 10 }}
+      >
+        {loading ? "Saving…" : "Save Changes"}
+      </button>
+    </AdminContainer>
   );
 }

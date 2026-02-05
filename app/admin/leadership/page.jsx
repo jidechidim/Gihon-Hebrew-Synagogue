@@ -87,18 +87,36 @@ export default function LeadershipAdmin() {
       <h2>Leadership Page Editor</h2>
 
       {/* Hero Section */}
-      <section style={{ border: "1px solid #ccc", padding: 16, marginBottom: 20 }}>
-        <h3>Hero Section</h3>
-        <label>Figcaption</label>
-        <input value={data.hero.figcaption} onChange={(e) => updateHero("figcaption", e.target.value)} />
-        <label>Alt Text</label>
-        <input value={data.hero.alt} onChange={(e) => updateHero("alt", e.target.value)} />
-        <ImageUpload
-          label="Hero Image"
-          value={data.hero.image}
-          onChange={(url) => updateHero("image", url)}
-          bucket="content"
-        />
+      <section
+        style={{
+          border: "1px solid #ccc",
+          padding: 16,
+          marginBottom: 20,
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 16,
+        }}
+      >
+        <h3 style={{ width: "100%" }}>Hero Section</h3>
+
+        <div style={{ flex: "1 1 45%", minWidth: 220, display: "flex", flexDirection: "column" }}>
+          <label>Figcaption</label>
+          <input style={{ width: "100%" }} value={data.hero.figcaption} onChange={(e) => updateHero("figcaption", e.target.value)} />
+        </div>
+
+        <div style={{ flex: "1 1 45%", minWidth: 220, display: "flex", flexDirection: "column" }}>
+          <label>Alt Text</label>
+          <input style={{ width: "100%" }} value={data.hero.alt} onChange={(e) => updateHero("alt", e.target.value)} />
+        </div>
+
+        <div style={{ flex: "1 1 45%", minWidth: 220, display: "flex", flexDirection: "column" }}>
+          <ImageUpload
+            label="Hero Image"
+            value={data.hero.image}
+            onChange={(url) => updateHero("image", url)}
+            bucket="content"
+          />
+        </div>
       </section>
 
       {/* Members Section */}
@@ -107,31 +125,41 @@ export default function LeadershipAdmin() {
         {data.members.map((member, i) => (
           <section
             key={member.id}
-            style={{ border: "1px solid #aaa", padding: 12, marginBottom: 12 }}
+            style={{ border: "1px solid #aaa", padding: 12, marginBottom: 12, display: "flex", flexWrap: "wrap", gap: 12 }}
           >
-            <label>Name</label>
-            <input value={member.name} onChange={(e) => updateMember(i, "name", e.target.value)} />
+            <div style={{ flex: "1 1 40%", minWidth: 180, display: "flex", flexDirection: "column" }}>
+              <label>Name</label>
+              <input style={{ width: "100%" }} value={member.name} onChange={(e) => updateMember(i, "name", e.target.value)} />
+            </div>
 
-            <label>Role</label>
-            <input value={member.role} onChange={(e) => updateMember(i, "role", e.target.value)} />
+            <div style={{ flex: "1 1 40%", minWidth: 180, display: "flex", flexDirection: "column" }}>
+              <label>Role</label>
+              <input style={{ width: "100%" }} value={member.role} onChange={(e) => updateMember(i, "role", e.target.value)} />
+            </div>
 
-            <label>Alt Text</label>
-            <input value={member.alt} onChange={(e) => updateMember(i, "alt", e.target.value)} />
+            <div style={{ flex: "1 1 40%", minWidth: 180, display: "flex", flexDirection: "column" }}>
+              <label>Alt Text</label>
+              <input style={{ width: "100%" }} value={member.alt} onChange={(e) => updateMember(i, "alt", e.target.value)} />
+            </div>
 
-            <ImageUpload
-              label="Member Image"
-              value={member.image}
-              onChange={(url) => updateMember(i, "image", url)}
-              bucket="content"
-            />
+            <div style={{ flex: "1 1 40%", minWidth: 220, display: "flex", flexDirection: "column" }}>
+              <ImageUpload
+                label="Member Image"
+                value={member.image}
+                onChange={(url) => updateMember(i, "image", url)}
+                bucket="content"
+              />
+            </div>
 
-            <button
-              type="button"
-              onClick={() => removeMember(i)}
-              style={{ marginTop: 8, background: "#e33", color: "#fff", padding: "4px 8px", border: "none", borderRadius: 4 }}
-            >
-              Remove Member
-            </button>
+            <div style={{ width: "100%" }}>
+              <button
+                type="button"
+                onClick={() => removeMember(i)}
+                style={{ marginTop: 8, background: "#e33", color: "#fff", padding: "4px 8px", border: "none", borderRadius: 4 }}
+              >
+                Remove Member
+              </button>
+            </div>
           </section>
         ))}
         <button
@@ -146,7 +174,8 @@ export default function LeadershipAdmin() {
       <button
         onClick={saveData}
         disabled={saving}
-        style={{ marginTop: 10, padding: "8px 16px", fontSize: 16 }}
+        className="btn btn-outline"
+        style={{ marginTop: 10 }}
       >
         {saving ? "Saving..." : "Save Changes"}
       </button>
