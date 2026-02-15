@@ -52,7 +52,7 @@ export default function LeadershipPage() {
       <section className="council-hero py-12">
         <div className="container narrow center">
           <div className="text-center">
-            <h1 className="text-3xl font-bold mb-6">
+            <h1 className="page-title text-3xl font-bold mb-6">
               Our Board and Executive Council
             </h1>
             <figure className="hero-figure">
@@ -69,7 +69,7 @@ export default function LeadershipPage() {
       <section className="members py-12">
         <div className="container narrow center">
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-semibold" id="membersTitle">
+            <h2 className="page-title text-2xl font-semibold" id="membersTitle">
               Our Members
             </h2>
           </div>

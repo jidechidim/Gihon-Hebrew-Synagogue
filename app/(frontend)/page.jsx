@@ -85,9 +85,58 @@ export default function HomePage() {
     );
 
   const currentParsha = parsha;
+  const aboutData = homeData.about || {};
+  const aboutParagraphs = Array.isArray(aboutData.paragraphs)
+    ? aboutData.paragraphs
+    : aboutData.description
+      ? [aboutData.description]
+      : [];
+  const filteredAboutParagraphs = aboutParagraphs.filter(Boolean);
+  const aboutTitle = aboutData.title || "Who We Are";
+  const aboutSummary =
+    filteredAboutParagraphs.length > 0
+      ? filteredAboutParagraphs
+      : [
+          "Gihon Hebrew Synagogue is a growing Jewish community in Nigeria dedicated to Torah life, prayer, education, and service to people seeking spiritual roots and belonging.",
+        ];
+  const aboutCtaText = aboutData.cta_text || "Learn More";
+  const aboutCtaLink = aboutData.cta_link || "/about";
+  const aboutImageTop =
+    aboutData.image_top ||
+    aboutData.image_primary ||
+    aboutData.image ||
+    aboutData.image_secondary ||
+    "/assets/welcomeimage.png";
+  const aboutImageBottom =
+    aboutData.image_bottom ||
+    aboutData.image_secondary ||
+    aboutData.image_two ||
+    aboutData.image ||
+    aboutImageTop;
+  const communityData = homeData.community || {};
+  const communityItems = Array.isArray(communityData.items) ? communityData.items : [];
+  const defaultCommunityItems = [
+    { title: "Services", image: "/assets/welcomeimage.png" },
+    { title: "Learning", image: "/assets/welcomeimage.png" },
+    { title: "Holidays", image: "/assets/welcomeimage.png" },
+  ];
+  const communityCards = (communityItems.length > 0 ? communityItems : defaultCommunityItems).slice(0, 3);
+  const communityTitle = communityData.title || "Our Community";
+  const communityDescription =
+    communityData.description || "A welcoming space of worship, learning, and connection.";
+  const donateData = homeData.donate || {};
+  const donateTitle = donateData.title || "Support Jewish Life in Nigeria";
+  const donateDescription =
+    donateData.description ||
+    "Your support helps us sustain worship, education, and outreach for Jewish families across Nigeria.";
+  const donatePrimaryLink = donateData.cta_link || "/donate";
+  const donatePrimaryText = donateData.cta_text || "Donate";
+  const donatePrimaryLinkProps = donatePrimaryLink.startsWith("http")
+    ? { target: "_blank", rel: "noopener noreferrer" }
+    : {};
 
   return (
-    <main>
+    <main className="home-page">
       {/* ===== HERO ===== */}
       <section className="hero" id="home" aria-label="Hero">
         <picture>
@@ -106,7 +155,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== WEEKLY PARSHA ===== */}
+      {/* ===== WEEKLY PARSHIYOT ===== */}
       <section id="parsha" className="section parsha">
         <div className="container narrow">
           <h1 className="section-title">Weekly Parshiyot</h1>
@@ -122,7 +171,7 @@ export default function HomePage() {
           ) : (
             <blockquote className="parsha-quote">
               <h3 className="parsha-title">Loading...</h3>
-              <p className="parsha-content">Fetching Parsha summary...</p>
+              <p className="parsha-content">Fetching Parshiyot summary...</p>
               <div className="parsha-ref">
                 <p className="ref">Fetching references...</p>
               </div>
@@ -130,7 +179,39 @@ export default function HomePage() {
           )}
 
           <div className="center">
-            <a href="/parsha" className="btn btn-outline">Go to Parsha</a>
+            <a href="/parshiyot" className="btn btn-outline">Go to Parshiyot</a>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== ABOUT SECTION ===== */}
+      <section id="about-home" className="section about-home">
+        <div className="container about-home-grid">
+          <div className="about-home-text">
+            <h2 className="section-title">{aboutTitle}</h2>
+            {aboutData.subtitle ? <p className="section-subtitle">{aboutData.subtitle}</p> : null}
+            {aboutSummary.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+            <a href={aboutCtaLink} className="btn btn-outline">
+              {aboutCtaText}
+            </a>
+          </div>
+          <div className="about-home-media">
+            <figure className="about-home-image about-home-image-top">
+              <img
+                src={aboutImageTop}
+                alt={aboutData.image_top_alt || aboutData.image_alt || aboutData.title || "About image"}
+              />
+            </figure>
+            {aboutImageBottom ? (
+              <figure className="about-home-image about-home-image-bottom">
+                <img
+                  src={aboutImageBottom}
+                  alt={aboutData.image_bottom_alt || aboutData.image_alt || aboutData.title || "About image"}
+                />
+              </figure>
+            ) : null}
           </div>
         </div>
       </section>
@@ -175,13 +256,55 @@ export default function HomePage() {
             <img src={homeData.welcome.image} alt={homeData.welcome.title} />
           </div>
           <div className="split-copy">
-            <h2>{homeData.welcome.title}</h2>
+            <h2 className="section-title">{homeData.welcome.title}</h2>
             {homeData.welcome.paragraphs.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
             <a href={homeData.welcome.cta_link} className="btn btn-outline">
               {homeData.welcome.cta_text}
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== OUR COMMUNITY SECTION ===== */}
+      <section id="community" className="section community">
+        <div className="container">
+          <div className="center community-head">
+            <h2 className="section-title">{communityTitle}</h2>
+            <p className="section-subtitle">{communityDescription}</p>
+          </div>
+          <div className="community-grid">
+            {communityCards.map((item, index) => {
+              const image = item.image || item.photo || item.thumbnail || item.image_url || "";
+              const title = item.title || "Community";
+              const alt = item.image_alt || title || "Community activity";
+              const isExternal = item.cta_link?.startsWith("http");
+              const linkProps = isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {};
+
+              return (
+                <article key={`${item.title || "community-item"}-${index}`} className="community-card">
+                  {image ? (
+                    <img src={image} alt={alt} loading="lazy" />
+                  ) : (
+                    <div className="community-fallback" aria-hidden="true">
+                      {item.title ? item.title.charAt(0) : "C"}
+                    </div>
+                  )}
+                  <div className="community-overlay">
+                    <div className="community-overlay-content">
+                      <h3>{title}</h3>
+                      {item.description ? <p>{item.description}</p> : null}
+                      {item.cta_link && item.cta_text ? (
+                        <a href={item.cta_link} className="community-link" {...linkProps}>
+                          {item.cta_text}
+                        </a>
+                      ) : null}
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -223,13 +346,28 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ===== DONATE SECTION ===== */}
+      <section id="donate" className="section donate">
+        <div className="container narrow center">
+          <div className="donate-panel">
+            <h2 className="section-title">{donateTitle}</h2>
+            <p className="section-subtitle">{donateDescription}</p>
+            <div className="hero-ctas donate-ctas">
+              <a href={donatePrimaryLink} className="btn btn-primary" {...donatePrimaryLinkProps}>
+                {donatePrimaryText}
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ===== NEWSLETTER SECTION ===== */}
       <section className="newsletter section">
         <div className="container narrow center">
           <h2 className="section-title">
             {homeData.newsletter?.title || "Stay Connected"}
           </h2>
-          <p>{homeData.newsletter?.description}</p>
+          <p className="section-subtitle">{homeData.newsletter?.description}</p>
           <form
             className="newsletter-form"
             onSubmit={async (e) => {

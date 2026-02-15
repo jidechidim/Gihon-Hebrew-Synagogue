@@ -1,0 +1,63 @@
+.donate-page .donate-hero {
+  background: linear-gradient(180deg, #f5f8fc 0%, #ffffff 100%);
+  padding: 140px 0 90px;
+}
+
+.donate-hero-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.2rem;
+}
+
+.donate-page .donate-impact {
+  background: #ffffff;
+  padding: 80px 0;
+}
+
+.donate-impact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 1.5rem;
+}
+
+.donate-impact-card {
+  border: 1px solid var(--outline);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.donate-impact-card h3 {
+  margin: 0 0 0.45rem;
+  font-size: 1.1rem;
+}
+
+.donate-impact-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.donate-page .donate-trust {
+  background: #edf2f5;
+  padding: 80px 0 100px;
+}
+
+@media (max-width: 960px) {
+  .donate-impact-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .donate-page .donate-hero {
+    padding: 50px 0 75px;
+  }
+
+  .donate-impact-grid {
+    grid-template-columns: 1fr;
+  }
+}

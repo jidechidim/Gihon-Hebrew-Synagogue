@@ -58,7 +58,7 @@ export default function NewsArticleContent() {
 
   return (
     <main className="min-h-screen flex flex-col items-center bg-gray-50 px-4">
-      <h2 className="article-heading">News Article</h2>
+      <h2 className="article-heading page-title">News Article</h2>
 
       <section className="article-container">
         {article.image && (
