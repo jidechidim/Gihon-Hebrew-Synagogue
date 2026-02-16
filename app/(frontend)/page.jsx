@@ -353,7 +353,7 @@ export default function HomePage() {
             <h2 className="section-title">{donateTitle}</h2>
             <p className="section-subtitle">{donateDescription}</p>
             <div className="hero-ctas donate-ctas">
-              <a href={donatePrimaryLink} className="btn btn-primary" {...donatePrimaryLinkProps}>
+              <a href={donatePrimaryLink} className="btn btn-outline" {...donatePrimaryLinkProps}>
                 {donatePrimaryText}
               </a>
             </div>
