@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@lib/supabase/client";
+import CTAButton from "../components/CTAButton";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -147,10 +148,10 @@ export default function HomePage() {
           <h1>{homeData.hero.title}</h1>
           <p>{homeData.hero.subtitle}</p>
           <div className="hero-ctas">
-            <a href={homeData.hero.cta_link} className="btn btn-primary">
+            <CTAButton href={homeData.hero.cta_link} variant="primary">
               {homeData.hero.cta_text}
-            </a>
-            <a href="/about" className="btn btn-outline">Learn More</a>
+            </CTAButton>
+            <CTAButton href="/about" variant="secondary">Learn More</CTAButton>
           </div>
         </div>
       </section>
@@ -179,23 +180,23 @@ export default function HomePage() {
           )}
 
           <div className="center">
-            <a href="/parshiyot" className="btn btn-outline">Go to Parshiyot</a>
+            <CTAButton href="/parshiyot" variant="secondary">Go to Parshiyot</CTAButton>
           </div>
         </div>
       </section>
 
       {/* ===== ABOUT SECTION ===== */}
       <section id="about-home" className="section about-home">
-        <div className="container about-home-grid">
+        <div className="container about-home-content">
           <div className="about-home-text">
             <h2 className="section-title">{aboutTitle}</h2>
             {aboutData.subtitle ? <p className="section-subtitle">{aboutData.subtitle}</p> : null}
             {aboutSummary.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
-            <a href={aboutCtaLink} className="btn btn-outline">
+            <CTAButton href={aboutCtaLink} variant="secondary">
               {aboutCtaText}
-            </a>
+            </CTAButton>
           </div>
           <div className="about-home-media">
             <figure className="about-home-image about-home-image-top">
@@ -235,7 +236,9 @@ export default function HomePage() {
                         <li><span className="dot"></span> {ev.location}</li>
                       </ul>
                       <div className="card-actions">
-                        <a className="btn btn-sm btn-outline" href="/register">Register</a>
+                        <CTAButton href="/register" variant="secondary" className="btn-sm">
+                          Register
+                        </CTAButton>
                       </div>
                     </div>
                   </article>
@@ -260,9 +263,9 @@ export default function HomePage() {
             {homeData.welcome.paragraphs.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
-            <a href={homeData.welcome.cta_link} className="btn btn-outline">
+            <CTAButton href={homeData.welcome.cta_link} variant="secondary">
               {homeData.welcome.cta_text}
-            </a>
+            </CTAButton>
           </div>
         </div>
       </section>
@@ -353,9 +356,9 @@ export default function HomePage() {
             <h2 className="section-title">{donateTitle}</h2>
             <p className="section-subtitle">{donateDescription}</p>
             <div className="hero-ctas donate-ctas">
-              <a href={donatePrimaryLink} className="btn btn-outline" {...donatePrimaryLinkProps}>
+              <CTAButton href={donatePrimaryLink} variant="secondary" {...donatePrimaryLinkProps}>
                 {donatePrimaryText}
-              </a>
+              </CTAButton>
             </div>
           </div>
         </div>
@@ -406,9 +409,9 @@ export default function HomePage() {
               placeholder={homeData.newsletter?.placeholder_email || "Enter your email address"}
               required
             />
-            <button type="submit" className="btn btn-primary">
+            <CTAButton type="submit" variant="primary">
               {homeData.newsletter?.submit_text || "Subscribe"}
-            </button>
+            </CTAButton>
           </form>
         </div>
       </section>

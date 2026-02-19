@@ -7,6 +7,7 @@ import { SessionContext } from "../../layout";
 import EventForm from "@/app/admin/components/EventForm";
 import AdminContainer from "../../components/AdminContainer";
 import ImageUpload from "../../../components/ImageUpload";
+import CTAButton from "../../../components/CTAButton";
 
 const supabase = createClientComponentClient();
 
@@ -84,9 +85,9 @@ export default function NewEventPage() {
         </div>
       </section>
 
-      <button onClick={createEvent} disabled={loading} className="btn btn-outline" style={{ marginTop: 10 }}>
+      <CTAButton onClick={createEvent} disabled={loading} type="button" variant="secondary" style={{ marginTop: 10 }}>
         {loading ? "Creating…" : "Create Event"}
-      </button>
+      </CTAButton>
     </AdminContainer>
   );
 }

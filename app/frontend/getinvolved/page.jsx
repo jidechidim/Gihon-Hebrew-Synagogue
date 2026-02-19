@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import CTAButton from "../../components/CTAButton";
 
 export default function GetInvolvedPage() {
   const [formState, setFormState] = useState({
@@ -184,9 +185,9 @@ export default function GetInvolvedPage() {
             />
           </label>
 
-          <button type="submit" className="btn btn-primary" disabled={submitting}>
+          <CTAButton type="submit" variant="primary" disabled={submitting}>
             {submitting ? "Submitting..." : "Submit"}
-          </button>
+          </CTAButton>
         </form>
       </section>
 

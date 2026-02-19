@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContext } from "../../layout";
 import ImageUpload from "../../../components/ImageUpload";
+import CTAButton from "../../../components/CTAButton";
 import AdminContainer from "../../components/AdminContainer";
 
 const supabase = createClientComponentClient();
@@ -71,9 +72,9 @@ export default function NewNewsPage() {
         </div>
       </section>
 
-      <button onClick={createNews} disabled={loading} className="btn btn-outline" style={{ marginTop: 10 }}>
+      <CTAButton onClick={createNews} disabled={loading} type="button" variant="secondary" style={{ marginTop: 10 }}>
         {loading ? "Creating…" : "Create News"}
-      </button>
+      </CTAButton>
     </AdminContainer>
   );
 }

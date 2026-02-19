@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import CTAButton from "./CTAButton";
 
 export default function Header() {
   const pathname = usePathname();
@@ -112,12 +113,9 @@ export default function Header() {
         </nav>
 
         {/* Donate */}
-        <Link
-          href="/donate"
-          className="btn btn-donate"
-        >
+        <CTAButton href="/donate" variant="primary" className="btn-donate">
           Donate
-        </Link>
+        </CTAButton>
       </div>
 
       {/* Mobile Drawer */}
@@ -151,13 +149,14 @@ export default function Header() {
           <li><Link href="/events" onClick={closeMenu}>Events</Link></li>
           <li><Link href="/news" onClick={closeMenu}>News & Media</Link></li>
           <li className="drawer-cta">
-            <Link
+            <CTAButton
               href="/donate"
-              className="btn btn-donate"
+              variant="primary"
+              className="btn-donate"
               onClick={closeMenu}
             >
               Donate
-            </Link>
+            </CTAButton>
           </li>
         </ul>
       </nav>

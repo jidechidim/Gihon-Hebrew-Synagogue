@@ -1,4 +1,4 @@
-import Link from "next/link";
+import CTAButton from "../../components/CTAButton";
 import "./donate.css";
 
 const DONATE_LINK = "https://flutterwave.com/pay/YOUR-UNIQUE-ID";
@@ -14,17 +14,16 @@ export default function DonatePage() {
             community outreach, and pastoral care across our growing congregation.
           </p>
           <div className="donate-hero-actions">
-            <a
+            <CTAButton
               href={DONATE_LINK}
               target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary"
+              variant="primary"
             >
               Give Now
-            </a>
-            <Link href="/getinvolved" className="btn btn-outline">
+            </CTAButton>
+            <CTAButton href="/getinvolved" variant="secondary">
               Other Ways to Help
-            </Link>
+            </CTAButton>
           </div>
         </div>
       </section>
@@ -57,9 +56,9 @@ export default function DonatePage() {
             If you would like to discuss giving in detail, contact our team.
           </p>
           <div className="center">
-            <Link href="mailto:gihonhebrewsynagogue25@gmail.com" className="btn btn-outline">
+            <CTAButton href="mailto:gihonhebrewsynagogue25@gmail.com" variant="secondary">
               Contact Us
-            </Link>
+            </CTAButton>
           </div>
         </div>
       </section>
