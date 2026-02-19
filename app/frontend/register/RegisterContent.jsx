@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { supabase } from "@lib/supabase/client";
+import CTAButton from "../../components/CTAButton";
 import "./register.css";
 
 export default function RegisterContent() {
@@ -206,9 +207,9 @@ export default function RegisterContent() {
           />
         </div>
 
-        <button type="submit" className="btn btn-primary" disabled={submitting}>
+        <CTAButton type="submit" variant="primary" disabled={submitting}>
           {submitting ? "Submitting..." : "Register"}
-        </button>
+        </CTAButton>
       </form>
 
       <style jsx>{`

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@lib/supabase/client";
+import CTAButton from "../../components/CTAButton";
 import "./events.css";
 
 export default function EventsPage() {
@@ -71,12 +72,13 @@ export default function EventsPage() {
                   </ul>
 
                   {/* REGISTER BUTTON — ALWAYS PRESENT */}
-                  <a
-                    className="btn btn-sm btn-outline"
+                  <CTAButton
                     href={`/register?eventId=${ev.id}`}
+                    variant="secondary"
+                    className="btn-sm"
                   >
                     Register
-                  </a>
+                  </CTAButton>
                 </div>
               </article>
             ))

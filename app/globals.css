@@ -71,6 +71,30 @@ a.btn{
 }
 .site-header.scrolled{background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.08)}
 
+/* Frontend header should match page section tone consistently */
+#siteHeader.site-header,
+#siteHeader.site-header.scrolled {
+  background: var(--paper);
+  box-shadow: none;
+}
+
+#siteHeader .brand-text,
+#siteHeader .desktop-nav a {
+  color: var(--ink);
+}
+
+#siteHeader .hamburger span {
+  background: var(--ink);
+}
+
+#siteHeader .btn-donate {
+  background: var(--brand);
+}
+
+#siteHeader .btn-donate:hover {
+  background: var(--brand-900);
+}
+
 .nav-wrap{display:flex;align-items:center;gap:1rem;padding:10px 0}
 
 /* Brand (logo + stacked text) */
@@ -688,47 +712,45 @@ main {
 
 /* Home About Section */
 .about-home {
-  background: #edf2f5;
-  padding-top: 150px;
-  --about-image-size: 400px;
-  --about-image-overlap: 140px;
+  background: var(--paper-2);
+  --about-image-size: 360px;
+  --about-image-overlap: 120px;
 }
 
-.about-home .section-title {
-  margin: 0;
-  font-size: clamp(1.75rem, 1.6vw + 1.1rem, 2.25rem);
-  letter-spacing: 0;
-  text-transform: none;
-  line-height: 1.15;
-}
-
-.about-home-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, calc((var(--about-image-size) * 2) - var(--about-image-overlap)));
-  gap: clamp(24px, 4vw, 72px);
+.about-home-content {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 38px;
 }
 
 .about-home-text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
+  width: min(100%, 560px);
   max-width: 560px;
 }
 
+.about-home .section-title {
+  margin: 0 0 0.7rem;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
 .about-home-text p {
-  margin: 0;
+  margin: 0 0 0.85rem;
   color: #334155;
   max-width: 58ch;
+}
+
+.about-home .about-home-text .section-subtitle {
+  margin-left: 0;
+  margin-right: 0;
+  text-align: left;
 }
 
 .about-home-media {
   position: relative;
   width: calc((var(--about-image-size) * 2) - var(--about-image-overlap));
   height: calc((var(--about-image-size) * 2) - var(--about-image-overlap));
-  max-width: 100%;
-  margin-left: auto;
 }
 
 .about-home-image {
@@ -761,58 +783,32 @@ main {
   z-index: 2;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 820px) {
   .about-home {
-    background: #f3f4f6;
-    --about-image-size: 400px;
-    --about-image-overlap: 140px;
-    padding-top: 110px;
+    --about-image-size: 300px;
+    --about-image-overlap: 102px;
   }
 
-  .about-home-grid {
-    grid-template-columns: 1fr;
-    gap: 42px;
-    max-width: 760px;
-    margin: 0 auto;
-    padding: clamp(32px, 5vw, 56px);
-    background: #edf2f5;
+  .about-home-content {
+    gap: 30px;
   }
 
   .about-home-text {
-    max-width: 560px;
-  }
-
-  .about-home-media {
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 760px) {
-  .about-home {
-    --about-image-size: 300px;
-    --about-image-overlap: 104px;
-    padding-top: 90px;
-  }
-
-  .about-home-grid {
-    gap: 30px;
-    padding: 28px;
+    max-width: none;
   }
 }
 
 @media (max-width: 560px) {
   .about-home {
-    --about-image-size: 220px;
-    --about-image-overlap: 74px;
+    --about-image-size: 196px;
+    --about-image-overlap: 68px;
   }
+}
 
-  .about-home-grid {
-    padding: 22px;
-  }
-
-  .about-home-media {
-    width: calc((var(--about-image-size) * 2) - var(--about-image-overlap));
-    height: calc((var(--about-image-size) * 2) - var(--about-image-overlap));
+@media (max-width: 420px) {
+  .about-home {
+    --about-image-size: 170px;
+    --about-image-overlap: 58px;
   }
 }
 
@@ -939,6 +935,21 @@ main {
   }
 }
 
+@media (hover: none), (pointer: coarse) {
+  .community-overlay-content p,
+  .community-link {
+    opacity: 1;
+    max-height: none;
+    overflow: visible;
+    transform: translateY(0);
+  }
+
+  .community-link {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+}
+
 @media (max-width: 1024px) {
   .community-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -990,7 +1001,6 @@ main {
 }
 
 @media (max-width: 1024px) {
-  .about-home,
   .community,
   .donate {
     padding-top: 120px;
@@ -998,7 +1008,6 @@ main {
 }
 
 @media (max-width: 640px) {
-  .about-home,
   .community,
   .donate {
     padding-top: 90px;

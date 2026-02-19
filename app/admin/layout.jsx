@@ -5,6 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
 import Image from "next/image";
+import CTAButton from "../components/CTAButton";
 
 export const SessionContext = createContext(null);
 
@@ -100,12 +101,14 @@ export default function AdminLayout({ children }) {
                 </ul>
               </nav>
 
-              <button
+              <CTAButton
                 onClick={logout}
-                className="hidden md:inline-flex logout-desktop btn btn-primary--red"
+                type="button"
+                variant="primary"
+                className="hidden md:inline-flex logout-desktop btn-primary--red"
               >
                 Logout
-              </button>
+              </CTAButton>
 
               <button
                 ref={buttonRef}
@@ -156,15 +159,17 @@ export default function AdminLayout({ children }) {
                   ))}
                 </ul>
                 <div className="drawer-cta mt-4">
-                  <button
+                  <CTAButton
                     onClick={() => {
                       setMenuOpen(false);
                       logout();
                     }}
-                    className="btn btn-primary--red w-full text-center"
+                    type="button"
+                    variant="primary"
+                    className="btn-primary--red w-full text-center"
                   >
                     Logout
-                  </button>
+                  </CTAButton>
                 </div>
               </div>
             </nav>

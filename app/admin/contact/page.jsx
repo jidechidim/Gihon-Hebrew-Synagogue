@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import CTAButton from "../../components/CTAButton";
 
 const supabase = createClientComponentClient();
 
@@ -171,14 +172,15 @@ export default function ContactAdmin() {
         </button>
       </section>
 
-      <button
+      <CTAButton
         onClick={saveData}
         disabled={saving}
-        className="btn btn-outline"
+        type="button"
+        variant="secondary"
         style={{ marginTop: 10 }}
       >
         {saving ? "Saving..." : "Save Changes"}
-      </button>
+      </CTAButton>
     </div>
   );
 }

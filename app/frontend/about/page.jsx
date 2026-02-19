@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@lib/supabase/client";
+import CTAButton from "../../components/CTAButton";
 import "./about.css";
 
 export default function AboutPage() {
@@ -96,9 +97,9 @@ export default function AboutPage() {
             />
             <figcaption>{aboutData.board.caption}</figcaption>
           </figure>
-          <a href={aboutData.board.cta_link} className="btn btn-outline btn-sm">
+          <CTAButton href={aboutData.board.cta_link} variant="secondary" className="btn-sm">
             {aboutData.board.cta_text}
-          </a>
+          </CTAButton>
         </div>
       </section>
     </main>

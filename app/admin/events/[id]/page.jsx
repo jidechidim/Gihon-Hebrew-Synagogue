@@ -7,6 +7,7 @@ import { SessionContext } from "../../layout";
 import { deleteFile } from "@/lib/storage";
 import AdminContainer from "../../components/AdminContainer";
 import ImageUpload from "../../../components/ImageUpload";
+import CTAButton from "../../../components/CTAButton";
 
 const supabase = createClientComponentClient();
 
@@ -123,14 +124,15 @@ export default function EditEventPage() {
         </div>
       </section>
 
-      <button
+      <CTAButton
         onClick={() => updateEvent(form)}
         disabled={loading}
-        className="btn btn-outline"
+        type="button"
+        variant="secondary"
         style={{ marginTop: 10 }}
       >
         {loading ? "Saving…" : "Save Changes"}
-      </button>
+      </CTAButton>
     </AdminContainer>
   );
 }

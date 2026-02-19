@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import ImageUpload from "../../components/ImageUpload";
+import CTAButton from "../../components/CTAButton";
 import AdminContainer from "../components/AdminContainer";
 
 export const runtime = "nodejs";
@@ -288,9 +288,9 @@ export default function HomeAdmin() {
           This section is populated from <code>public/data/parsha.json</code> and appears automatically on the homepage.
         </p>
         <div style={fullWidthStyle}>
-          <Link href="/parshiyot" className="btn btn-outline btn-sm">
+          <CTAButton href="/parshiyot" variant="secondary" className="btn-sm">
             View Public Parshiyot Page
-          </Link>
+          </CTAButton>
         </div>
       </section>
 
@@ -384,9 +384,9 @@ export default function HomeAdmin() {
           Upcoming Events on the homepage uses the latest records from the Events CMS.
         </p>
         <div style={fullWidthStyle}>
-          <Link href="/admin/events" className="btn btn-outline btn-sm">
+          <CTAButton href="/admin/events" variant="secondary" className="btn-sm">
             Manage Events
-          </Link>
+          </CTAButton>
         </div>
       </section>
 
@@ -533,9 +533,9 @@ export default function HomeAdmin() {
           Latest from Gihon is driven by the latest News entries and updates automatically on the homepage.
         </p>
         <div style={fullWidthStyle}>
-          <Link href="/admin/news" className="btn btn-outline btn-sm">
+          <CTAButton href="/admin/news" variant="secondary" className="btn-sm">
             Manage News
-          </Link>
+          </CTAButton>
         </div>
       </section>
 
@@ -603,14 +603,15 @@ export default function HomeAdmin() {
         </div>
       </section>
 
-      <button
+      <CTAButton
         onClick={saveData}
         disabled={saving}
-        className="btn btn-outline"
+        type="button"
+        variant="secondary"
         style={{ marginTop: 10 }}
       >
         {saving ? "Saving..." : "Save Changes"}
-      </button>
+      </CTAButton>
     </AdminContainer>
   );
 }
