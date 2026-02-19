@@ -38,8 +38,8 @@ export default function AboutPage() {
       {/* ===== INTRO SECTION ===== */}
       <section className="intro" aria-labelledby="aboutTitle">
         <div className="container narrow center" id="intro-section">
-          <h1 id="aboutTitle">{aboutData.intro.title}</h1>
-          <p className="lede">{aboutData.intro.lede}</p>
+          <h1 id="aboutTitle" className="page-title">{aboutData.intro.title}</h1>
+          <p className="lede page-subtitle">{aboutData.intro.lede}</p>
           <figure className="hero-figure">
             <img
               src={aboutData.intro.image}
@@ -52,7 +52,7 @@ export default function AboutPage() {
       {/* ===== MISSION & VISION ===== */}
       <section className="mv" aria-labelledby="mvTitle">
         <div className="container narrow center" id="mv-section">
-          <h2 id="mvTitle">Our Mission and Vision</h2>
+          <h2 id="mvTitle" className="page-title">Our Mission and Vision</h2>
           <div className="mv-grid">
             <article className="mv-card">
               <h3>{aboutData.mission_vision.mission.title}</h3>
@@ -69,8 +69,8 @@ export default function AboutPage() {
       {/* ===== VALUES ===== */}
       <section className="values" aria-labelledby="valuesTitle">
         <div className="container narrow center" id="values-section">
-          <h2 id="valuesTitle">Our Values</h2>
-          <p className="values-kicker">
+          <h2 id="valuesTitle" className="page-title">Our Values</h2>
+          <p className="values-kicker page-subtitle">
             At Gihon Hebrew Synagogue, we are guided by a set of core values:
           </p>
           <div className="values-grid">
@@ -88,7 +88,7 @@ export default function AboutPage() {
       {/* ===== BOARD ===== */}
       <section className="board" aria-labelledby="boardTitle">
         <div className="container narrow center" id="board-section">
-          <h2 id="boardTitle">Our Board and Executive Council</h2>
+          <h2 id="boardTitle" className="page-title">Our Board and Executive Council</h2>
           <figure className="board-figure">
             <img
               src={aboutData.board.image}

@@ -70,8 +70,8 @@ export default function ParshaPage() {
       {/* Parsha Header */}
       <section className="parsha-header" aria-labelledby="parshaName">
         <div className="container narrow center">
-          <h1 id="parshaName">{parsha.englishName}</h1>
-          <h3 id="parshaHebrew">{parsha.hebrewName}</h3>
+          <h1 id="parshaName" className="page-title">{parsha.englishName}</h1>
+          <h3 id="parshaHebrew" className="page-subtitle">{parsha.hebrewName}</h3>
           <p className="refs" id="parshaRefs">
             {parsha.refs?.map((ref, i) => (
               <a key={i} href={ref.href} className="ref">

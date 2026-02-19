@@ -96,7 +96,7 @@ export default function Header() {
             width={50}
             height={50}
           />
-          <span className="brand-text">Gihon Hebrew Synagogue</span>
+          <span className="brand-text" style={{ fontWeight: 700 }}>Gihon Hebrew Synagogue</span>
         </Link>
 
         {/* Desktop Nav */}
@@ -105,21 +105,19 @@ export default function Header() {
             <li><Link href="/">Home</Link></li>
             <li><Link href="/about">About Us</Link></li>
             <li><Link href="/getinvolved">Get Involved</Link></li>
-            <li><Link href="/parsha">Parshiyot</Link></li>
+            <li><Link href="/parshiyot">Parshiyot</Link></li>
             <li><Link href="/events">Events</Link></li>
             <li><Link href="/news">News & Media</Link></li>
           </ul>
         </nav>
 
         {/* Donate */}
-        <a
-          href="https://flutterwave.com/pay/YOUR-UNIQUE-ID"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href="/donate"
           className="btn btn-donate"
         >
           Donate
-        </a>
+        </Link>
       </div>
 
       {/* Mobile Drawer */}
@@ -142,26 +140,24 @@ export default function Header() {
             width={50}
             height={50}
           />
-          <span className="brand-text">Gihon Hebrew Synagogue</span>
+          <span className="brand-text" style={{ fontWeight: 700 }}>Gihon Hebrew Synagogue</span>
         </Link>
 
         <ul>
           <li><Link href="/" onClick={closeMenu}>Home</Link></li>
           <li><Link href="/about" onClick={closeMenu}>About Us</Link></li>
           <li><Link href="/getinvolved" onClick={closeMenu}>Get Involved</Link></li>
-          <li><Link href="/parsha" onClick={closeMenu}>Parshiyot</Link></li>
+          <li><Link href="/parshiyot" onClick={closeMenu}>Parshiyot</Link></li>
           <li><Link href="/events" onClick={closeMenu}>Events</Link></li>
           <li><Link href="/news" onClick={closeMenu}>News & Media</Link></li>
           <li className="drawer-cta">
-            <a
-              href="https://flutterwave.com/pay/YOUR-UNIQUE-ID"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/donate"
               className="btn btn-donate"
               onClick={closeMenu}
             >
               Donate
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>

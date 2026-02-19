@@ -9,6 +9,7 @@ const supabase = createClientComponentClient();
 export default function LeadershipAdmin() {
   const [session, setSession] = useState(null);
   const [data, setData] = useState(null);
+  const [leadershipRowId, setLeadershipRowId] = useState(null);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -23,11 +24,20 @@ export default function LeadershipAdmin() {
       setSession(sessionData.session);
 
       // Load leadership data
-      const { data: row } = await supabase
-        .from("cms_content")
-        .select("data")
-        .eq("id", "leadership")
-        .single();
+      const { data: row, error: rowError } = await supabase
+        .from("pages_content")
+        .select("id, data")
+        .eq("slug", "leadership")
+        .limit(1)
+        .maybeSingle();
+
+      if (rowError) {
+        console.error(rowError);
+        setLoading(false);
+        return;
+      }
+
+      setLeadershipRowId(row?.id || null);
 
       setData(
         row?.data || {
@@ -47,10 +57,16 @@ export default function LeadershipAdmin() {
   if (!data) return <p>Loading content…</p>;
 
   const saveData = async () => {
+    if (!leadershipRowId) {
+      alert("Leadership row not found in pages_content. Save cancelled to avoid creating a new row.");
+      return;
+    }
+
     setSaving(true);
     const { error } = await supabase
-      .from("cms_content")
-      .upsert({ id: "leadership", data });
+      .from("pages_content")
+      .update({ data })
+      .eq("id", leadershipRowId);
     setSaving(false);
 
     if (error) console.error(error);

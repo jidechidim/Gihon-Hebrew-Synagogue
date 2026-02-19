@@ -37,8 +37,8 @@ export default function CalendarPage() {
     <main className="page">
       <section className="calendar-head" aria-labelledby="calendarTitle">
         <div className="container narrow center">
-          <h1 id="calendarTitle">Jewish Calendar</h1>
-          <p className="lede">
+          <h1 id="calendarTitle" className="page-title">Jewish Calendar</h1>
+          <p className="lede page-subtitle">
             Upcoming holidays, parsha readings, and candle-lighting times.
           </p>
         </div>

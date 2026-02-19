@@ -111,8 +111,8 @@ export default function RegisterContent() {
 
   return (
     <section className="container narrow center form-section">
-      <h1>Event Registration</h1>
-      <p className="subtitle">
+      <h1 className="page-title">Event Registration</h1>
+      <p className="subtitle page-subtitle">
         Please fill out this form to register for an event.
       </p>
 

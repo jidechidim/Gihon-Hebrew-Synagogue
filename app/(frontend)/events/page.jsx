@@ -35,7 +35,7 @@ export default function EventsPage() {
       {/* ===== PAGE HEADER ===== */}
       <section className="events-head" aria-labelledby="eventsTitle">
         <div className="container narrow center">
-          <h1 id="eventsTitle">Upcoming Events</h1>
+          <h1 id="eventsTitle" className="page-title">Upcoming Events</h1>
         </div>
       </section>
 

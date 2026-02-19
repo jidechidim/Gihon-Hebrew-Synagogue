@@ -33,8 +33,8 @@ export default function Footer() {
         <div className="foot-col">
           <h4>Quick Links</h4>
           <ul>
-            <li><Link href="/parsha">Weekly Parshiyot</Link></li>
-            <li><a href="https://flutterwave.com/pay/YOUR-UNIQUE-ID">Donate</a></li>
+            <li><Link href="/parshiyot">Weekly Parshiyot</Link></li>
+            <li><Link href="/donate">Donate</Link></li>
             <li><Link href="/calendar">Calendar</Link></li>
           </ul>
         </div>

@@ -9,6 +9,7 @@ const supabase = createClientComponentClient();
 export default function AboutAdmin() {
   const [session, setSession] = useState(null);
   const [data, setData] = useState(null);
+  const [aboutRowId, setAboutRowId] = useState(null);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -22,11 +23,20 @@ export default function AboutAdmin() {
       }
       setSession(sessionData.session);
 
-      const { data: row } = await supabase
-        .from("cms_content")
-        .select("data")
-        .eq("id", "about")
-        .single();
+      const { data: row, error: rowError } = await supabase
+        .from("pages_content")
+        .select("id, data")
+        .eq("slug", "about")
+        .limit(1)
+        .maybeSingle();
+
+      if (rowError) {
+        console.error(rowError);
+        setLoading(false);
+        return;
+      }
+
+      setAboutRowId(row?.id || null);
 
       setData(
         row?.data || {
@@ -51,10 +61,16 @@ export default function AboutAdmin() {
   if (!data) return <p>Loading content…</p>;
 
   const saveData = async () => {
+    if (!aboutRowId) {
+      alert("About row not found in pages_content. Save cancelled to avoid creating a new row.");
+      return;
+    }
+
     setSaving(true);
     const { error } = await supabase
-      .from("cms_content")
-      .upsert({ id: "about", data });
+      .from("pages_content")
+      .update({ data })
+      .eq("id", aboutRowId);
     setSaving(false);
 
     if (error) console.error(error);

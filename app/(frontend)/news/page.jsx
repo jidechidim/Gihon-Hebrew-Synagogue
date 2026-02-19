@@ -38,7 +38,7 @@ export default function NewsPage() {
       {/* ===== Page Title ===== */}
       <section className="news-head text-center py-12">
         <div className="container narrow center">
-          <h1 className="text-4xl font-small">Latest from Gihon</h1>
+          <h1 className="page-title text-4xl font-small">Latest from Gihon</h1>
         </div>
       </section>
 

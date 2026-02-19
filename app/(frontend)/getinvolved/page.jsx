@@ -81,8 +81,8 @@ export default function GetInvolvedPage() {
   return (
     <main className="page">
       <section className="container narrow center form-section">
-        <h1>Get Involved With Gihon Hebrew Synagogue</h1>
-        <p className="subtitle">Let's get to know you more</p>
+        <h1 className="page-title">Get Involved With Gihon Hebrew Synagogue</h1>
+        <p className="subtitle page-subtitle">Let's get to know you more</p>
         <p className="note"><em>* Indicates required question</em></p>
 
         {status && (

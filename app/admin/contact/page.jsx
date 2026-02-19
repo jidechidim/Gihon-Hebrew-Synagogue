@@ -8,6 +8,7 @@ const supabase = createClientComponentClient();
 export default function ContactAdmin() {
   const [session, setSession] = useState(null);
   const [data, setData] = useState(null);
+  const [contactRowId, setContactRowId] = useState(null);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -20,11 +21,20 @@ export default function ContactAdmin() {
       }
       setSession(sessionData.session);
 
-      const { data: row } = await supabase
-        .from("cms_content")
-        .select("data")
-        .eq("id", "contact")
-        .single();
+      const { data: row, error: rowError } = await supabase
+        .from("pages_content")
+        .select("id, data")
+        .eq("slug", "contact")
+        .limit(1)
+        .maybeSingle();
+
+      if (rowError) {
+        console.error(rowError);
+        setLoading(false);
+        return;
+      }
+
+      setContactRowId(row?.id || null);
 
       setData(
         row?.data || { address: "", email: "", phones: [""], socials: [] }
@@ -41,10 +51,16 @@ export default function ContactAdmin() {
   if (!data) return <p>Loading content…</p>;
 
   const saveData = async () => {
+    if (!contactRowId) {
+      alert("Contact row not found in pages_content. Save cancelled to avoid creating a new row.");
+      return;
+    }
+
     setSaving(true);
     const { error } = await supabase
-      .from("cms_content")
-      .upsert({ id: "contact", data });
+      .from("pages_content")
+      .update({ data })
+      .eq("id", contactRowId);
     setSaving(false);
 
     if (error) console.error(error);
