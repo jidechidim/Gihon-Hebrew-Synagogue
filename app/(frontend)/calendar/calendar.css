@@ -1,48 +1,94 @@
-/* Calendar page-only styles.
-   Keep shared header/nav/footer styling in app/globals.css. */
-
-.calendar-page .calendar-head {
-  padding: 36px 0 8px;
+.synagogue-calendar {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: auto;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #faf9f6;
 }
 
-.calendar-page .calendar-head h1 {
-  margin-bottom: 10px;
-  font-size: clamp(26px, 2vw + 18px, 34px);
+.calendar-hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.calendar-hero h1 {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin: 50px 0 0.7rem;
+  font-size: clamp(1.5rem, 1vw + 1rem, 2rem);
+  line-height: 1;
   font-weight: 700;
+  color: #1f2d3d;
 }
 
-.calendar-page .calendar-head .lede {
-  margin: 0;
+.calendar-hero p {
+  margin: 0 auto 1rem;
+  max-width: 760px;
   color: var(--muted);
+  font-size: clamp(1rem, 0.45vw + 0.9rem, 1.1rem);
+  line-height: 1.75;
 }
 
-.calendar-page .calendar.section {
-  padding: 18px 0 50px;
+.calendar-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
 }
 
-.calendar-page .calendar-list {
-  list-style: none;
-  padding: 0;
-  margin: 20px 0;
+.calendar-controls select,
+.calendar-controls input[type="text"] {
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #dcdcdc;
+}
+
+.calendar-grid {
   display: grid;
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem;
 }
 
-.calendar-page .calendar-item {
-  background: var(--paper);
-  border: 1px solid var(--outline);
-  border-radius: 8px;
-  padding: 12px 16px;
-  box-shadow: var(--shadow);
-  text-align: left;
+.calendar-grid.is-loading {
+  opacity: 0.65;
 }
 
-.calendar-page .calendar-item strong {
-  display: block;
-  font-weight: 700;
+.calendar-card {
+  background: white;
+  border-radius: 16px;
+  padding: 1.8rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease;
 }
 
-.calendar-page .calendar-item span {
+.calendar-card:hover {
+  transform: translateY(-6px);
+}
+
+.calendar-date {
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+.hebrew-date {
   font-size: 0.9rem;
-  color: var(--muted);
+  direction: rtl;
+  font-weight: 600;
+  margin: 0.5rem 0;
+}
+
+.calendar-title {
+  font-family: "Georgia", serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.calendar-badge {
+  margin-top: 0.75rem;
+  display: inline-block;
+  background: #f0f3f8;
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
 }
