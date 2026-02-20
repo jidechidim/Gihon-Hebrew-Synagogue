@@ -1,71 +1,41 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import "./calendar.css";
+import CalendarClient from "./CalendarClient";
 
-export default function CalendarPage() {
-  const [calendarItems, setCalendarItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+export const revalidate = 3600;
 
-  useEffect(() => {
-    const fetchCalendar = async () => {
-      try {
-        const year = new Date().getFullYear(); // current year
-        const res = await fetch(
-          `https://www.hebcal.com/hebcal?v=1&cfg=json&year=${year}&maj=on&min=on&mod=on&nx=on&ss=on&mf=on&c=on&geo=geoname&geonameid=2332459`
-        );
-        if (!res.ok) throw new Error("Failed to fetch calendar");
-        const data = await res.json();
+const DEFAULT_GEONAMEID = "2352778";
 
-        if (!data.items || data.items.length === 0)
-          throw new Error("No calendar items found");
+async function getInitialCalendarItems() {
+  try {
+    const year = new Date().getFullYear();
+    const url = `https://www.hebcal.com/hebcal?v=1&cfg=json&year=${year}&geo=geoname&geonameid=${DEFAULT_GEONAMEID}&maj=on&min=on&mod=on&nx=on&ss=on&mf=on&c=on`;
+    const res = await fetch(url, { next: { revalidate: 3600 } });
 
-        setCalendarItems(data.items.slice(0, 10));
-      } catch (err) {
-        console.error("Calendar load failed", err);
-        setError("Unable to load calendar at the moment.");
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (!res.ok) return [];
 
-    fetchCalendar();
-  }, []);
+    const data = await res.json();
+    const items = data.items || [];
+
+    return items.slice(0, 50).map((item) => ({
+      id: item.uid || `${item.date}${item.title}`,
+      title: item.title,
+      date: item.date,
+      hebrewDate: item.hebrew || null,
+      category: item.category || null,
+    }));
+  } catch (err) {
+    console.error("Initial calendar fetch error:", err);
+    return [];
+  }
+}
+
+export default async function CalendarPage() {
+  const initialItems = await getInitialCalendarItems();
 
   return (
-    <main className="page">
-      <section className="calendar-head" aria-labelledby="calendarTitle">
-        <div className="container narrow center">
-          <h1 id="calendarTitle" className="page-title">Jewish Calendar</h1>
-          <p className="lede page-subtitle">
-            Upcoming holidays, parsha readings, and candle-lighting times.
-          </p>
-        </div>
-      </section>
-
-      <section id="calendar" className="calendar section">
-        <div className="container narrow center">
-          {loading ? (
-            <ul className="calendar-list">
-              <li>Loading calendar...</li>
-            </ul>
-          ) : error ? (
-            <ul className="calendar-list">
-              <li>{error}</li>
-            </ul>
-          ) : (
-            <ul className="calendar-list">
-              {calendarItems.map((item, i) => (
-                <li key={i} className="calendar-item">
-                  <strong>{item.title}</strong>
-                  <span>{new Date(item.date).toDateString()}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </section>
-    </main>
+    <CalendarClient
+      initialItems={initialItems}
+      defaultLocation={DEFAULT_GEONAMEID}
+    />
   );
 }

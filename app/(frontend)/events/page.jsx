@@ -1,53 +1,39 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { supabase } from "@lib/supabase/client";
 import CTAButton from "../../components/CTAButton";
 import "./events.css";
+import { createSupabaseServerClient } from "@lib/supabase/server-client";
 
-export default function EventsPage() {
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+export const revalidate = 300;
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("events")
-          .select("*")
-          .order("date", { ascending: true });
+async function getEvents() {
+  try {
+    const supabase = createSupabaseServerClient();
+    const { data, error } = await supabase
+      .from("events")
+      .select("*")
+      .order("date", { ascending: true });
 
-        if (error) throw error;
-        setEvents(data || []);
-      } catch (err) {
-        console.error("Error loading events:", err);
-        setError("Unable to load events at the moment.");
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (error) throw error;
+    return data || [];
+  } catch (err) {
+    console.error("Error loading events:", err);
+    return [];
+  }
+}
 
-    fetchEvents();
-  }, []);
+export default async function EventsPage() {
+  const events = await getEvents();
 
   return (
     <main className="page">
-      {/* ===== PAGE HEADER ===== */}
       <section className="events-head" aria-labelledby="eventsTitle">
         <div className="container narrow center">
           <h1 id="eventsTitle" className="page-title">Upcoming Events</h1>
         </div>
       </section>
 
-      {/* ===== EVENTS LIST ===== */}
       <section className="events-list" aria-label="Event listings">
         <div className="container" id="eventsContainer">
-          {loading ? (
-            <p>Loading events...</p>
-          ) : error ? (
-            <p>{error}</p>
-          ) : events.length === 0 ? (
+          {events.length === 0 ? (
             <p>No upcoming events at the moment.</p>
           ) : (
             events.map((ev) => (
@@ -70,8 +56,6 @@ export default function EventsPage() {
                       </li>
                     )}
                   </ul>
-
-                  {/* REGISTER BUTTON — ALWAYS PRESENT */}
                   <CTAButton
                     href={`/register?eventId=${ev.id}`}
                     variant="secondary"

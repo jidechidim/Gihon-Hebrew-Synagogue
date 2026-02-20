@@ -1,91 +1,134 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { supabase } from "@lib/supabase/client";
+import Link from "next/link";
+import path from "node:path";
+import { readFile } from "node:fs/promises";
 import CTAButton from "../components/CTAButton";
+import NewsletterForm from "../components/NewsletterForm";
+import { createSupabaseServerClient } from "@lib/supabase/server-client";
 
 export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
-export default function HomePage() {
-  const [homeData, setHomeData] = useState(null);
-  const [events, setEvents] = useState([]);
-  const [news, setNews] = useState([]);
-  const [parsha, setParsha] = useState(null);
+const DEFAULT_HOME_DATA = {
+  hero: {
+    title: "Gihon Hebrew Synagogue",
+    subtitle: "Promoting Judaic life in Nigeria.",
+    image: "/assets/welcomeimage.png",
+    cta_text: "Get Involved",
+    cta_link: "/getinvolved",
+  },
+  welcome: {
+    title: "Welcome to Gihon Hebrew Synagogue",
+    paragraphs: [
+      "We are a growing Jewish community dedicated to prayer, learning, and service.",
+    ],
+    image: "/assets/welcomeimage.png",
+    cta_text: "Learn More",
+    cta_link: "/about",
+  },
+  newsletter: {
+    title: "Stay Connected",
+    description: "Get updates on events, teachings, and community life.",
+    placeholder_email: "Enter your email address",
+    submit_text: "Subscribe",
+  },
+};
 
-  useEffect(() => {
-    const fetchContent = async () => {
-      try {
-        // ===== Fetch homepage content =====
-        const { data: homeRes, error: homeError } = await supabase
-          .from("pages_content")
-          .select("data")
-          .eq("slug", "home")
-          .single();
-        if (homeError) throw homeError;
-        setHomeData(homeRes?.data);
+function mergeHomeData(payload) {
+  return {
+    ...DEFAULT_HOME_DATA,
+    ...(payload || {}),
+    hero: { ...DEFAULT_HOME_DATA.hero, ...(payload?.hero || {}) },
+    welcome: { ...DEFAULT_HOME_DATA.welcome, ...(payload?.welcome || {}) },
+    newsletter: { ...DEFAULT_HOME_DATA.newsletter, ...(payload?.newsletter || {}) },
+  };
+}
 
-        // ===== Fetch next 3 upcoming events =====
-        const { data: eventsRes, error: eventsError } = await supabase
-          .from("events")
-          .select("*")
-          .order("date", { ascending: true })
-          .limit(3);
-        if (eventsError) throw eventsError;
-        setEvents(eventsRes || []);
+async function getCurrentParsha() {
+  try {
+    const parshaPath = path.join(process.cwd(), "public", "data", "parsha.json");
+    const raw = await readFile(parshaPath, "utf8");
+    const items = JSON.parse(raw);
 
-        // ===== Fetch 5 latest news =====
-        const { data: newsRes, error: newsError } = await supabase
-          .from("news")
-          .select("id, title, image, summary, date, content")
-          .order("date", { ascending: false })
-          .limit(5);
-        if (newsError) throw newsError;
-        setNews(newsRes || []);
+    if (!Array.isArray(items) || items.length === 0) return null;
 
-        // ===== Fetch current week's parsha =====
-        const parshaRes = await fetch("/data/parsha.json");
-        if (!parshaRes.ok) throw new Error("Failed to load Parsha data");
-        const data = await parshaRes.json();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
+    let currentParsha = items.find((item) => {
+      const start = new Date(item.startDate);
+      const end = new Date(item.endDate);
+      start.setHours(0, 0, 0, 0);
+      end.setHours(0, 0, 0, 0);
+      return today >= start && today <= end;
+    });
 
-        let currentParsha = data.find(item => {
-          const start = new Date(item.startDate);
-          const end = new Date(item.endDate);
-          start.setHours(0, 0, 0, 0);
-          end.setHours(0, 0, 0, 0);
-          return today >= start && today <= end;
-        });
+    if (!currentParsha) {
+      currentParsha = items.find((item) => {
+        const start = new Date(item.startDate);
+        start.setHours(0, 0, 0, 0);
+        return today < start;
+      });
+    }
 
-        if (!currentParsha) {
-          currentParsha = data.find(item => {
-            const start = new Date(item.startDate);
-            start.setHours(0, 0, 0, 0);
-            return today < start;
-          });
-        }
+    return currentParsha || items[items.length - 1];
+  } catch (err) {
+    console.error("Error loading parsha data:", err);
+    return null;
+  }
+}
 
-        if (!currentParsha) currentParsha = data[data.length - 1];
+async function getHomePageData() {
+  const supabase = createSupabaseServerClient();
+  let homeData = DEFAULT_HOME_DATA;
+  let events = [];
+  let news = [];
 
-        setParsha(currentParsha);
-      } catch (err) {
-        console.error("Error loading homepage data:", err);
-      }
-    };
+  try {
+    const { data, error } = await supabase
+      .from("pages_content")
+      .select("data")
+      .eq("slug", "home")
+      .single();
 
-    fetchContent();
-  }, []);
+    if (error) throw error;
+    homeData = mergeHomeData(data?.data);
+  } catch (err) {
+    console.error("Error loading homepage content:", err);
+  }
 
-  if (!homeData)
-    return (
-      <main className="container">
-        <p>Loading homepage...</p>
-      </main>
-    );
+  try {
+    const { data, error } = await supabase
+      .from("events")
+      .select("*")
+      .order("date", { ascending: true })
+      .limit(3);
 
-  const currentParsha = parsha;
+    if (error) throw error;
+    events = data || [];
+  } catch (err) {
+    console.error("Error loading homepage events:", err);
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("news")
+      .select("id, title, image, summary, date, content")
+      .order("date", { ascending: false })
+      .limit(5);
+
+    if (error) throw error;
+    news = data || [];
+  } catch (err) {
+    console.error("Error loading homepage news:", err);
+  }
+
+  const parsha = await getCurrentParsha();
+  return { homeData, events, news, parsha };
+}
+
+export default async function HomePage() {
+  const { homeData, events, news, parsha } = await getHomePageData();
+
   const aboutData = homeData.about || {};
   const aboutParagraphs = Array.isArray(aboutData.paragraphs)
     ? aboutData.paragraphs
@@ -135,10 +178,12 @@ export default function HomePage() {
   const donatePrimaryLinkProps = donatePrimaryLink.startsWith("http")
     ? { target: "_blank", rel: "noopener noreferrer" }
     : {};
+  const welcomeParagraphs = Array.isArray(homeData.welcome?.paragraphs)
+    ? homeData.welcome.paragraphs
+    : [];
 
   return (
     <main className="home-page">
-      {/* ===== HERO ===== */}
       <section className="hero" id="home" aria-label="Hero">
         <picture>
           <img src={homeData.hero.image} alt={homeData.hero.title} className="hero-img" />
@@ -156,26 +201,22 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== WEEKLY PARSHIYOT ===== */}
       <section id="parsha" className="section parsha">
         <div className="container narrow">
           <h1 className="section-title">Weekly Parshiyot</h1>
 
-          {currentParsha ? (
+          {parsha ? (
             <blockquote className="parsha-quote">
-              <h3 className="parsha-title">{currentParsha.englishName}</h3>
-              <p className="parsha-content">{currentParsha.shortSummary}</p>
+              <h3 className="parsha-title">{parsha.englishName}</h3>
+              <p className="parsha-content">{parsha.shortSummary}</p>
               <div className="parsha-ref">
-                <p className="ref">{currentParsha.refs.join(", ")}</p>
+                <p className="ref">{Array.isArray(parsha.refs) ? parsha.refs.join(", ") : ""}</p>
               </div>
             </blockquote>
           ) : (
             <blockquote className="parsha-quote">
-              <h3 className="parsha-title">Loading...</h3>
-              <p className="parsha-content">Fetching Parshiyot summary...</p>
-              <div className="parsha-ref">
-                <p className="ref">Fetching references...</p>
-              </div>
+              <h3 className="parsha-title">Weekly Parsha</h3>
+              <p className="parsha-content">Parsha summary is not available right now.</p>
             </blockquote>
           )}
 
@@ -185,7 +226,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== ABOUT SECTION ===== */}
       <section id="about-home" className="section about-home">
         <div className="container about-home-content">
           <div className="about-home-text">
@@ -217,14 +257,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== UPCOMING EVENTS ===== */}
       <section id="events" className="section events">
         <div className="container">
           <div className="section-head">
             <h2 className="section-title">Upcoming Events</h2>
             <div className="events-wrapper">
               <div className="cards-3">
-                {events.map(ev => (
+                {events.map((ev) => (
                   <article key={ev.id} className="card">
                     <img src={ev.image} alt={ev.title} />
                     <div className="card-body">
@@ -245,14 +284,13 @@ export default function HomePage() {
                 ))}
               </div>
               <div className="see-more-wrapper">
-                <a href="/events" className="see-more">See More</a>
+                <Link href="/events" className="see-more">See More</Link>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== WELCOME SECTION ===== */}
       <section id="welcome" className="welcome section bg-light">
         <div className="container split">
           <div className="split-media">
@@ -260,7 +298,7 @@ export default function HomePage() {
           </div>
           <div className="split-copy">
             <h2 className="section-title">{homeData.welcome.title}</h2>
-            {homeData.welcome.paragraphs.map((p, i) => (
+            {welcomeParagraphs.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
             <CTAButton href={homeData.welcome.cta_link} variant="secondary">
@@ -270,7 +308,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== OUR COMMUNITY SECTION ===== */}
       <section id="community" className="section community">
         <div className="container">
           <div className="center community-head">
@@ -283,7 +320,6 @@ export default function HomePage() {
               const title = item.title || "Community";
               const alt = item.image_alt || title || "Community activity";
               const isExternal = item.cta_link?.startsWith("http");
-              const linkProps = isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {};
 
               return (
                 <article key={`${item.title || "community-item"}-${index}`} className="community-card">
@@ -299,9 +335,15 @@ export default function HomePage() {
                       <h3>{title}</h3>
                       {item.description ? <p>{item.description}</p> : null}
                       {item.cta_link && item.cta_text ? (
-                        <a href={item.cta_link} className="community-link" {...linkProps}>
-                          {item.cta_text}
-                        </a>
+                        isExternal ? (
+                          <a href={item.cta_link} className="community-link" target="_blank" rel="noopener noreferrer">
+                            {item.cta_text}
+                          </a>
+                        ) : (
+                          <Link href={item.cta_link} className="community-link">
+                            {item.cta_text}
+                          </Link>
+                        )
                       ) : null}
                     </div>
                   </div>
@@ -312,7 +354,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== LATEST NEWS ===== */}
       <section id="news" className="section latest">
         <div className="container">
           <div className="section-head">
@@ -322,34 +363,33 @@ export default function HomePage() {
                 {news.length > 0 && (
                   <>
                     <article className="feature">
-                      <a href="/news">
+                      <Link href="/news">
                         <img src={news[0].image} alt={news[0].title} />
                         <div className="feature-meta">
                           <h3>{news[0].title}</h3>
                           <span className="read-more">Read more</span>
                         </div>
-                      </a>
+                      </Link>
                     </article>
                     <aside className="thumbs">
-                      {news.slice(1, 5).map(item => (
-                        <a key={item.id} className="thumb" href="/news">
+                      {news.slice(1, 5).map((item) => (
+                        <Link key={item.id} className="thumb" href="/news">
                           <img src={item.image} alt={item.title} />
                           <span>{item.title}</span>
-                        </a>
+                        </Link>
                       ))}
                     </aside>
                   </>
                 )}
               </div>
               <div className="see-more-wrapper">
-                <a href="/news" className="see-more">See More</a>
+                <Link href="/news" className="see-more">See More</Link>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== DONATE SECTION ===== */}
       <section id="donate" className="section donate">
         <div className="container narrow center">
           <div className="donate-panel">
@@ -364,55 +404,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== NEWSLETTER SECTION ===== */}
       <section className="newsletter section">
         <div className="container narrow center">
           <h2 className="section-title">
             {homeData.newsletter?.title || "Stay Connected"}
           </h2>
           <p className="section-subtitle">{homeData.newsletter?.description}</p>
-          <form
-            className="newsletter-form"
-            onSubmit={async (e) => {
-              e.preventDefault();
-              const email = e.target.email.value.trim();
-              if (!email) {
-                alert("Please enter a valid email.");
-                return;
-              }
-
-              const formData = new FormData();
-              formData.append("email", email);
-
-              try {
-                const res = await fetch("https://formspree.io/f/xvgbearn", {
-                  method: "POST",
-                  body: formData,
-                  headers: { Accept: "application/json" },
-                });
-
-                if (res.ok) {
-                  alert("Thank you for subscribing!");
-                  e.target.reset();
-                } else {
-                  alert("Something went wrong. Please try again.");
-                }
-              } catch (err) {
-                console.error(err);
-                alert("Error submitting form. Check your connection.");
-              }
-            }}
-          >
-            <input
-              type="email"
-              name="email"
-              placeholder={homeData.newsletter?.placeholder_email || "Enter your email address"}
-              required
-            />
-            <CTAButton type="submit" variant="primary">
-              {homeData.newsletter?.submit_text || "Subscribe"}
-            </CTAButton>
-          </form>
+          <NewsletterForm
+            placeholder={homeData.newsletter?.placeholder_email || "Enter your email address"}
+            submitText={homeData.newsletter?.submit_text || "Subscribe"}
+          />
         </div>
       </section>
     </main>
