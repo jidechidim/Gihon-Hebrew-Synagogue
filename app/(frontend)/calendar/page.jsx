@@ -34,7 +34,7 @@ export default function CalendarPage() {
   }, []);
 
   return (
-    <main className="page">
+    <main className="page calendar-page">
       <section className="calendar-head" aria-labelledby="calendarTitle">
         <div className="container narrow center">
           <h1 id="calendarTitle" className="page-title">Jewish Calendar</h1>

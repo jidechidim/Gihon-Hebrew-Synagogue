@@ -1,82 +1,34 @@
-/* ===== Tokens ===== */
-:root {
-  --brand: #255D99;
-  --brand-900: #1C467D;
-  --ink: #121212;
-  --muted: #6b7280;
-  --paper: #ffffff;
-  --outline: #e7edf3;
-  --shadow: 0 10px 25px rgba(3,7,18,.08);
-  --max: 1120px;
+/* Calendar page-only styles.
+   Keep shared header/nav/footer styling in app/globals.css. */
+
+.calendar-page .calendar-head {
+  padding: 36px 0 8px;
 }
 
-/* ===== Base ===== */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  color: var(--ink);
-  background: var(--paper);
-  line-height: 1.65;
-}
-img { max-width: 100%; display: block; }
-
-.container { width: min(92vw, var(--max)); margin-inline: auto; }
-.container.narrow { width: min(820px, 92vw); }
-.center { text-align: center; }
-
-/* ===== Header ===== */
-.site-header {
-  position: fixed;
-  top: 0; inset-inline: 0;
-  z-index: 60;
-  background: #fff;
-  box-shadow: 0 8px 24px rgba(0,0,0,.06);
-}
-.nav-wrap { display: flex; align-items: center; gap: 1rem; padding: 10px 0; }
-.brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; }
-.site-header .brand img { height: 40px; width: auto; }
-@media (max-width:640px) { .site-header .brand img { height: 32px; } }
-.brand-text { font-weight: 800; color: var(--ink); }
-
-.desktop-nav { margin-left: auto; }
-.desktop-nav ul { display: flex; gap: 1.1rem; list-style: none; }
-.desktop-nav a { color: var(--ink); text-decoration: none; font-weight: 600; transition: color .25s ease; }
-.desktop-nav a:hover { color: var(--brand); }
-.desktop-nav a.active { color: var(--brand); }
-.btn-donate {
-  background: #0f2d4a; color: #fff;
-  padding: .55rem 1rem; border-radius: 0;
-  font-weight: 700; text-decoration: none;
-}
-.btn-donate:hover { background: var(--brand); }
-
-/* Mobile Nav */
-.hamburger { display: none; }
-@media (max-width:900px) {
-  .desktop-nav { display: none; }
-  .hamburger { display: inline-block; }
-}
-
-/* ===== Calendar Head ===== */
-.calendar-head {
-  padding: 50px 0 20px; /* space under fixed header */
-}
-.calendar-head h1 {
+.calendar-page .calendar-head h1 {
   margin-bottom: 10px;
   font-size: clamp(26px, 2vw + 18px, 34px);
   font-weight: 700;
 }
-.calendar-head .lede { margin: 0; color: var(--muted); }
 
-/* ===== Calendar List ===== */
-.calendar-list {
+.calendar-page .calendar-head .lede {
+  margin: 0;
+  color: var(--muted);
+}
+
+.calendar-page .calendar.section {
+  padding: 18px 0 50px;
+}
+
+.calendar-page .calendar-list {
   list-style: none;
   padding: 0;
   margin: 20px 0;
   display: grid;
   gap: 14px;
 }
-.calendar-item {
+
+.calendar-page .calendar-item {
   background: var(--paper);
   border: 1px solid var(--outline);
   border-radius: 8px;
@@ -84,52 +36,13 @@ img { max-width: 100%; display: block; }
   box-shadow: var(--shadow);
   text-align: left;
 }
-.calendar-item strong {
+
+.calendar-page .calendar-item strong {
   display: block;
   font-weight: 700;
 }
-.calendar-item span {
+
+.calendar-page .calendar-item span {
   font-size: 0.9rem;
   color: var(--muted);
-}
-
-/* Brand (logo + text) */
-.brand {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  text-decoration: none;
-  flex-shrink: 1;         /* allow shrink on small screens */
-  min-width: 0;           /* prevents overflow */
-}
-
-.brand img {
-  height: 40px;
-  width: auto;
-  flex-shrink: 0;         /* logo never shrinks */
-}
-
-.brand-text {
-  font-weight: 700;
-  font-size: 1rem;
-  color: var(--ink);
-  white-space: nowrap;     /* don’t break mid-word */
-  overflow: hidden;
-  text-overflow: ellipsis; /* add "…" if cut off */
-}
-
-/* Smaller screen adjustments */
-@media (max-width: 820px) {
-  .brand img {
-    height: 32px;
-  }
-  .brand-text {
-    font-size: 0.9rem;     /* scale text down */
-  }
-}
-
-@media (max-width: 640px) {
-  .brand-text {
-    display: none;         /* hide text on very narrow screens */
-  }
 }
