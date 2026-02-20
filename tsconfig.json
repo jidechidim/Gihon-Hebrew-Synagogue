@@ -35,10 +35,10 @@
         "./lib/*"
       ],
       "@components/*": [
-        "./app/frontend/components/*"
+        "./app/(frontend)/components/*"
       ],
       "@styles/*": [
-        "./app/frontend/styles/*"
+        "./app/(frontend)/styles/*"
       ],
       "@assets/*": [
         "./public/*"
