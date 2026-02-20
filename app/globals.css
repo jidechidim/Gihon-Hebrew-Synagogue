@@ -72,18 +72,31 @@ a.btn{
 .site-header.scrolled{background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.08)}
 
 /* Frontend header should match page section tone consistently */
-#siteHeader.site-header,
-#siteHeader.site-header.scrolled {
-  background: var(--paper);
+#siteHeader.site-header[data-solid="false"] {
+  background: transparent;
   box-shadow: none;
 }
 
-#siteHeader .brand-text,
-#siteHeader .desktop-nav a {
+#siteHeader.site-header[data-solid="true"] {
+  background: var(--paper);
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+}
+
+#siteHeader.site-header[data-solid="false"] .nav-wrap .brand-text,
+#siteHeader.site-header[data-solid="false"] .nav-wrap .desktop-nav a {
+  color: #fff;
+}
+
+#siteHeader.site-header[data-solid="true"] .nav-wrap .brand-text,
+#siteHeader.site-header[data-solid="true"] .nav-wrap .desktop-nav a {
   color: var(--ink);
 }
 
-#siteHeader .hamburger span {
+#siteHeader.site-header[data-solid="false"] .nav-wrap .hamburger span {
+  background: #fff;
+}
+
+#siteHeader.site-header[data-solid="true"] .nav-wrap .hamburger span {
   background: var(--ink);
 }
 
@@ -818,14 +831,14 @@ main {
 
 @media (max-width: 560px) {
   .about-home {
-    --about-image-size: 196px;
+    --about-image-size: 200px;
     --about-image-overlap: 68px;
   }
 }
 
 @media (max-width: 420px) {
   .about-home {
-    --about-image-size: 170px;
+    --about-image-size: 200px;
     --about-image-overlap: 58px;
   }
 }
