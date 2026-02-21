@@ -983,16 +983,27 @@ main {
 
 @media (max-width: 1024px) {
   .community-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .community-card {
+    flex: 1 1 300px;
+    max-width: 350px;
   }
 }
 
 @media (max-width: 640px) {
   .community-grid {
+    display: grid;
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .community-card {
+    max-width: none;
     aspect-ratio: 4 / 3;
   }
 }

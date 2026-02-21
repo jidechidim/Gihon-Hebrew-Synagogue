@@ -6,7 +6,7 @@ import NewsletterForm from "../components/NewsletterForm";
 import { createSupabaseServerClient } from "@lib/supabase/server-client";
 
 export const runtime = "nodejs";
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 const DEFAULT_HOME_DATA = {
   hero: {
@@ -275,7 +275,7 @@ export default async function HomePage() {
                         <li><span className="dot"></span> {ev.location}</li>
                       </ul>
                       <div className="card-actions">
-                        <CTAButton href="/register" variant="secondary" className="btn-sm">
+                        <CTAButton href={`/register?eventId=${ev.id}`} variant="secondary" className="btn-sm">
                           Register
                         </CTAButton>
                       </div>
@@ -363,7 +363,7 @@ export default async function HomePage() {
                 {news.length > 0 && (
                   <>
                     <article className="feature">
-                      <Link href="/news">
+                      <Link href={`/newsarticle?slug=${encodeURIComponent(news[0].id)}`}>
                         <img src={news[0].image} alt={news[0].title} />
                         <div className="feature-meta">
                           <h3>{news[0].title}</h3>
@@ -373,7 +373,11 @@ export default async function HomePage() {
                     </article>
                     <aside className="thumbs">
                       {news.slice(1, 5).map((item) => (
-                        <Link key={item.id} className="thumb" href="/news">
+                        <Link
+                          key={item.id}
+                          className="thumb"
+                          href={`/newsarticle?slug=${encodeURIComponent(item.id)}`}
+                        >
                           <img src={item.image} alt={item.title} />
                           <span>{item.title}</span>
                         </Link>

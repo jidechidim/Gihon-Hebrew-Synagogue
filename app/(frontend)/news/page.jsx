@@ -3,7 +3,7 @@ import Image from "next/image";
 import "./news.css";
 import { createSupabaseServerClient } from "@lib/supabase/server-client";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 async function getNews() {
   try {
