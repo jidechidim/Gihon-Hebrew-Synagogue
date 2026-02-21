@@ -38,7 +38,7 @@ export default function RegisterContent() {
         setEvents(data || []);
 
         if (preselectId && data?.length) {
-          const match = data.find((ev) => ev.id === preselectId);
+          const match = data.find((ev) => String(ev.id) === preselectId);
           if (match) {
             setFormState((prev) => ({
               ...prev,
@@ -243,16 +243,24 @@ export default function RegisterContent() {
 
         /* ✅ Block-style checkbox */
         .checkbox-group {
-          display: flex;
-          flex-direction: column;
-          gap: 0.3rem;
+          display: grid;
+          grid-template-columns: auto 1fr;
+          column-gap: 0.5rem;
+          align-items: start;
+          justify-items: start;
         }
         .checkbox-label {
+          grid-column: 2;
+          margin: 0;
           font-weight: 600;
+          text-align: left;
         }
         .checkbox-group input[type="checkbox"] {
+          grid-column: 1;
+          grid-row: 1;
           width: auto;
-          margin: 0;
+          margin: 0.2rem 0 0;
+          justify-self: start;
         }
 
         .required {
