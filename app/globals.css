@@ -5,6 +5,7 @@
 /* ------ Tokens ------ */
 :root{
   --brand:#255D99;        /* primary */
+  --brand-rgb: 37, 93, 153;
   --brand-900:#1C467D;    /* darker */
   --brand-100:#A8BED6;    /* light/tint */
   --ink:#121212;          /* body/headings */
@@ -49,7 +50,7 @@ body{
 .btn-primary--red{background:#dc2626;color:#fff;border-color:transparent}
 .btn-primary--red:hover{background:#b91c1c}
 .btn-outline{background:transparent;color:var(--brand);border-color:var(--brand)}
-.btn-outline:hover{background:var(--brand);color:#fff}
+.btn-outline:hover{background:rgba(var(--brand-rgb), .2)}
 .btn-donate{background:#0f2d4a;color:#fff;padding:.55rem 1rem}
 .btn-sm{padding:.45rem .8rem;font-size:.92rem}
 .btn-primary,
