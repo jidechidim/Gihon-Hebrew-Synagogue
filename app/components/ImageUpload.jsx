@@ -1,14 +1,11 @@
 "use client";
 import { useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { uploadImage } from "@/lib/upload";
 
 export default function ImageUpload({ label, value, onChange, folder = "general", previewHeight = 180 }) {
   const [uploading, setUploading] = useState(false);
+  const supabase = createClientComponentClient();
 
   async function handleUpload(e) {
     const file = e.target.files?.[0];
@@ -16,27 +13,16 @@ export default function ImageUpload({ label, value, onChange, folder = "general"
 
     setUploading(true);
 
-    const fileExt = file.name.split(".").pop();
-    const fileName = `${Date.now()}.${fileExt}`;
-    const filePath = `${folder}/${fileName}`;
-
-    const { error } = await supabase.storage
-      .from("uploads") // ✅ your bucket
-      .upload(filePath, file, { upsert: true });
-
-    if (error) {
-      alert("❌ Upload failed");
+    try {
+      const publicUrl = await uploadImage(file, folder, { supabase });
+      if (publicUrl) onChange(publicUrl);
+    } catch (error) {
       console.error(error);
+      const message = error instanceof Error ? error.message : "Upload failed";
+      alert(message);
+    } finally {
       setUploading(false);
-      return;
     }
-
-    const { data } = supabase.storage
-      .from("uploads")
-      .getPublicUrl(filePath);
-
-    onChange(data.publicUrl);
-    setUploading(false);
   }
 
   return (
