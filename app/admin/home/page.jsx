@@ -5,6 +5,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import ImageUpload from "../../components/ImageUpload";
 import CTAButton from "../../components/CTAButton";
 import AdminContainer from "../components/AdminContainer";
+import ContentPreviewModal from "../components/ContentPreviewModal";
 
 export const runtime = "nodejs";
 
@@ -133,6 +134,7 @@ function normalizeHomeData(rawData = {}) {
 export default function HomeAdmin() {
   const [session, setSession] = useState(null);
   const [data, setData] = useState(null);
+  const [initialData, setInitialData] = useState(null);
   const [homeRowId, setHomeRowId] = useState(null);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -161,8 +163,10 @@ export default function HomeAdmin() {
         return;
       }
 
+      const loadedData = normalizeHomeData(row?.data || {});
       setHomeRowId(row?.id || null);
-      setData(normalizeHomeData(row?.data || {}));
+      setData(loadedData);
+      setInitialData(loadedData);
 
       setLoading(false);
     }
@@ -177,7 +181,7 @@ export default function HomeAdmin() {
   const saveData = async () => {
     if (!homeRowId) {
       alert("Home row not found in pages_content. Save cancelled to avoid creating a new row.");
-      return;
+      return false;
     }
 
     setSaving(true);
@@ -189,8 +193,14 @@ export default function HomeAdmin() {
 
     setSaving(false);
 
-    if (error) console.error(error);
-    else alert("Changes saved.");
+    if (error) {
+      console.error(error);
+      return false;
+    }
+
+    setInitialData(data);
+    alert("Changes saved.");
+    return true;
   };
 
   const updateHero = (field, value) =>
@@ -277,6 +287,7 @@ export default function HomeAdmin() {
             value={data.hero.image}
             onChange={(url) => updateHero("image", url)}
             folder="home"
+            fileName="homepageheroimage"
           />
         </div>
       </section>
@@ -364,6 +375,7 @@ export default function HomeAdmin() {
             value={data.about.image_top}
             onChange={(url) => updateAbout("image_top", url)}
             folder="home"
+            fileName="homepageheroabout1"
           />
         </div>
 
@@ -373,6 +385,7 @@ export default function HomeAdmin() {
             value={data.about.image_bottom}
             onChange={(url) => updateAbout("image_bottom", url)}
             folder="home"
+            fileName="homepageheroabout2"
           />
         </div>
       </section>
@@ -431,6 +444,7 @@ export default function HomeAdmin() {
             value={data.welcome.image}
             onChange={(url) => updateWelcome("image", url)}
             folder="home"
+            fileName="homepagewelcomeimage"
           />
         </div>
       </section>
@@ -520,6 +534,7 @@ export default function HomeAdmin() {
                 value={item.image || ""}
                 onChange={(url) => updateCommunityItem(index, "image", url)}
                 folder="home"
+                fileName={`homepagecommunity${index + 1}`}
               />
             </div>
           </section>
@@ -603,15 +618,15 @@ export default function HomeAdmin() {
         </div>
       </section>
 
-      <CTAButton
-        onClick={saveData}
-        disabled={saving}
-        type="button"
-        variant="secondary"
+      <ContentPreviewModal
+        data={data}
+        originalData={initialData}
+        onConfirmSave={saveData}
+        saving={saving}
+        websitePreviewPath="/"
+        websitePreviewData={data}
         style={{ marginTop: 10 }}
-      >
-        {saving ? "Saving..." : "Save Changes"}
-      </CTAButton>
+      />
     </AdminContainer>
   );
 }

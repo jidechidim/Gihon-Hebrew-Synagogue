@@ -4,10 +4,9 @@ import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContext } from "../../layout";
-import EventForm from "@/app/admin/components/EventForm";
 import AdminContainer from "../../components/AdminContainer";
 import ImageUpload from "../../../components/ImageUpload";
-import CTAButton from "../../../components/CTAButton";
+import ContentPreviewModal from "../../components/ContentPreviewModal";
 
 const supabase = createClientComponentClient();
 
@@ -26,15 +25,21 @@ export default function NewEventPage() {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState(EMPTY_EVENT);
 
-  if (!session) return <p>Checking access…</p>;
+  if (!session) return <p>Checking access...</p>;
 
   const createEvent = async () => {
     setLoading(true);
     const payload = { ...form, created_at: new Date().toISOString(), updated_at: new Date().toISOString() };
     const { error } = await supabase.from("events").insert([payload]);
     setLoading(false);
-    if (error) return alert(error.message);
+
+    if (error) {
+      alert(error.message);
+      return false;
+    }
+
     router.push("/admin/events");
+    return true;
   };
 
   const updateField = (k, v) => setForm((s) => ({ ...s, [k]: v }));
@@ -85,9 +90,15 @@ export default function NewEventPage() {
         </div>
       </section>
 
-      <CTAButton onClick={createEvent} disabled={loading} type="button" variant="secondary" style={{ marginTop: 10 }}>
-        {loading ? "Creating…" : "Create Event"}
-      </CTAButton>
+      <ContentPreviewModal
+        data={form}
+        originalData={EMPTY_EVENT}
+        onConfirmSave={createEvent}
+        saving={loading}
+        previewLabel="Preview Event"
+        confirmLabel="Create Event"
+        style={{ marginTop: 10 }}
+      />
     </AdminContainer>
   );
 }

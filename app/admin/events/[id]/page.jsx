@@ -7,7 +7,7 @@ import { SessionContext } from "../../layout";
 import { deleteFile } from "@/lib/storage";
 import AdminContainer from "../../components/AdminContainer";
 import ImageUpload from "../../../components/ImageUpload";
-import CTAButton from "../../../components/CTAButton";
+import ContentPreviewModal from "../../components/ContentPreviewModal";
 
 const supabase = createClientComponentClient();
 
@@ -17,6 +17,8 @@ export default function EditEventPage() {
   const { id } = useParams();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState(null);
+  const [initialForm, setInitialForm] = useState(null);
 
   useEffect(() => {
     if (!session) return;
@@ -25,21 +27,34 @@ export default function EditEventPage() {
       const { data, error } = await supabase.from("events").select("*").eq("id", id).single();
       if (error) return alert(error.message);
       setEvent(data);
+      setForm(data);
+      setInitialForm(data);
     };
 
     load();
   }, [session, id]);
 
-  const updateEvent = async (form) => {
+  const updateEvent = async () => {
     setLoading(true);
-    await supabase.from("events").update({ ...form, updated_at: new Date().toISOString() }).eq("id", id);
+    const { error } = await supabase
+      .from("events")
+      .update({ ...form, updated_at: new Date().toISOString() })
+      .eq("id", id);
     setLoading(false);
+
+    if (error) {
+      alert(error.message);
+      return false;
+    }
+
+    setInitialForm(form);
     router.push("/admin/events");
+    return true;
   };
 
   const handleDelete = async () => {
     if (!confirm("Delete this event?")) return;
-    if (event.image) await deleteFile("events", event.image);
+    if (event.image) await deleteFile("uploads", event.image);
     await supabase.from("events").delete().eq("id", id);
     router.push("/admin/events");
   };
@@ -50,16 +65,9 @@ export default function EditEventPage() {
     setForm((f) => ({ ...f, published: !f.published }));
   };
 
-  const [form, setForm] = useState(null);
-
-  // keep local form state in sync with loaded event
-  useEffect(() => {
-    if (event) setForm(event);
-  }, [event]);
-
   const updateField = (k, v) => setForm((s) => ({ ...s, [k]: v }));
 
-  if (!session || !event || !form) return <p>Loading…</p>;
+  if (!session || !event || !form) return <p>Loading...</p>;
 
   return (
     <AdminContainer>
@@ -124,15 +132,14 @@ export default function EditEventPage() {
         </div>
       </section>
 
-      <CTAButton
-        onClick={() => updateEvent(form)}
-        disabled={loading}
-        type="button"
-        variant="secondary"
+      <ContentPreviewModal
+        data={form}
+        originalData={initialForm}
+        onConfirmSave={updateEvent}
+        saving={loading}
+        previewLabel="Preview Event Changes"
         style={{ marginTop: 10 }}
-      >
-        {loading ? "Saving…" : "Save Changes"}
-      </CTAButton>
+      />
     </AdminContainer>
   );
 }

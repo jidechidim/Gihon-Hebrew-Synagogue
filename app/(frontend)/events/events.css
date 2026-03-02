@@ -268,7 +268,7 @@ img{max-width:100%;display:block}
   border-color:var(--brand); 
   background:transparent; 
 } 
-.btn-outline:hover{background:var(--brand); color:#fff} 
+.btn-outline:hover{background:rgba(var(--brand-rgb), .2); color:var(--brand)} 
 .btn-sm{padding:.45rem .85rem; font-size:.92rem} 
  
 /* ===== Pager (Previous left, Next right) ===== */
@@ -403,3 +403,11 @@ img{max-width:100%;display:block}
   margin-bottom: 100px; /* 100px gap before footer */
 }
 
+
+
+.events-empty {
+  text-align: center;
+  color: var(--muted);
+  margin: 0 0 50px;
+  justify-self: center;
+}

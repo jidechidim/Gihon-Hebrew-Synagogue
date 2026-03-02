@@ -23,6 +23,8 @@ export default function AdminLayout({ children }) {
   const adminLinks = [
     { href: "/admin/home", label: "Home" },
     { href: "/admin/about", label: "About" },
+    { href: "/admin/gallery", label: "Gallery" },
+    { href: "/admin/donate", label: "Donate" },
     { href: "/admin/events", label: "Events" },
     { href: "/admin/news", label: "News" },
     { href: "/admin/leadership", label: "Leadership" },

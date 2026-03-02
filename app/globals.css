@@ -768,7 +768,7 @@ main {
 }
 
 .about-home-image {
-  position: absolute;
+  position: absolute;.site-header.scrolled .desktop-nav a{color:var(--ink)}
   width: var(--about-image-size);
   height: var(--about-image-size);
   margin: 0;
@@ -1056,4 +1056,3 @@ main {
     padding-top: 90px;
   }
 }
-

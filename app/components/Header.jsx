@@ -104,12 +104,12 @@ export default function Header() {
         {/* Desktop Nav */}
         <nav className="desktop-nav" aria-label="Primary">
           <ul>
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/about">About Us</Link></li>
-            <li><Link href="/getinvolved">Get Involved</Link></li>
-            <li><Link href="/parshiyot">Parshiyot</Link></li>
-            <li><Link href="/events">Events</Link></li>
-            <li><Link href="/news">News & Media</Link></li>
+            <li><Link href="/" className={pathname === "/" ? "active" : ""}>Home</Link></li>
+            <li><Link href="/about" className={pathname === "/about" ? "active" : ""}>About Us</Link></li>
+            <li><Link href="/getinvolved" className={pathname === "/getinvolved" ? "active" : ""}>Get Involved</Link></li>
+            <li><Link href="/parshiyot" className={pathname === "/parshiyot" ? "active" : ""}>Parshiyot</Link></li>
+            <li><Link href="/events" className={pathname === "/events" ? "active" : ""}>Events</Link></li>
+            <li><Link href="/news" className={pathname === "/news" ? "active" : ""}>News & Media</Link></li>
           </ul>
         </nav>
 
@@ -143,12 +143,12 @@ export default function Header() {
         </Link>
 
         <ul>
-          <li><Link href="/" onClick={closeMenu}>Home</Link></li>
-          <li><Link href="/about" onClick={closeMenu}>About Us</Link></li>
-          <li><Link href="/getinvolved" onClick={closeMenu}>Get Involved</Link></li>
-          <li><Link href="/parshiyot" onClick={closeMenu}>Parshiyot</Link></li>
-          <li><Link href="/events" onClick={closeMenu}>Events</Link></li>
-          <li><Link href="/news" onClick={closeMenu}>News & Media</Link></li>
+          <li><Link href="/" className={pathname === "/" ? "active" : ""} onClick={closeMenu}>Home</Link></li>
+          <li><Link href="/about" className={pathname === "/about" ? "active" : ""} onClick={closeMenu}>About Us</Link></li>
+          <li><Link href="/getinvolved" className={pathname === "/getinvolved" ? "active" : ""} onClick={closeMenu}>Get Involved</Link></li>
+          <li><Link href="/parshiyot" className={pathname === "/parshiyot" ? "active" : ""} onClick={closeMenu}>Parshiyot</Link></li>
+          <li><Link href="/events" className={pathname === "/events" ? "active" : ""} onClick={closeMenu}>Events</Link></li>
+          <li><Link href="/news" className={pathname === "/news" ? "active" : ""} onClick={closeMenu}>News & Media</Link></li>
           <li className="drawer-cta">
             <CTAButton
               href="/donate"

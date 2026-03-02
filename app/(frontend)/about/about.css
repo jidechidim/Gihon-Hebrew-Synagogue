@@ -31,7 +31,7 @@ body{
   transition:all .25s ease;
 }
 .btn-outline{border-color:var(--brand); color:var(--brand); background:transparent}
-.btn-outline:hover{background:var(--brand); color:#fff}
+.btn-outline:hover{background:rgba(var(--brand-rgb), .2); color:var(--brand)}
 .btn-sm{padding:.55rem 1rem; font-size:.9rem}
 
 /* ===============================
@@ -262,10 +262,57 @@ body{
 .value .open{left:150px; top:150px}
 .value .close{right:150px; bottom:150px}
 
+/* ===== Gallery ===== */
+.gallery{
+  background:var(--panel);
+  padding:110px 0;
+}
+
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+  margin-top:1.2rem;
+}
+
+.gallery-item{
+  margin:0;
+  background:#fff;
+  border:1px solid var(--outline);
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+
+.gallery-item img{
+  width:100%;
+  height:400px;
+  object-fit:cover;
+}
+
+.gallery-item figcaption{
+  margin:0;
+  padding:0px 12px;
+  color:var(--muted);
+  font-size:.9rem;
+  text-align:left;
+}
+
+.gallery-empty{
+  margin:1rem 0 0;
+  color:var(--muted);
+}
+
+.gallery-actions{
+  margin-top:24px;
+  display:flex;
+  justify-content:center;
+}
+
 /* ===== Board ===== */
 .board{padding:150px 0 150px}
 .board h2{margin:50 18px; font-weight:700}
-.board-figure{margin:50 10px}
+.board-figure{margin:20 10px}
 .board-figure img{
   width:100%; height:520px; object-fit:cover; border-radius:6px; box-shadow:var(--shadow);
 }
@@ -297,12 +344,13 @@ body{
   .hamburger{display:inline-block}
 }
 
-/* Footer collapses: 4 → 2 → 1 */
+/* Footer collapses: 4 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 2 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 1 */
 @media (max-width:1024px){
   .hero-figure img,
   .board-figure img{height:440px}
   .mv-grid{grid-template-columns:1fr; gap:30px}
   .values-grid{grid-template-columns:repeat(2,1fr)}
+  .gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .footer-grid{grid-template-columns:1fr 1fr; gap:18px}
 }
 
@@ -310,11 +358,14 @@ body{
   .hero-figure img,
   .board-figure img{height:320px}
   .values-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr}
+  .gallery-item img{height:320px}
   .footer-grid{grid-template-columns:1fr; gap:12px}
   .footer-bottom{flex-direction:column; gap:10px; text-align:center}
 
   .intro,
   .values,
+  .gallery,
   .board { padding:56px 0; }
   .mv { padding:48px 0; }
 

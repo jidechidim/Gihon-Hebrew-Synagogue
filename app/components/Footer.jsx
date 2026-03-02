@@ -26,7 +26,7 @@ export default function Footer() {
           <ul>
             <li><Link href="/about#mission">Mission and Vision</Link></li>
             <li><Link href="/leadership">Leadership Team</Link></li>
-            <li><Link href="/news">News</Link></li>
+            <li><Link href="/news">Gallery</Link></li>
           </ul>
         </div>
 
