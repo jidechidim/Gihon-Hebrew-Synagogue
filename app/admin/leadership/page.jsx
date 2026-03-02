@@ -3,20 +3,20 @@
 import { useState, useEffect } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import ImageUpload from "../../components/ImageUpload";
-import CTAButton from "../../components/CTAButton";
+import ContentPreviewModal from "../components/ContentPreviewModal";
 
 const supabase = createClientComponentClient();
 
 export default function LeadershipAdmin() {
   const [session, setSession] = useState(null);
   const [data, setData] = useState(null);
+  const [initialData, setInitialData] = useState(null);
   const [leadershipRowId, setLeadershipRowId] = useState(null);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
-      // Check session
       const { data: sessionData } = await supabase.auth.getSession();
       if (!sessionData.session) {
         window.location.href = "/admin/login";
@@ -24,7 +24,6 @@ export default function LeadershipAdmin() {
       }
       setSession(sessionData.session);
 
-      // Load leadership data
       const { data: row, error: rowError } = await supabase
         .from("pages_content")
         .select("id, data")
@@ -40,27 +39,28 @@ export default function LeadershipAdmin() {
 
       setLeadershipRowId(row?.id || null);
 
-      setData(
+      const loadedData =
         row?.data || {
           hero: { image: "", alt: "", figcaption: "" },
           members: [],
-        }
-      );
+        };
 
+      setData(loadedData);
+      setInitialData(loadedData);
       setLoading(false);
     }
 
     fetchData();
   }, []);
 
-  if (loading) return <p>Checking access…</p>;
+  if (loading) return <p>Checking access...</p>;
   if (!session) return null;
-  if (!data) return <p>Loading content…</p>;
+  if (!data) return <p>Loading content...</p>;
 
   const saveData = async () => {
     if (!leadershipRowId) {
       alert("Leadership row not found in pages_content. Save cancelled to avoid creating a new row.");
-      return;
+      return false;
     }
 
     setSaving(true);
@@ -70,8 +70,14 @@ export default function LeadershipAdmin() {
       .eq("id", leadershipRowId);
     setSaving(false);
 
-    if (error) console.error(error);
-    else alert("✅ Changes saved!");
+    if (error) {
+      console.error(error);
+      return false;
+    }
+
+    setInitialData(data);
+    alert("Changes saved.");
+    return true;
   };
 
   const updateHero = (field, value) =>
@@ -84,7 +90,7 @@ export default function LeadershipAdmin() {
   };
 
   const addMember = () => {
-    const newId = data.members.length > 0 ? Math.max(...data.members.map(m => m.id)) + 1 : 1;
+    const newId = data.members.length > 0 ? Math.max(...data.members.map((m) => m.id)) + 1 : 1;
     setData({
       ...data,
       members: [
@@ -103,7 +109,6 @@ export default function LeadershipAdmin() {
     <div style={{ maxWidth: 800, margin: "0 auto", padding: 20 }}>
       <h2>Leadership Page Editor</h2>
 
-      {/* Hero Section */}
       <section
         style={{
           border: "1px solid #ccc",
@@ -131,12 +136,12 @@ export default function LeadershipAdmin() {
             label="Hero Image"
             value={data.hero.image}
             onChange={(url) => updateHero("image", url)}
-            bucket="content"
+            folder="leadership"
+            fileName="leadershipimage"
           />
         </div>
       </section>
 
-      {/* Members Section */}
       <section style={{ border: "1px solid #ccc", padding: 16, marginBottom: 20 }}>
         <h3>Members</h3>
         {data.members.map((member, i) => (
@@ -164,7 +169,8 @@ export default function LeadershipAdmin() {
                 label="Member Image"
                 value={member.image}
                 onChange={(url) => updateMember(i, "image", url)}
-                bucket="content"
+                folder="leadership"
+                fileName={`leadershipmembers${member.id || i + 1}`}
               />
             </div>
 
@@ -188,15 +194,15 @@ export default function LeadershipAdmin() {
         </button>
       </section>
 
-      <CTAButton
-        onClick={saveData}
-        disabled={saving}
-        type="button"
-        variant="secondary"
+      <ContentPreviewModal
+        data={data}
+        originalData={initialData}
+        onConfirmSave={saveData}
+        saving={saving}
+        websitePreviewPath="/leadership"
+        websitePreviewData={data}
         style={{ marginTop: 10 }}
-      >
-        {saving ? "Saving..." : "Save Changes"}
-      </CTAButton>
+      />
     </div>
   );
 }

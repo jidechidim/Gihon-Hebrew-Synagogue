@@ -34,7 +34,7 @@ export default async function EventsPage() {
       <section className="events-list" aria-label="Event listings">
         <div className="container" id="eventsContainer">
           {events.length === 0 ? (
-            <p>No upcoming events at the moment.</p>
+            <p className="events-empty">No upcoming events at the moment.</p>
           ) : (
             events.map((ev) => (
               <article key={ev.id} className="event">

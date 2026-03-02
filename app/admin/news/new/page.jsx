@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContext } from "../../layout";
 import ImageUpload from "../../../components/ImageUpload";
-import CTAButton from "../../../components/CTAButton";
 import AdminContainer from "../../components/AdminContainer";
+import ContentPreviewModal from "../../components/ContentPreviewModal";
 
 const supabase = createClientComponentClient();
 
@@ -18,15 +18,21 @@ export default function NewNewsPage() {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState(EMPTY_NEWS);
 
-  if (!session) return <p>Checking access…</p>;
+  if (!session) return <p>Checking access...</p>;
 
   const createNews = async () => {
     setLoading(true);
     const payload = { ...form, created_at: new Date().toISOString(), updated_at: new Date().toISOString() };
     const { error } = await supabase.from("news").insert([payload]);
     setLoading(false);
-    if (error) { alert(error.message); return; }
+
+    if (error) {
+      alert(error.message);
+      return false;
+    }
+
     router.push("/admin/news");
+    return true;
   };
 
   const updateField = (key, value) => setForm((s) => ({ ...s, [key]: value }));
@@ -72,9 +78,15 @@ export default function NewNewsPage() {
         </div>
       </section>
 
-      <CTAButton onClick={createNews} disabled={loading} type="button" variant="secondary" style={{ marginTop: 10 }}>
-        {loading ? "Creating…" : "Create News"}
-      </CTAButton>
+      <ContentPreviewModal
+        data={form}
+        originalData={EMPTY_NEWS}
+        onConfirmSave={createNews}
+        saving={loading}
+        previewLabel="Preview News"
+        confirmLabel="Create News"
+        style={{ marginTop: 10 }}
+      />
     </AdminContainer>
   );
 }

@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import CTAButton from "../../components/CTAButton";
+import ContentPreviewModal from "../components/ContentPreviewModal";
 
 const supabase = createClientComponentClient();
 
 export default function ContactAdmin() {
   const [session, setSession] = useState(null);
   const [data, setData] = useState(null);
+  const [initialData, setInitialData] = useState(null);
   const [contactRowId, setContactRowId] = useState(null);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -37,24 +38,25 @@ export default function ContactAdmin() {
 
       setContactRowId(row?.id || null);
 
-      setData(
-        row?.data || { address: "", email: "", phones: [""], socials: [] }
-      );
+      const loadedData =
+        row?.data || { address: "", email: "", phones: [""], socials: [] };
 
+      setData(loadedData);
+      setInitialData(loadedData);
       setLoading(false);
     }
 
     fetchData();
   }, []);
 
-  if (loading) return <p>Checking access…</p>;
+  if (loading) return <p>Checking access...</p>;
   if (!session) return null;
-  if (!data) return <p>Loading content…</p>;
+  if (!data) return <p>Loading content...</p>;
 
   const saveData = async () => {
     if (!contactRowId) {
       alert("Contact row not found in pages_content. Save cancelled to avoid creating a new row.");
-      return;
+      return false;
     }
 
     setSaving(true);
@@ -64,8 +66,14 @@ export default function ContactAdmin() {
       .eq("id", contactRowId);
     setSaving(false);
 
-    if (error) console.error(error);
-    else alert("✅ Changes saved!");
+    if (error) {
+      console.error(error);
+      return false;
+    }
+
+    setInitialData(data);
+    alert("Changes saved.");
+    return true;
   };
 
   const updatePhone = (index, value) => {
@@ -91,7 +99,6 @@ export default function ContactAdmin() {
     <div style={{ maxWidth: 800, margin: "0 auto", padding: 20 }}>
       <h2>Contact Page Editor</h2>
 
-      {/* Address Section */}
       <section style={{ border: "1px solid #ccc", padding: 16, marginBottom: 20 }}>
         <h3>Address & Email</h3>
         <label>Address</label>
@@ -109,7 +116,6 @@ export default function ContactAdmin() {
         />
       </section>
 
-      {/* Phones Section */}
       <section style={{ border: "1px solid #ccc", padding: 16, marginBottom: 20 }}>
         <h3>Phones</h3>
         {data.phones.map((phone, i) => (
@@ -137,7 +143,6 @@ export default function ContactAdmin() {
         </button>
       </section>
 
-      {/* Social Links Section */}
       <section style={{ border: "1px solid #ccc", padding: 16, marginBottom: 20 }}>
         <h3>Social Links</h3>
         {data.socials.map((social, i) => (
@@ -172,15 +177,13 @@ export default function ContactAdmin() {
         </button>
       </section>
 
-      <CTAButton
-        onClick={saveData}
-        disabled={saving}
-        type="button"
-        variant="secondary"
+      <ContentPreviewModal
+        data={data}
+        originalData={initialData}
+        onConfirmSave={saveData}
+        saving={saving}
         style={{ marginTop: 10 }}
-      >
-        {saving ? "Saving..." : "Save Changes"}
-      </CTAButton>
+      />
     </div>
   );
 }

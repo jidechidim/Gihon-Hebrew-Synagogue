@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { uploadFile } from "@/lib/storage";
+import { uploadImage } from "@/lib/upload";
 
 export default function EventForm({ initialData = {}, onSubmit, loading }) {
   const [form, setForm] = useState(initialData);
@@ -15,7 +15,7 @@ export default function EventForm({ initialData = {}, onSubmit, loading }) {
     if (!file) return;
     try {
       setUploading(true);
-      const url = await uploadFile(file, "events", "images");
+      const url = await uploadImage(file, "events", { currentUrl: form.image });
       setForm((prev) => ({ ...prev, image: url }));
     } catch (err) {
       console.error(err);

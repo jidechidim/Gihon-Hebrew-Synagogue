@@ -1,18 +1,62 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import path from "node:path";
 import { readFile } from "node:fs/promises";
 import CTAButton from "../components/CTAButton";
 import NewsletterForm from "../components/NewsletterForm";
 import { createSupabaseServerClient } from "@lib/supabase/server-client";
+import { decodeCmsPreviewData } from "@lib/cmsPreview";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+const LEGACY_IMAGE_PLACEHOLDERS = new Set([
+  "/assets/fallback",
+  "/assets/fallback/about/",
+  "/assets/fallback/about/aboutpageintroimage.jpg",
+  "/assets/fallback/about/aboutpageboardimage.jpg",
+]);
+const FALLBACK_ASSET_BASE = "/assets/fallback";
+
+const HOME_FALLBACK_IMAGES = {
+  hero: `${FALLBACK_ASSET_BASE}/home/homepageheroimage.jpg`,
+  welcome: `${FALLBACK_ASSET_BASE}/home/homepagewelcomeimage.jpg`,
+  aboutTop: `${FALLBACK_ASSET_BASE}/home/homepageheroabout1.jpg`,
+  aboutBottom: `${FALLBACK_ASSET_BASE}/home/homepageheroabout2.jpg`,
+  community: [
+    `${FALLBACK_ASSET_BASE}/home/homepagecommunity1.jpg`,
+    `${FALLBACK_ASSET_BASE}/home/homepagecommunity2.jpg`,
+    `${FALLBACK_ASSET_BASE}/home/homepagecommunity3.jpg`,
+  ],
+  events: [
+    `${FALLBACK_ASSET_BASE}/home/homepageeventimage.jpg`,
+    `${FALLBACK_ASSET_BASE}/home/homepageeventimage2.jpg`,
+    `${FALLBACK_ASSET_BASE}/home/homepageeventimage3.jpg`,
+  ],
+  news: [
+    `${FALLBACK_ASSET_BASE}/home/homepagenewsimage1.jpg`,
+    `${FALLBACK_ASSET_BASE}/home/homepagenewsimage2.jpg`,
+    `${FALLBACK_ASSET_BASE}/home/homepagenewsimage3.jpg`,
+    `${FALLBACK_ASSET_BASE}/home/homepagenewsimage4.jpg`,
+    `${FALLBACK_ASSET_BASE}/home/homepagenewsimage5.jpg`,
+  ],
+};
+
+function withImageFallback(value, fallback) {
+  if (typeof value !== "string") return fallback;
+
+  const normalized = value.trim();
+  if (!normalized || normalized.endsWith("/") || LEGACY_IMAGE_PLACEHOLDERS.has(normalized)) {
+    return fallback;
+  }
+
+  return normalized;
+}
 
 const DEFAULT_HOME_DATA = {
   hero: {
     title: "Gihon Hebrew Synagogue",
     subtitle: "Promoting Judaic life in Nigeria.",
-    image: "/assets/welcomeimage.png",
+    image: HOME_FALLBACK_IMAGES.hero,
     cta_text: "Get Involved",
     cta_link: "/getinvolved",
   },
@@ -21,7 +65,7 @@ const DEFAULT_HOME_DATA = {
     paragraphs: [
       "We are a growing Jewish community dedicated to prayer, learning, and service.",
     ],
-    image: "/assets/welcomeimage.png",
+    image: HOME_FALLBACK_IMAGES.welcome,
     cta_text: "Learn More",
     cta_link: "/about",
   },
@@ -126,8 +170,22 @@ async function getHomePageData() {
   return { homeData, events, news, parsha };
 }
 
-export default async function HomePage() {
-  const { homeData, events, news, parsha } = await getHomePageData();
+function readPreviewData(searchParams) {
+  if (!searchParams || searchParams.cmsPreview !== "1") return null;
+
+  const encodedPayload = Array.isArray(searchParams.previewData)
+    ? searchParams.previewData[0]
+    : searchParams.previewData;
+
+  const decoded = decodeCmsPreviewData(encodedPayload);
+  return decoded && typeof decoded === "object" ? decoded : null;
+}
+
+export default async function HomePage({ searchParams }) {
+  const resolvedSearchParams = await searchParams;
+  const previewData = readPreviewData(resolvedSearchParams);
+  const { homeData: savedHomeData, events, news, parsha } = await getHomePageData();
+  const homeData = previewData ? mergeHomeData(previewData) : savedHomeData;
 
   const aboutData = homeData.about || {};
   const aboutParagraphs = Array.isArray(aboutData.paragraphs)
@@ -145,26 +203,36 @@ export default async function HomePage() {
         ];
   const aboutCtaText = aboutData.cta_text || "Learn More";
   const aboutCtaLink = aboutData.cta_link || "/about";
-  const aboutImageTop =
+  const aboutImageTop = withImageFallback(
     aboutData.image_top ||
-    aboutData.image_primary ||
-    aboutData.image ||
-    aboutData.image_secondary ||
-    "/assets/welcomeimage.png";
-  const aboutImageBottom =
+      aboutData.image_primary ||
+      aboutData.image ||
+      aboutData.image_secondary,
+    HOME_FALLBACK_IMAGES.aboutTop
+  );
+  const aboutImageBottom = withImageFallback(
     aboutData.image_bottom ||
-    aboutData.image_secondary ||
-    aboutData.image_two ||
-    aboutData.image ||
-    aboutImageTop;
+      aboutData.image_secondary ||
+      aboutData.image_two ||
+      aboutData.image,
+    HOME_FALLBACK_IMAGES.aboutBottom
+  );
   const communityData = homeData.community || {};
   const communityItems = Array.isArray(communityData.items) ? communityData.items : [];
   const defaultCommunityItems = [
-    { title: "Services", image: "/assets/welcomeimage.png" },
-    { title: "Learning", image: "/assets/welcomeimage.png" },
-    { title: "Holidays", image: "/assets/welcomeimage.png" },
+    { title: "Services", image: HOME_FALLBACK_IMAGES.community[0] },
+    { title: "Learning", image: HOME_FALLBACK_IMAGES.community[1] },
+    { title: "Holidays", image: HOME_FALLBACK_IMAGES.community[2] },
   ];
-  const communityCards = (communityItems.length > 0 ? communityItems : defaultCommunityItems).slice(0, 3);
+  const communityCards = (communityItems.length > 0 ? communityItems : defaultCommunityItems)
+    .slice(0, 3)
+    .map((item, index) => ({
+      ...item,
+      image: withImageFallback(
+        item.image || item.photo || item.thumbnail || item.image_url,
+        HOME_FALLBACK_IMAGES.community[index] || HOME_FALLBACK_IMAGES.community[0]
+      ),
+    }));
   const communityTitle = communityData.title || "Our Community";
   const communityDescription =
     communityData.description || "A welcoming space of worship, learning, and connection.";
@@ -186,7 +254,11 @@ export default async function HomePage() {
     <main className="home-page">
       <section className="hero" id="home" aria-label="Hero">
         <picture>
-          <img src={homeData.hero.image} alt={homeData.hero.title} className="hero-img" />
+          <img
+            src={withImageFallback(homeData.hero.image, HOME_FALLBACK_IMAGES.hero)}
+            alt={homeData.hero.title}
+            className="hero-img"
+          />
         </picture>
         <div className="hero-overlay"></div>
         <div className="container hero-content">
@@ -263,25 +335,32 @@ export default async function HomePage() {
             <h2 className="section-title">Upcoming Events</h2>
             <div className="events-wrapper">
               <div className="cards-3">
-                {events.map((ev) => (
-                  <article key={ev.id} className="card">
-                    <img src={ev.image} alt={ev.title} />
-                    <div className="card-body">
-                      <h3>{ev.title}</h3>
-                      <p>{ev.summary}</p>
-                      <ul className="meta">
-                        <li><span className="dot"></span> {new Date(ev.date).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</li>
-                        <li><span className="dot"></span> {new Date(ev.date).toLocaleDateString()}</li>
-                        <li><span className="dot"></span> {ev.location}</li>
-                      </ul>
-                      <div className="card-actions">
-                        <CTAButton href={`/register?eventId=${ev.id}`} variant="secondary" className="btn-sm">
-                          Register
-                        </CTAButton>
+                {events.map((ev, index) => {
+                  const eventImage = withImageFallback(
+                    ev.image,
+                    HOME_FALLBACK_IMAGES.events[index % HOME_FALLBACK_IMAGES.events.length]
+                  );
+
+                  return (
+                    <article key={ev.id} className="card">
+                      <img src={eventImage} alt={ev.title} />
+                      <div className="card-body">
+                        <h3>{ev.title}</h3>
+                        <p>{ev.summary}</p>
+                        <ul className="meta">
+                          <li><span className="dot"></span> {new Date(ev.date).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</li>
+                          <li><span className="dot"></span> {new Date(ev.date).toLocaleDateString()}</li>
+                          <li><span className="dot"></span> {ev.location}</li>
+                        </ul>
+                        <div className="card-actions">
+                          <CTAButton href={`/register?eventId=${ev.id}`} variant="secondary" className="btn-sm">
+                            Register
+                          </CTAButton>
+                        </div>
                       </div>
-                    </div>
-                  </article>
-                ))}
+                    </article>
+                  );
+                })}
               </div>
               <div className="see-more-wrapper">
                 <Link href="/events" className="see-more">See More</Link>
@@ -294,7 +373,10 @@ export default async function HomePage() {
       <section id="welcome" className="welcome section bg-light">
         <div className="container split">
           <div className="split-media">
-            <img src={homeData.welcome.image} alt={homeData.welcome.title} />
+            <img
+              src={withImageFallback(homeData.welcome.image, HOME_FALLBACK_IMAGES.welcome)}
+              alt={homeData.welcome.title}
+            />
           </div>
           <div className="split-copy">
             <h2 className="section-title">{homeData.welcome.title}</h2>
@@ -316,15 +398,14 @@ export default async function HomePage() {
           </div>
           <div className="community-grid">
             {communityCards.map((item, index) => {
-              const image = item.image || item.photo || item.thumbnail || item.image_url || "";
               const title = item.title || "Community";
               const alt = item.image_alt || title || "Community activity";
               const isExternal = item.cta_link?.startsWith("http");
 
               return (
                 <article key={`${item.title || "community-item"}-${index}`} className="community-card">
-                  {image ? (
-                    <img src={image} alt={alt} loading="lazy" />
+                  {item.image ? (
+                    <img src={item.image} alt={alt} loading="lazy" />
                   ) : (
                     <div className="community-fallback" aria-hidden="true">
                       {item.title ? item.title.charAt(0) : "C"}
@@ -364,7 +445,10 @@ export default async function HomePage() {
                   <>
                     <article className="feature">
                       <Link href={`/newsarticle?slug=${encodeURIComponent(news[0].id)}`}>
-                        <img src={news[0].image} alt={news[0].title} />
+                        <img
+                          src={withImageFallback(news[0].image, HOME_FALLBACK_IMAGES.news[0])}
+                          alt={news[0].title}
+                        />
                         <div className="feature-meta">
                           <h3>{news[0].title}</h3>
                           <span className="read-more">Read more</span>
@@ -372,13 +456,19 @@ export default async function HomePage() {
                       </Link>
                     </article>
                     <aside className="thumbs">
-                      {news.slice(1, 5).map((item) => (
+                      {news.slice(1, 5).map((item, index) => (
                         <Link
                           key={item.id}
                           className="thumb"
                           href={`/newsarticle?slug=${encodeURIComponent(item.id)}`}
                         >
-                          <img src={item.image} alt={item.title} />
+                          <img
+                            src={withImageFallback(
+                              item.image,
+                              HOME_FALLBACK_IMAGES.news[(index + 1) % HOME_FALLBACK_IMAGES.news.length]
+                            )}
+                            alt={item.title}
+                          />
                           <span>{item.title}</span>
                         </Link>
                       ))}
@@ -423,3 +513,7 @@ export default async function HomePage() {
     </main>
   );
 }
+
+
+
+

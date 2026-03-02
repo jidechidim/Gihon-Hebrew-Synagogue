@@ -7,7 +7,7 @@ import { SessionContext } from "../../layout";
 import { deleteFile } from "@/lib/storage";
 import AdminContainer from "../../components/AdminContainer";
 import ImageUpload from "../../../components/ImageUpload";
-import CTAButton from "../../../components/CTAButton";
+import ContentPreviewModal from "../../components/ContentPreviewModal";
 
 const supabase = createClientComponentClient();
 
@@ -18,6 +18,7 @@ export default function EditNewsPage() {
   const [news, setNews] = useState(null);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState(null);
+  const [initialForm, setInitialForm] = useState(null);
 
   useEffect(() => {
     if (!session) return;
@@ -25,32 +26,35 @@ export default function EditNewsPage() {
       const { data, error } = await supabase.from("news").select("*").eq("id", id).single();
       if (error) return alert(error.message);
       setNews(data);
+      setForm(data);
+      setInitialForm(data);
     };
     load();
   }, [session, id]);
-
-  // sync fetched news into local form state
-  useEffect(() => {
-    if (news) setForm(news);
-  }, [news]);
 
   const updateField = (k, v) => setForm((s) => ({ ...s, [k]: v }));
 
   const saveChanges = async () => {
     setLoading(true);
-    try {
-      await supabase.from("news").update({ ...form, updated_at: new Date().toISOString() }).eq("id", id);
-      router.push("/admin/news");
-    } catch (err) {
-      alert("Update failed: " + err.message);
-    } finally {
-      setLoading(false);
+    const { error } = await supabase
+      .from("news")
+      .update({ ...form, updated_at: new Date().toISOString() })
+      .eq("id", id);
+    setLoading(false);
+
+    if (error) {
+      alert("Update failed: " + error.message);
+      return false;
     }
+
+    setInitialForm(form);
+    router.push("/admin/news");
+    return true;
   };
 
   const handleDelete = async () => {
     if (!confirm("Delete this news?")) return;
-    if (form?.image) await deleteFile("news", form.image);
+    if (form?.image) await deleteFile("uploads", form.image);
     await supabase.from("news").delete().eq("id", id);
     router.push("/admin/news");
   };
@@ -61,7 +65,7 @@ export default function EditNewsPage() {
     setNews((n) => ({ ...n, published: !n.published }));
   };
 
-  if (!session || !news || !form) return <p>Loading…</p>;
+  if (!session || !news || !form) return <p>Loading...</p>;
 
   return (
     <AdminContainer>
@@ -121,15 +125,14 @@ export default function EditNewsPage() {
         </div>
       </section>
 
-      <CTAButton
-        onClick={saveChanges}
-        disabled={loading}
-        type="button"
-        variant="secondary"
+      <ContentPreviewModal
+        data={form}
+        originalData={initialForm}
+        onConfirmSave={saveChanges}
+        saving={loading}
+        previewLabel="Preview News Changes"
         style={{ marginTop: 10 }}
-      >
-        {loading ? "Saving…" : "Save Changes"}
-      </CTAButton>
+      />
     </AdminContainer>
   );
 }
