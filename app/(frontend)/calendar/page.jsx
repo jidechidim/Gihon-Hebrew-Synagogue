@@ -5,10 +5,9 @@ export const revalidate = 3600;
 
 const DEFAULT_GEONAMEID = "2352778";
 
-async function getInitialCalendarItems() {
+async function getInitialCalendarItems(year, month) {
   try {
-    const year = new Date().getFullYear();
-    const url = `https://www.hebcal.com/hebcal?v=1&cfg=json&year=${year}&geo=geoname&geonameid=${DEFAULT_GEONAMEID}&maj=on&min=on&mod=on&nx=on&ss=on&mf=on&c=on`;
+    const url = `https://www.hebcal.com/hebcal?v=1&cfg=json&year=${year}&month=${month}&geo=geoname&geonameid=${DEFAULT_GEONAMEID}&maj=on&min=on&mod=on&nx=on&ss=on&mf=on&c=on`;
     const res = await fetch(url, { next: { revalidate: 3600 } });
 
     if (!res.ok) return [];
@@ -30,12 +29,16 @@ async function getInitialCalendarItems() {
 }
 
 export default async function CalendarPage() {
-  const initialItems = await getInitialCalendarItems();
+  const now = new Date();
+  const year = now.getFullYear();
+  const defaultMonth = String(now.getMonth() + 1);
+  const initialItems = await getInitialCalendarItems(year, defaultMonth);
 
   return (
     <CalendarClient
       initialItems={initialItems}
       defaultLocation={DEFAULT_GEONAMEID}
+      defaultMonth={defaultMonth}
     />
   );
 }

@@ -312,7 +312,7 @@ body{
 /* ===== Board ===== */
 .board{padding:150px 0 150px}
 .board h2{margin:50 18px; font-weight:700}
-.board-figure{margin:20 10px}
+.board-figure{margin:20 0px}
 .board-figure img{
   width:100%; height:520px; object-fit:cover; border-radius:6px; box-shadow:var(--shadow);
 }

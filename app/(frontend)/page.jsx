@@ -54,8 +54,8 @@ function withImageFallback(value, fallback) {
 
 const DEFAULT_HOME_DATA = {
   hero: {
-    title: "Gihon Hebrew Synagogue",
-    subtitle: "Promoting Judaic life in Nigeria.",
+    title: "PROMOTING JEWISH LIFE IN NIGERIA",
+    subtitle: "Learn about Gihon Hebrew Synagogue",
     image: HOME_FALLBACK_IMAGES.hero,
     cta_text: "Get Involved",
     cta_link: "/getinvolved",
@@ -63,7 +63,7 @@ const DEFAULT_HOME_DATA = {
   welcome: {
     title: "Welcome to Gihon Hebrew Synagogue",
     paragraphs: [
-      "We are a growing Jewish community dedicated to prayer, learning, and service.",
+      "At Gihon Hebrew Synagogue, we are more than a place of worship — we are a vibrant community where every individual is welcomed, supported, and inspired. Our doors are open to all who seek connection, learning, and spiritual growth.",
     ],
     image: HOME_FALLBACK_IMAGES.welcome,
     cta_text: "Learn More",
@@ -71,7 +71,7 @@ const DEFAULT_HOME_DATA = {
   },
   newsletter: {
     title: "Stay Connected",
-    description: "Get updates on events, teachings, and community life.",
+    description: "Sign up to receive updates on events, parsha readings, and community news.",
     placeholder_email: "Enter your email address",
     submit_text: "Subscribe",
   },
