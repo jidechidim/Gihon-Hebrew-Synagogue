@@ -15,10 +15,14 @@ const MONTHS = [
   "July", "August", "September", "October", "November", "December",
 ];
 
-export default function CalendarClient({ initialItems = [], defaultLocation = LOCATIONS.Abuja }) {
+export default function CalendarClient({
+  initialItems = [],
+  defaultLocation = LOCATIONS.Abuja,
+  defaultMonth = String(new Date().getMonth() + 1),
+}) {
   const [items, setItems] = useState(initialItems);
   const [location, setLocation] = useState(defaultLocation);
-  const [month, setMonth] = useState("");
+  const [month, setMonth] = useState(defaultMonth);
   const [parshaOnly, setParshaOnly] = useState(false);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
@@ -85,7 +89,7 @@ export default function CalendarClient({ initialItems = [], defaultLocation = LO
         <select value={month} onChange={(e) => setMonth(e.target.value)}>
           <option value="">All Months</option>
           {MONTHS.map((m, i) => (
-            <option key={i + 1} value={i + 1}>{m}</option>
+            <option key={i + 1} value={String(i + 1)}>{m}</option>
           ))}
         </select>
 
