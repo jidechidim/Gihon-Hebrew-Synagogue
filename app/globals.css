@@ -139,13 +139,16 @@ a.btn{
 .desktop-nav ul{display:flex;gap:20px;list-style:none;margin:0;padding:0}
 
 /* Desktop nav links */
-.desktop-nav a{
+.desktop-nav a,
+.desktop-nav .nav-link{
   color:#fff;text-decoration:none;font-weight:600;transition:color .25s ease;
 }
-.site-header.scrolled .desktop-nav a{color:var(--ink)}
+.site-header.scrolled .desktop-nav a,
+.site-header.scrolled .desktop-nav .nav-link{color:var(--ink)}
 .desktop-nav a:hover,
 .desktop-nav a:focus-visible,
-.desktop-nav a.active{color:var(--brand)}
+.desktop-nav .nav-link:hover,
+.desktop-nav .nav-link:focus-visible{color:var(--brand) !important;text-decoration:none !important}
 
 /* Admin-specific: ensure hover uses primary brand color (overrides inline/tailwind hover classes) */
 .admin-header .desktop-nav a:hover{
@@ -197,13 +200,15 @@ a.btn{
 .mobile-drawer .brand-text{color:var(--ink)}
 
 .mobile-drawer ul{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
-.mobile-drawer a{
+.mobile-drawer a,
+.mobile-drawer .nav-link{
   display:block;padding:.7rem .4rem;color:var(--ink);font-weight:700;text-decoration:none;
   transition:color .25s ease, background .25s ease;
 }
 .mobile-drawer a:hover,
 .mobile-drawer a:focus-visible,
-.mobile-drawer a.active{color:var(--brand)}
+.mobile-drawer .nav-link:hover,
+.mobile-drawer .nav-link:focus-visible{color:var(--brand) !important;text-decoration:none !important}
 
 .mobile-drawer .drawer-cta{margin-top:.5rem;text-align:left}
 .mobile-drawer .drawer-cta .btn-donate{
@@ -948,7 +953,7 @@ main {
 .community-overlay-content h3 {
   margin: 0;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .community-overlay-content p,
