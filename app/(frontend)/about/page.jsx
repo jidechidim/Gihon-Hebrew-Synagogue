@@ -1,4 +1,4 @@
-import CTAButton from "../../components/CTAButton";
+﻿import CTAButton from "../../components/CTAButton";
 import "./about.css";
 import { createSupabaseServerClient } from "@lib/supabase/server-client";
 import { decodeCmsPreviewData } from "@lib/cmsPreview";

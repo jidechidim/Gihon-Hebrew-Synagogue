@@ -2,14 +2,14 @@
 
 import type { ReactNode } from "react";
 import { useEffect } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import "../globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 const SITE_NAME = "Gihon Hebrew Synagogue";
 
-function getPageTitle(pathname: string, searchParams: URLSearchParams) {
+function getPageTitle(pathname: string) {
   const cleanPath = pathname || "/";
 
   if (cleanPath === "/") return "Home";
@@ -31,22 +31,25 @@ function getPageTitle(pathname: string, searchParams: URLSearchParams) {
   const firstSegment = cleanPath.split("/").filter(Boolean)[0];
   if (!firstSegment) return "Home";
 
-  if (firstSegment === "newsarticle") {
-    const slug = searchParams.get("slug");
-    return slug ? "News Article" : "News Article";
-  }
-
-  return routeLabels[firstSegment] || firstSegment.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
+  return (
+    routeLabels[firstSegment] ||
+    firstSegment
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase())
+  );
 }
 
-export default function FrontendLayout({ children }: { children: ReactNode }) {
+export default function FrontendLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const title = getPageTitle(pathname || "/", searchParams || new URLSearchParams());
+    const title = getPageTitle(pathname || "/");
     document.title = `${SITE_NAME} | ${title}`;
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
   return (
     <>
