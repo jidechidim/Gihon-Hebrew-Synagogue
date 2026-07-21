@@ -45,7 +45,7 @@ export default function Header() {
   }, [pathname]);
 
   const isHome = pathname === "/";
-  const solidHeader = !isHome || scrolled;
+  const solidHeader = true;
   const isActive = (path) => pathname === path;
 
   return (
