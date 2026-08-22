@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="logo-badge">
             <Image
               src="/assets/logo.png"
-              alt="Gihon logo"
+              alt="Gihon Hebrew Synagogue"
               width={64}
               height={64}
             />
@@ -43,7 +43,7 @@ export default function Footer() {
           <h4>Contact</h4>
           <ul>
             <li>17 Grace Pavilon Street, Prayer Road, Jikwoyi Phase II, Jikwoyi, FCT-Abuja</li>
-            <li><a href="mailto:info@gihonhebrewsynagogue.com">gihonhebrewsynagogue25@gmail.com</a></li>
+            <li><a href="mailto:info@gihonhebrewsynagogue.com">info@gihonhebrewsynagogue.com</a></li>
             <li><a href="tel:+2348033238539">+234 803 323 8539</a></li>
             <li><a href="tel:+2348060831801">+234 806 083 1801</a></li>
           </ul>
