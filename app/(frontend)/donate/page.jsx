@@ -37,7 +37,7 @@ const DEFAULT_DONATE_DATA = {
     description:
       "We are committed to stewarding every contribution with integrity and accountability. If you would like to discuss giving in detail, contact our team.",
     cta_text: "Contact Us",
-    cta_link: "mailto:gihonhebrewsynagogue25@gmail.com",
+    cta_link: "mailto:info@gihonhebrewsynagogue.com",
   },
 };
 
