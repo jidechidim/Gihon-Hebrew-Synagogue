@@ -132,7 +132,14 @@ export default function LeadershipPage() {
               Our Board and Executive Council
             </h1>
             <figure className="hero-figure">
-              <img src={hero.image} alt={hero.alt || "Leadership image"} />
+              <img
+                src={hero.image || LEADERSHIP_FALLBACK_DATA.hero.image}
+                alt={hero.alt || "Leadership image"}
+                onError={(event) => {
+                  event.currentTarget.onerror = null;
+                  event.currentTarget.src = LEADERSHIP_FALLBACK_DATA.hero.image;
+                }}
+              />
               {hero.figcaption ? <figcaption>{hero.figcaption}</figcaption> : null}
             </figure>
           </div>
@@ -143,29 +150,37 @@ export default function LeadershipPage() {
         <div className="container narrow center">
           <div className="text-center mb-8">
             <h2 className="page-title text-2xl font-semibold" id="membersTitle">
-              Our Members
+              Our Leadership Team
             </h2>
           </div>
 
           <ul className="members-grid">
-            {members.map((member, index) => (
-              <li
-                key={member.id || index}
-                className={`member text-center ${member.solo ? "member--solo" : ""}`}
-              >
-                <figure className="flex flex-col items-center">
-                  <img
-                    className="avatar w-40 h-40 object-cover rounded-full shadow"
-                    src={member.image}
-                    alt={member.alt || member.name}
-                  />
-                  <figcaption className="mt-3 text-center">
-                    <strong className="block text-lg">{member.name}</strong>
-                    <span className="text-gray-600">{member.role}</span>
-                  </figcaption>
-                </figure>
-              </li>
-            ))}
+            {members.map((member, index) => {
+              const fallbackImage = LEADERSHIP_MEMBER_FALLBACK_IMAGES[index % LEADERSHIP_MEMBER_FALLBACK_IMAGES.length];
+
+              return (
+                <li
+                  key={member.id || index}
+                  className={`member text-center ${member.solo ? "member--solo" : ""}`}
+                >
+                  <figure className="flex flex-col items-center">
+                    <img
+                      className="avatar w-40 h-40 object-cover rounded-full shadow"
+                      src={member.image || fallbackImage}
+                      alt={member.alt || member.name}
+                      onError={(event) => {
+                        event.currentTarget.onerror = null;
+                        event.currentTarget.src = fallbackImage;
+                      }}
+                    />
+                    <figcaption className="mt-3 text-center">
+                      <strong className="block text-lg">{member.name}</strong>
+                      <span className="text-gray-600">{member.role}</span>
+                    </figcaption>
+                  </figure>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </section>

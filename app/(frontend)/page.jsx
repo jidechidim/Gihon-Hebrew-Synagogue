@@ -28,7 +28,7 @@ const HOME_FALLBACK_IMAGES = {
     `${FALLBACK_ASSET_BASE}/home/homepagecommunity3.jpg`,
   ],
   events: [
-    `${FALLBACK_ASSET_BASE}/home/homepageeventimage.jpg`,
+    `${FALLBACK_ASSET_BASE}/home/homepageeventimage1.jpg`,
     `${FALLBACK_ASSET_BASE}/home/homepageeventimage2.jpg`,
     `${FALLBACK_ASSET_BASE}/home/homepageeventimage3.jpg`,
   ],

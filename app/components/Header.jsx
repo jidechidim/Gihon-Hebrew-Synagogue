@@ -45,7 +45,8 @@ export default function Header() {
   }, [pathname]);
 
   const isHome = pathname === "/";
-  const solidHeader = !isHome || scrolled;
+  const solidHeader = true;
+  const isActive = (path) => pathname === path;
 
   return (
     <header
@@ -104,12 +105,12 @@ export default function Header() {
         {/* Desktop Nav */}
         <nav className="desktop-nav" aria-label="Primary">
           <ul>
-            <li><Link href="/" className={pathname === "/" ? "active" : ""}>Home</Link></li>
-            <li><Link href="/about" className={pathname === "/about" ? "active" : ""}>About Us</Link></li>
-            <li><Link href="/getinvolved" className={pathname === "/getinvolved" ? "active" : ""}>Get Involved</Link></li>
-            <li><Link href="/parshiyot" className={pathname === "/parshiyot" ? "active" : ""}>Parshiyot</Link></li>
-            <li><Link href="/events" className={pathname === "/events" ? "active" : ""}>Events</Link></li>
-            <li><Link href="/news" className={pathname === "/news" ? "active" : ""}>News & Media</Link></li>
+            <li><Link href="/" className={`nav-link ${isActive("/") ? "active" : ""}`} aria-current={isActive("/") ? "page" : undefined}>Home</Link></li>
+            <li><Link href="/about" className={`nav-link ${isActive("/about") ? "active" : ""}`} aria-current={isActive("/about") ? "page" : undefined}>About Us</Link></li>
+            <li><Link href="/getinvolved" className={`nav-link ${isActive("/getinvolved") ? "active" : ""}`} aria-current={isActive("/getinvolved") ? "page" : undefined}>Get Involved</Link></li>
+            <li><Link href="/parshiyot" className={`nav-link ${isActive("/parshiyot") ? "active" : ""}`} aria-current={isActive("/parshiyot") ? "page" : undefined}>Parshiyot</Link></li>
+            <li><Link href="/events" className={`nav-link ${isActive("/events") ? "active" : ""}`} aria-current={isActive("/events") ? "page" : undefined}>Events</Link></li>
+            <li><Link href="/news" className={`nav-link ${isActive("/news") ? "active" : ""}`} aria-current={isActive("/news") ? "page" : undefined}>News & Media</Link></li>
           </ul>
         </nav>
 
@@ -143,12 +144,12 @@ export default function Header() {
         </Link>
 
         <ul>
-          <li><Link href="/" className={pathname === "/" ? "active" : ""} onClick={closeMenu}>Home</Link></li>
-          <li><Link href="/about" className={pathname === "/about" ? "active" : ""} onClick={closeMenu}>About Us</Link></li>
-          <li><Link href="/getinvolved" className={pathname === "/getinvolved" ? "active" : ""} onClick={closeMenu}>Get Involved</Link></li>
-          <li><Link href="/parshiyot" className={pathname === "/parshiyot" ? "active" : ""} onClick={closeMenu}>Parshiyot</Link></li>
-          <li><Link href="/events" className={pathname === "/events" ? "active" : ""} onClick={closeMenu}>Events</Link></li>
-          <li><Link href="/news" className={pathname === "/news" ? "active" : ""} onClick={closeMenu}>News & Media</Link></li>
+          <li><Link href="/" className={`nav-link ${isActive("/") ? "active" : ""}`} aria-current={isActive("/") ? "page" : undefined} onClick={closeMenu}>Home</Link></li>
+          <li><Link href="/about" className={`nav-link ${isActive("/about") ? "active" : ""}`} aria-current={isActive("/about") ? "page" : undefined} onClick={closeMenu}>About Us</Link></li>
+          <li><Link href="/getinvolved" className={`nav-link ${isActive("/getinvolved") ? "active" : ""}`} aria-current={isActive("/getinvolved") ? "page" : undefined} onClick={closeMenu}>Get Involved</Link></li>
+          <li><Link href="/parshiyot" className={`nav-link ${isActive("/parshiyot") ? "active" : ""}`} aria-current={isActive("/parshiyot") ? "page" : undefined} onClick={closeMenu}>Parshiyot</Link></li>
+          <li><Link href="/events" className={`nav-link ${isActive("/events") ? "active" : ""}`} aria-current={isActive("/events") ? "page" : undefined} onClick={closeMenu}>Events</Link></li>
+          <li><Link href="/news" className={`nav-link ${isActive("/news") ? "active" : ""}`} aria-current={isActive("/news") ? "page" : undefined} onClick={closeMenu}>News & Media</Link></li>
           <li className="drawer-cta">
             <CTAButton
               href="/donate"
