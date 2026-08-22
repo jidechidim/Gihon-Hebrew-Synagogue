@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="logo-badge">
             <Image
               src="/assets/logo.png"
-              alt="Gihon logo"
+              alt="Gihon Hebrew Synagogue"
               width={64}
               height={64}
             />
